@@ -57,25 +57,26 @@ autoload -U colors;colors
 #alias
 #ssh
 alias sshlasta="ssh why_waita@lasta.dip.jp"
-alias sshnest="ssh -p 2222 why@moon.mma.club.uec.ac.jp"
-alias sshsun="ssh n1310100@sun.edu.cc.uec.ac.jp"
-alias sshmoon="ssh why@moon.mma.club.uec.ac.jp" 
-alias portforward_sun='ssh n1310100@sun.edu.cc.uec.ac.jp -L8080:proxy-east.uec.ac.jp:8080'
-alias portforward_nest='ssh why@moon.mma.club.uec.ac.jp -L8080:proxy-east.uec.ac.jp:8080 -p 2222'
-alias sshhome='ssh whywaita@whywaita.com'
+alias sshhome="ssh whywaita.com"
 #ls
 alias ls="ls -F -G"
 alias ll="ls -l"
 alias la="ls -a"
 #ServerAddress
-alias nest="nest.mma.club.uec.ac.jp"
-alias sun="sun.edu.cc.uec.ac.jp"
-alias moon="moon.mma.club.uec.ac.jp"
+alias nest="ssh why@nest.mma.club.uec.ac.jp"
+alias sun="ssh n1310100@sun.edu.cc.uec.ac.jp"
+alias moon="ssh why@moon.mma.club.uec.ac.jp"
+alias outnest="ssh why@moon.mma.club.uec.ac.jp -p 2222"
 #other
-alias mkrepo="platex Report.tex&&dvipdfmx Report.dvi"
+alias mkrepo="platex Report.tex&&dvipdfmx Report.dvi &&open Report.pdf"
 alias more=less
 alias rm="rm -i"
-alias mkrepo="platex Report.tex&&dvipdfmx Report.dvi"
+alias open.="open ."
+alias sublimetext="/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl"
+#tmux
+alias ta="tmux a -t"
+alias tns="tmux new-session -s"
+
 
 #rubyinstall
 export PATH="$HOME/.rbenv/bin:$PATH"

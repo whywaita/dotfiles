@@ -97,3 +97,6 @@ NeoBundle 'Lokaltog/powerline.git'
 NeoBundle 'scrooloose/syntastic'
 
 "Vim-Powerlineなんて知るか！！！！！
+
+"いい感じのhtml
+NeoBundle 'mattn/emmet-vim'
