@@ -91,12 +91,12 @@ NeoBundle 'Align'
   " NeoBundle 'Smooth-Scroll'
 NeoBundle 'yuroyoro/smooth_scroll.vim'
 
-NeoBundle 'Lokaltog/powerline.git'
+" PowerLine
+NeoBundle 'alpaca-tc/alpaca_powertabline'
+NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 
 " Syntax checking plugin ruby
 NeoBundle 'scrooloose/syntastic'
-
-"Vim-Powerlineなんて知るか！！！！！
 
 "いい感じのhtml
 NeoBundle 'mattn/emmet-vim'
