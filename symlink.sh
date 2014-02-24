@@ -9,8 +9,8 @@ do
     fi
 done
 
-mkdir -p %HOME/dotfiles/.vim/bundle
-git clone https://github.com/Shougo/neobundle.vim $HOME/dotfiles/vim/vimfiles/bundle/neobundle.vim
+mkdir -p $HOME/dotfiles/.vim/bundle
+git clone https://github.com/Shougo/neobundle.vim $HOME/dotfiles/.vim/bundle/neobundle.vim
 
 git clone https://github.com/sstephenson/rbenv.git $HOME/.rbenv
 mkdir -p $HOME/.rbenv/plugins
