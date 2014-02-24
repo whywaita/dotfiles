@@ -81,13 +81,10 @@ alias ta="tmux a -t"
 alias tns="tmux new-session -s"
 
 
-#rubyinstall
+#install
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
-### Added by the Heroku Toolbelt
-### お疲れ様です
 export PATH="/usr/local/heroku/bin:$PATH"
-
-#LaTeXinstall
 export PATH="/usr/texbin:$PATH"
+export PATH=$HOME/.nodebrew/current/bin:$PATH
