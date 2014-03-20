@@ -75,7 +75,7 @@ alias mkrepo="platex Report.tex&&dvipdfmx Report.dvi &&open Report.pdf"
 alias more=less
 alias rm="rm -i"
 alias open.="open ."
-alias sublimetext="/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl"
+alias sublimetext="/Applications/Sublime\ Text\.app/Contents/SharedSupport/bin/subl"
 #tmux
 alias ta="tmux a -t"
 alias tns="tmux new-session -s"
@@ -88,3 +88,4 @@ eval "$(rbenv init -)"
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="/usr/texbin:$PATH"
 export PATH=$HOME/.nodebrew/current/bin:$PATH
+export PATH=${HOME}/.cabal/bin:$PATH
