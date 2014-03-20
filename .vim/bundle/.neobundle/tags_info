@@ -8,6 +8,7 @@ mpvim
 neobundle.vim
 neocomplcache
 neosnippet
+neosnippet-snippets
 powerline
 rails.vim
 smooth_scroll.vim

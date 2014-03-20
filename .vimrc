@@ -33,7 +33,7 @@ if has('vim_starting')
  " 自動補完機構
  NeoBundle 'Shougo/neocomplcache'
  NeoBundle 'Shougo/neosnippet'
-
+ NeoBundle 'Shougo/neosnippet-snippets'
 
  " 自動括弧閉じ
  NeoBundle 'yuroyoro/vim-autoclose'
