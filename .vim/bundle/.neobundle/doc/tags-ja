@@ -33,6 +33,13 @@
 :FufTagWithCursorWord	fuf.jax	/*:FufTagWithCursorWord*
 :FufTaggedFile	fuf.jax	/*:FufTaggedFile*
 abc	fuf.jax	/*abc*
+alpaca_powerlinetabline-changelog	alpaca_powertagline.jax	/*alpaca_powerlinetabline-changelog*
+alpaca_powerlinetabline-examples	alpaca_powertagline.jax	/*alpaca_powerlinetabline-examples*
+alpaca_powerlinetabline-introduction	alpaca_powertagline.jax	/*alpaca_powerlinetabline-introduction*
+alpaca_powerlinetabline-options	alpaca_powertagline.jax	/*alpaca_powerlinetabline-options*
+alpaca_powerlinetabline.txt	alpaca_powertagline.jax	/*alpaca_powerlinetabline.txt*
+alpaca_powertabline	alpaca_powertagline.jax	/*alpaca_powertabline*
+alpaca_powertabline-contents	alpaca_powertagline.jax	/*alpaca_powertabline-contents*
 fuf	fuf.jax	/*fuf*
 fuf#setOneTimeVariables()	fuf.jax	/*fuf#setOneTimeVariables()*
 fuf-abbreviation	fuf.jax	/*fuf-abbreviation*

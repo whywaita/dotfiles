@@ -11,14 +11,8 @@ if has('vim_starting')
 
  NeoBundleFetch 'Shougo/neobundle.vim'
 
- " Recommended to install
- " After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
  NeoBundle 'Shougo/vimproc'
 
- " My Bundles here:
- "
- " Note: You don't set neobundle setting in .gvimrc!
- " Original repos on github
  NeoBundle 'tpope/vim-fugitive'
  NeoBundle 'Lokaltog/vim-easymotion'
  NeoBundle 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -32,21 +26,35 @@ if has('vim_starting')
  NeoBundle 'http://svn.macports.org/repository/macports/contrib/mpvim/'
  NeoBundle 'https://bitbucket.org/ns9tks/vim-fuzzyfinder'
 
- " ...
 
- filetype plugin indent on     " Required!
- "
- " Brief help
- " :NeoBundleList          - list configured bundles
- " :NeoBundleInstall(!)    - install(update) bundles
- " :NeoBundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+ filetype plugin indent on
 
- " Installation check.
+
+ " 自動補完機構
+ NeoBundle 'Shougo/neocomplcache'
+ NeoBundle 'Shougo/neosnippet'
+
+
+ " 自動括弧閉じ
+ NeoBundle 'yuroyoro/vim-autoclose'
+ let g:autoclose_vim_commentmode = 1
+
+ " 高性能整形（らしい）
+ NeoBundle 'Align'
+
+ NeoBundle 'yuroyoro/smooth_scroll.vim'
+
+ " PowerLine
+ NeoBundle 'alpaca-tc/alpaca_powertabline'
+ NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
+
+ " Syntax checking plugin ruby
+ NeoBundle 'scrooloose/syntastic'
+
+ "いい感じのhtml
+ NeoBundle 'mattn/emmet-vim'
+
  NeoBundleCheck
-
-" 自動補完機構
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/neosnippet'
 
 " neocomplcacheの設定
 " Disable AutoComplPop.
@@ -79,24 +87,4 @@ inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplcache#close_popup()
 inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
-" 自動括弧閉じ
-NeoBundle 'yuroyoro/vim-autoclose'
-let g:autoclose_vim_commentmode = 1
 
-" 高性能整形（らしい）
-NeoBundle 'Align'
-
-" Searching/Moving
-" smooth_scroll.vim : スクロールを賢く
-  " NeoBundle 'Smooth-Scroll'
-NeoBundle 'yuroyoro/smooth_scroll.vim'
-
-" PowerLine
-NeoBundle 'alpaca-tc/alpaca_powertabline'
-NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
-
-" Syntax checking plugin ruby
-NeoBundle 'scrooloose/syntastic'
-
-"いい感じのhtml
-NeoBundle 'mattn/emmet-vim'
