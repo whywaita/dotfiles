@@ -65,11 +65,6 @@ alias sshhome="ssh whywaita.com"
 alias ls="ls -F -G"
 alias ll="ls -l"
 alias la="ls -a"
-#ServerAddress
-alias nest="ssh why@nest.mma.club.uec.ac.jp"
-alias sun="ssh n1310100@sun.edu.cc.uec.ac.jp"
-alias moon="ssh why@moon.mma.club.uec.ac.jp"
-alias outnest="ssh why@moon.mma.club.uec.ac.jp -p 2222"
 #other
 alias mkrepo="platex Report.tex&&dvipdfmx Report.dvi &&open Report.pdf"
 alias more=less
