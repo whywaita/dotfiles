@@ -6,7 +6,7 @@
 ```
 $ cd
 $ git clone --recursive git@github.com:whywaita/dotfiles.git
-$ sh dotfiles/symlink.sh
+$ sh dotfiles/setup.sh
 ```
 
 # 既知の不具合
