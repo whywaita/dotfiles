@@ -58,9 +58,6 @@ autoload -U colors;colors
                      ;;
                     esac
 #alias
-#ssh
-alias sshlasta="ssh why_waita@lasta.dip.jp"
-alias sshhome="ssh whywaita.com"
 #ls
 alias ls="ls -F -G"
 alias ll="ls -l"
@@ -74,6 +71,8 @@ alias sublimetext="/Applications/Sublime\ Text\.app/Contents/SharedSupport/bin/s
 #tmux
 alias ta="tmux a -t"
 alias tns="tmux new-session -s"
+alias td="tmux detach"
+alias tk="tmux kill-session"
 
 
 #install
