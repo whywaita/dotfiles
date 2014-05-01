@@ -54,6 +54,9 @@ if has('vim_starting')
  "いい感じのhtml
  NeoBundle 'mattn/emmet-vim'
 
+ "git plugin
+ NeoBundle 'gregsexton/gitv.git'
+
  NeoBundleCheck
 
 " neocomplcacheの設定
@@ -87,4 +90,5 @@ inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplcache#close_popup()
 inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
-
+ " git branch name 
+set statusline+=%{fugitive#statusline()}
