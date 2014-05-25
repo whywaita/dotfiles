@@ -7,11 +7,19 @@ install zsh
 install mobile-shell
 
 #Utilities
-install git
 install coreutills
 install openssl
 install libyaml
 install readline
+
+#git
+install git
+install git-flow
+install tig
+
+#font
+tap sanemat/font
+install ricty --powerline
 
 #tools
 install tmux
@@ -34,7 +42,6 @@ cask install iterm2
 cask install java
 cask install android-studio
 cask install handbrake
-# cask install google-chrome
 cask install audacity
 cask install vlc
 cask install thunderbird
