@@ -1,6 +1,9 @@
 set nocompatible
 set number
 syntax on
+set tabstop=4
+set shiftwidth=4
+set noexpandtab
 
 if has('vim_starting')
    set nocompatible               " Be iMproved
