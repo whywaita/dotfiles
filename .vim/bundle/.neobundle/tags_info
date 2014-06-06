@@ -4,6 +4,7 @@ L9
 alpaca_powertabline
 command-t
 emmet-vim
+gitv
 mpvim
 neobundle.vim
 neocomplcache
