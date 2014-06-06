@@ -58,6 +58,7 @@ cask install pandoc
 cask install adobe-reader
 cask install wiresheke
 cask install xquartz
+cask install basictex
 
 #remove dust
 cleanup
