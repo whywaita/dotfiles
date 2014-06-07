@@ -7,7 +7,7 @@ install zsh
 install mobile-shell
 
 #Utilities
-install coreutills
+#install coreutills
 install openssl
 install libyaml
 install readline
@@ -19,7 +19,7 @@ install tig
 
 #font
 tap sanemat/font
-install ricty --powerline
+#install ricty --powerline
 
 #tools
 install tmux
@@ -47,7 +47,7 @@ cask install vlc
 cask install thunderbird
 cask install evernote
 cask install dropbox
-cask install cotediter
+#cask install cotediter
 cask install growlnotify
 cask install limechat
 cask install sublime-text
@@ -56,9 +56,11 @@ cask install yorufukurou
 cask install alfred
 cask install pandoc
 cask install adobe-reader
-cask install wiresheke
+#cask install wiresheke
 cask install xquartz
 cask install basictex
+
+cask alfred link
 
 #remove dust
 cleanup
