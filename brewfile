@@ -19,7 +19,7 @@ install tig
 
 #font
 tap sanemat/font
-#install ricty --powerline
+install ricty 
 
 #tools
 install tmux
