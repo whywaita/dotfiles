@@ -47,7 +47,7 @@ cask install vlc
 cask install thunderbird
 cask install evernote
 cask install dropbox
-#cask install cotediter
+cask install coteditor
 cask install growlnotify
 cask install limechat
 cask install sublime-text
