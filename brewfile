@@ -1,0 +1,66 @@
+#update Homebrew
+update
+upgrade
+
+#shell
+install zsh
+install mobile-shell
+
+#Utilities
+#install coreutills
+install openssl
+install libyaml
+install readline
+
+#git
+install git
+install git-flow
+install tig
+
+#font
+tap sanemat/font
+#install ricty --powerline
+
+#tools
+install tmux
+install nkf
+install vim --with-lua
+install w3m
+install curl
+install wget
+install tree
+install nmap
+install ghostscript
+install imagemagick
+install ffmpeg
+
+## Homebrew-cask
+tap phinze/homebrew-cask || true
+install brew-cask
+
+cask install iterm2
+cask install java
+cask install android-studio
+cask install handbrake
+cask install audacity
+cask install vlc
+cask install thunderbird
+cask install evernote
+cask install dropbox
+#cask install cotediter
+cask install growlnotify
+cask install limechat
+cask install sublime-text
+cask install skype
+cask install yorufukurou
+cask install alfred
+cask install pandoc
+cask install adobe-reader
+#cask install wiresheke
+cask install xquartz
+cask install basictex
+
+cask alfred link
+
+#remove dust
+cleanup
