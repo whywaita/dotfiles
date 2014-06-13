@@ -5,6 +5,11 @@ set tabstop=4
 set shiftwidth=4
 set noexpandtab
 
+"indent setting"
+set autoindent
+set cindent
+set smarttab
+
 if has('vim_starting')
    set nocompatible               " Be iMproved
    set runtimepath+=~/.vim/bundle/neobundle.vim/
