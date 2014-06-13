@@ -18,4 +18,3 @@ git clone https://github.com/sstephenson/ruby-build.git $HOME/.rbenv/plugins/rub
 
 cd $HOME/dotfiles/.vim/bundle
 rmdir *
-
