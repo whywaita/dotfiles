@@ -75,13 +75,19 @@ alias tk="tmux kill-session"
 
 
 #PATH
+## install rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-
+## install Heroku
 export PATH="/usr/local/heroku/bin:$PATH"
+## install TeX
 export PATH="/usr/texbin:$PATH"
+## install nodebrew
 export PATH=$HOME/.nodebrew/current/bin:$PATH
+## install cabal (Haskell tools)
 export PATH=${HOME}/.cabal/bin:$PATH
+##Homebrew
+export PATH=/usr/local/bin:$PATH
 
 #脱非推奨ネットワークコマンド養成ギプス
 #http://blog.livedoor.jp/sonots/archives/38589335.html
