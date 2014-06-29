@@ -59,6 +59,7 @@ cask install adobe-reader
 #cask install wiresheke
 cask install xquartz
 cask install basictex
+cask install mac-linux-usb-loader
 
 cask alfred link
 
