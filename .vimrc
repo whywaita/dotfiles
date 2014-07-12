@@ -24,18 +24,11 @@ if has('vim_starting')
  NeoBundle 'tpope/vim-fugitive'
  NeoBundle 'Lokaltog/vim-easymotion'
  NeoBundle 'rstacruz/sparkup', {'rtp': 'vim/'}
- " vim-scripts repos
  NeoBundle 'L9'
  NeoBundle 'FuzzyFinder'
  NeoBundle 'rails.vim'
- " Non github repos
- " NeoBundle 'git://git.wincent.com/command-t.git'
- " Non git repos
  NeoBundle 'http://svn.macports.org/repository/macports/contrib/mpvim/'
  NeoBundle 'https://bitbucket.org/ns9tks/vim-fuzzyfinder'
-
-
- filetype plugin indent on
 
 
  " 自動補完機構
@@ -53,10 +46,18 @@ if has('vim_starting')
  NeoBundle 'yuroyoro/smooth_scroll.vim'
 
  " PowerLine
- NeoBundle 'alpaca-tc/alpaca_powertabline'
- NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
+ "  NeoBundle 'alpaca-tc/alpaca_powertabline'
+ "  NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 
- " Syntax checking plugin ruby
+ " NewPowerLine
+ NeoBundle 'itchyny/lightline.vim'
+
+ " PowerUp Powerline
+ NeoBundle 'Shougo/vimfiler.vim'
+ NeoBundle 'Shougo/unite.vim'
+ NeoBundle 'Shougo/vimshell.vim'
+
+ " Syntax checking plugin
  NeoBundle 'scrooloose/syntastic'
 
  "いい感じのhtml
@@ -65,6 +66,8 @@ if has('vim_starting')
  "git plugin
  NeoBundle 'gregsexton/gitv.git'
 
+ filetype plugin indent on
+ 
  NeoBundleCheck
 
 " neocomplcacheの設定
@@ -100,3 +103,81 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
  " git branch name 
 set statusline+=%{fugitive#statusline()}
+
+" build vimproc
+
+let vimproc_updcmd = has('win64') ?
+      \ 'tools\\update-dll-mingw 64' : 'tools\\update-dll-mingw 32'
+execute "NeoBundle 'Shougo/vimproc.vim'," . string({
+      \ 'build' : {
+      \     'windows' : vimproc_updcmd,
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \    },
+      \ })
+
+
+" lightline.vim setting
+set laststatus=2
+set t_Co=256
+let g:lightline = {
+        \ 'colorscheme': 'wombat',
+        \ 'mode_map': {'c': 'NORMAL'},
+        \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ], ['readonly', 'fugitive', 'filename' ] ]
+        \ },
+        \ 'component_function': {
+        \   'modified': 'MyModified',
+        \   'readonly': 'MyReadonly',
+        \   'fugitive': 'MyFugitive',
+        \   'filename': 'MyFilename',
+        \   'fileformat': 'MyFileformat',
+        \   'filetype': 'MyFiletype',
+        \   'fileencoding': 'MyFileencoding',
+        \   'mode': 'MyMode'
+        \ }
+        \ }
+
+function! MyModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+	return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+endfunction
+
+function! MyFilename()
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+          \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+          \  &ft == 'unite' ? unite#get_status_string() :
+          \  &ft == 'vimshell' ? vimshell#get_status_string() :
+          \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+          \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+  try
+   if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+    return fugitive#head()
+   endif
+   catch
+  endtry
+  return ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction

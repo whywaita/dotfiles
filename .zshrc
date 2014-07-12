@@ -71,7 +71,7 @@ alias sublimetext="/Applications/Sublime\ Text\.app/Contents/SharedSupport/bin/s
 alias ta="tmux a -t"
 alias tns="tmux new-session -s"
 alias td="tmux detach"
-alias tk="tmux kill-session"
+alias trm="tmux kill-session"
 
 
 #PATH
