@@ -33,6 +33,9 @@ install nmap
 install ghostscript
 install imagemagick
 install ffmpeg
+install mplayer --use-gcc
+install aalib
+install libcasa --use-gcc
 
 ## Homebrew-cask
 tap phinze/homebrew-cask || true
@@ -60,6 +63,8 @@ cask install adobe-reader
 cask install xquartz
 cask install basictex
 cask install mac-linux-usb-loader
+cask install virtualbox
+cask install vagrant
 
 cask alfred link
 
