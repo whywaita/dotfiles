@@ -42,7 +42,7 @@ tap phinze/homebrew-cask || true
 install brew-cask
 
 cask install iterm2
-cask install java
+# cask install java
 cask install android-studio
 cask install handbrake
 cask install audacity
@@ -65,6 +65,12 @@ cask install basictex
 cask install mac-linux-usb-loader
 cask install virtualbox
 cask install vagrant
+
+# install java
+tap caskroom/versions
+
+cask install java7
+cask install java6
 
 cask alfred link
 
