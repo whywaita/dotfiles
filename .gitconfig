@@ -1,0 +1,9 @@
+[user]
+	name = whywaita
+	email = whywaita@susibo.com
+[color]
+	status = auto
+	ui = auto
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore

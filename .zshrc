@@ -20,6 +20,7 @@ setopt hist_reduce_blanks
 
 #default editer set
 export EDITER=vi
+export GIT_EDITER=vi
 
 #compl
 autoload -U compinit;compinit
@@ -62,7 +63,7 @@ alias ls="ls -F -G"
 alias ll="ls -l"
 alias la="ls -a"
 #other
-alias mkrepo="platex $1.tex && dvipdfmx $1.dvi && open $1.pdf"
+alias mkrepo="platex Report.tex && dvipdfmx Report.dvi && open Report.pdf"
 alias more=less
 alias rm="rm -i"
 alias open.="open ."
