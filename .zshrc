@@ -73,7 +73,8 @@ alias ta="tmux a -t"
 alias tns="tmux new-session -s"
 alias td="tmux detach"
 alias trm="tmux kill-session -t"
-
+#Lang
+alias be="bundle exec"
 
 #PATH
 ## install rbenv
