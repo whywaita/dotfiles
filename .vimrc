@@ -4,6 +4,7 @@ syntax on
 set tabstop=4
 set shiftwidth=4
 set noexpandtab
+set backspace=indent,eol,start
 
 "indent setting"
 set autoindent
