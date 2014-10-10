@@ -94,3 +94,7 @@ export PATH=/usr/local/bin:$PATH
 #脱非推奨ネットワークコマンド養成ギプス
 #http://blog.livedoor.jp/sonots/archives/38589335.html
 # Homebrewで入らなかったので削除
+
+## local固有設定
+[ -f ~/.local/zsh.local ] && source ~/.local/zsh.local
+
