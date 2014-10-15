@@ -61,15 +61,22 @@ if has('vim_starting')
  " Syntax checking plugin
  NeoBundle 'scrooloose/syntastic'
 
- "いい感じのhtml
+ " help to write html
  NeoBundle 'mattn/emmet-vim'
 
- "git plugin
+ " git plugin
  NeoBundle 'gregsexton/gitv.git'
+
+ " help to write markdown
+ " Make Preview
+ NeoBundle 'kannokanno/previm'
+
+ " OpenBrowser
+ NeoBundle 'tyru/open-browser.vim'
 
  filetype plugin indent on
  
- NeoBundleCheck
+NeoBundleCheck
 
 " neocomplcacheの設定
 " Disable AutoComplPop.
@@ -118,6 +125,12 @@ execute "NeoBundle 'Shougo/vimproc.vim'," . string({
       \    },
       \ })
 
+
+" set *.md filetype
+augroup PrevimSettings
+    autocmd!
+    autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+augroup END
 
 " lightline.vim setting
 
