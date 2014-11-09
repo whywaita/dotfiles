@@ -30,19 +30,24 @@ install curl
 install wget
 install tree
 install nmap
+## TeX
 install ghostscript
 install imagemagick
+## movie
 install ffmpeg
 install mplayer --use-gcc
 install aalib
 install libcasa --use-gcc
+## peco
+install go
+tap peco/peco
+install peco
 
 ## Homebrew-cask
 tap phinze/homebrew-cask || true
 install brew-cask
 
 cask install iterm2
-# cask install java
 cask install android-studio
 cask install handbrake
 cask install audacity
