@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd $(dirname $0)
+cd ${dirname $0}
 for dotfile in .?*
 do
     if [ $dotfile != '..' ] && [ $dotfile != '.git' ]
@@ -18,7 +18,7 @@ rmdir *
 echo "install rbenv? (yes/no)"
 read rbenvs
 
-case "${rbenvs}" in
+case "${rbenv}" in
 	yes)
 	git clone https://github.com/sstephenson/rbenv.git $HOME/.rbenv
 	mkdir -p $HOME/.rbenv/plugins
