@@ -66,7 +66,7 @@ alias la="ls -a"
 alias mkrepo="platex Report.tex && dvipdfmx Report.dvi && open Report.pdf"
 alias more=less
 alias rm="rm -i"
-alias open.="open ."
+#alias open.="open ."
 alias sublimetext="/Applications/Sublime\ Text\.app/Contents/SharedSupport/bin/subl"
 #tmux
 alias ta="tmux a -t"
