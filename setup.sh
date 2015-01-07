@@ -1,12 +1,9 @@
 #!/bin/sh
 
-cd ${dirname $0}
-for dotfile in .?*
+DOT_FILES=( .zshrc .vim .vimrc .tmux .tmux.conf .gitconfig .gemrc)
+for file in ${DOT_FILES[@]}
 do
-    if [ $dotfile != '..' ] && [ $dotfile != '.git' ]
-    then
-        ln -Fis "$PWD/$dotfile" $HOME
-    fi
+  ln -s $HOME/dotfiles/$file $HOME/$file
 done
 
 mkdir -p $HOME/dotfiles/.vim/bundle
