@@ -1,4 +1,6 @@
-#!/bin/sh#update Homebrew
+#!/bin/bash -eu
+
+#update Homebrew
 brew update
 brew upgrade
 
