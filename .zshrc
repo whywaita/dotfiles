@@ -57,6 +57,17 @@ autoload -U colors;colors
      ;;
    esac
 
+if [[ -n "$PS1" ]]; then
+    cd() {
+        command cd "$@"
+        local s=$?
+        if [[ ($s -eq 0) && (${#FUNCNAME[*]} -eq 1) ]]; then
+            history -s cd $(printf "%q" "$PWD")
+        fi
+        return $s
+    }
+fi
+
 #alias
 #ls
 alias ls="ls -F -G"
@@ -84,16 +95,8 @@ eval "$(rbenv init -)"
 #export PATH="/usr/local/heroku/bin:$PATH"
 ## install TeX
 export PATH="/usr/texbin:$PATH"
-## install nodebrew
-#export PATH=$HOME/.nodebrew/current/bin:$PATH
-## install cabal (Haskell tools)
-#export PATH=${HOME}/.cabal/bin:$PATH
-##Homebrew
+## Homebrew
 export PATH=/usr/local/bin:$PATH
-
-#脱非推奨ネットワークコマンド養成ギプス
-#http://blog.livedoor.jp/sonots/archives/38589335.html
-# Homebrewで入らなかったので削除
 
 ## local固有設定
 [ -f ~/.local/zsh.local ] && source ~/.local/zsh.local
