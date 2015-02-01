@@ -13,7 +13,7 @@ cd $HOME/dotfiles/.vim/bundle
 rmdir *
 
 echo "install rbenv? (yes/no)"
-read rbenvs
+read rbenv
 
 case "${rbenv}" in
 	yes)
