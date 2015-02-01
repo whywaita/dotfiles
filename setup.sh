@@ -1,6 +1,8 @@
 #!/bin/bash
 
 DOT_FILES=(.zshrc .vim .vimrc .tmux .tmux.conf .gitconfig .gemrc)
+RCFILE=(.${SHELL}rc)
+
 for file in ${DOT_FILES[@]}
 do
   ln -s $HOME/dotfiles/$file $HOME/$file
@@ -24,3 +26,12 @@ case "${rbenv}" in
 *)
 	;;
 esac
+
+# rbenv PATH
+CHECKrbenv=`grep "rbenv init -"  ${HOME}/${RCFILE}`
+
+if [ "CHECKrbenv" != "rbenv init -" ]; then
+  echo "" >> ${RCFILE}
+  echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ${HOME}/${RCFILE}
+  echo 'eval "$(rbenv init -)"' >> ${HOME}/${RCFILE}
+fi
