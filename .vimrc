@@ -74,6 +74,13 @@ if has('vim_starting')
  " OpenBrowser
  NeoBundle 'tyru/open-browser.vim'
 
+ " help to write javascript & coffee script
+ NeoBundle 'hail2u/vim-css3-syntax'
+ NeoBundle 'taichouchou2/html5.vim'
+ NeoBundle 'kchmck/vim-coffee-script'
+
+ NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
+
  filetype plugin indent on
  
 NeoBundleCheck
