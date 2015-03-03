@@ -63,7 +63,7 @@ alias ls="ls -F -G"
 alias ll="ls -l"
 alias la="ls -a"
 #other
-alias mkrepo="platex Report.tex && dvipdfmx Report.dvi && open Report.pdf"
+alias mkrepo="platex Report.tex && dvipdfmx Report.dvi && open -a Skim Report.pdf"
 alias more=less
 alias rm="rm -i"
 #alias open.="open ."
