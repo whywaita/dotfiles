@@ -6,6 +6,10 @@ set shiftwidth=2
 set expandtab
 set backspace=indent,eol,start
 
+" 行,列を強調表示
+set cursorline
+set cursorcolumn
+
 "indent setting"
 set autoindent
 set cindent
