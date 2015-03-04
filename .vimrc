@@ -85,6 +85,11 @@ if has('vim_starting')
 
  NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
 
+ " syntax for jcon
+ NeoBundle 'leshill/vim-json'
+ " syntax for jade
+ NeoBundle 'digitaltoad/vim-jade'
+
  filetype plugin indent on
  
 NeoBundleCheck
