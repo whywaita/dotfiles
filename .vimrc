@@ -91,7 +91,8 @@ if has('vim_starting')
  NeoBundle 'digitaltoad/vim-jade'
 
  filetype plugin indent on
- 
+call neobundle#end()
+
 NeoBundleCheck
 
 " neocomplcacheの設定
