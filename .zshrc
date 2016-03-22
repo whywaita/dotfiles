@@ -50,7 +50,7 @@ autoload -U colors;colors
 
    ### Title (user@hostname) ###
    case "${TERM}" in
-     kterm*|xterm*|)
+     kterm*|xterm*)
      precmd() {
      echo -ne "\033]0;${USER}@${HOST%%.*}\007"
      }
@@ -66,7 +66,7 @@ alias la="ls -a"
 alias mkrepo="platex Report.tex && dvipdfmx Report.dvi && open -a Skim Report.pdf"
 alias more=less
 alias rm="rm -i"
-#alias open.="open ."
+alias nnmap="sudo nmap -sS -sV -Pn -p 1-65535"
 alias sublimetext="/Applications/Sublime\ Text\.app/Contents/SharedSupport/bin/subl"
 #tmux
 alias ta="tmux a -t"
@@ -76,17 +76,8 @@ alias trm="tmux kill-session -t"
 #Lang
 alias be="bundle exec"
 
-#PATH
-## install rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-## install Heroku
-#export PATH="/usr/local/heroku/bin:$PATH"
-## install TeX
-export PATH="/usr/texbin:$PATH"
-## Homebrew
-export PATH=/usr/local/bin:$PATH
-
 ## local固有設定
 [ -f ~/.local/zsh.local ] && source ~/.local/zsh.local
 
+# added by travis gem
+[ -f /Users/whywaita/.travis/travis.sh ] && source /Users/whywaita/.travis/travis.sh
