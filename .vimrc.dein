@@ -32,6 +32,9 @@ call dein#begin(expand('~/.cache/dein'))
         \ }
   set laststatus=2
 
+" スクロールを賢くする
+  call dein#add('yuroyoro/smooth_scroll.vim')
+
 " vimを凄くする
   call dein#add('Shougo/vimshell.vim')
   call dein#add('Shougo/vimfiler.vim')
