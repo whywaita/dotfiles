@@ -8,11 +8,8 @@ do
   ln -s $HOME/dotfiles/$file $HOME/$file
 done
 
-mkdir -p $HOME/dotfiles/.vim/bundle
-git clone https://github.com/Shougo/neobundle.vim $HOME/dotfiles/.vim/bundle/neobundle.vim
-
-cd $HOME/dotfiles/.vim/bundle
-rmdir *
+mkdir -p $HOME/.vim/dein/repos/github.com/Shougo/dein.vim
+git clone https://github.com/Shougo/dein.vim.git $HOME/.vim/dein/repos/github.com/Shougo/dein.vim
 
 echo "install rbenv? (yes/no)"
 read rbenv
