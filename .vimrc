@@ -1,11 +1,12 @@
 " 標準設定
 source ~/dotfiles/.vimrc.basic
 
-" dein install
+" dein
 source ~/dotfiles/.vimrc.dein
 
-" プログラミング用の設定
+" インフラ
+source ~/dotfiles/.vimrc.infra
+
+" プログラミング
 source ~/dotfiles/.vimrc.programing
 
-" インフラ用の設定
-source ~/dotfiles/.vimrc.infra
