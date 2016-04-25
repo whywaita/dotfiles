@@ -12,3 +12,10 @@ if has('syntax')
   augroup END
   call ZenkakuSpace()
 endif
+
+
+
+call dein#begin(expand('~/.cache/dein'))
+  " 各種シンタックスチェッカ
+  call dein#add('scrooloose/syntastic')
+call dein#end()
