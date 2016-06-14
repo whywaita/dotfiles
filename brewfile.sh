@@ -72,6 +72,7 @@ brew cask install basictex
 brew cask install mac-linux-usb-loader
 brew cask install virtualbox
 brew cask install vagrant
+brew cask install hipchat
 
 # install java
 brew tap caskroom/versions
