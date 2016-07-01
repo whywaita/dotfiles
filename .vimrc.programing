@@ -1,9 +1,9 @@
 call dein#begin(expand('~/.cache/dein'))
-" lint programing
+  " 各種シンタックスチェッカ
   call dein#add('scrooloose/syntastic')
-call dein#end()"
+call dein#end()
 
-" 全角スペースのハイライトを設定
+  "全角スペースのハイライトを設定
 function! ZenkakuSpace()
   highlight ZenkakuSpace cterm=underline ctermfg=darkgrey gui=underline guifg=darkgrey
 endfunction
@@ -26,3 +26,4 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
