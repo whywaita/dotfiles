@@ -68,6 +68,7 @@ alias more=less
 alias rm="rm -i"
 alias nnmap="sudo nmap -sS -sV -Pn -p 1-65535"
 alias sublimetext="/Applications/Sublime\ Text\.app/Contents/SharedSupport/bin/subl"
+alias gen-rand="cat /dev/urandom | LC_CTYPE=C tr -dc '[:alnum:]' | head -c"
 #tmux
 alias ta="tmux a -t"
 alias tns="tmux new-session -s"
