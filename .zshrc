@@ -77,6 +77,3 @@ alias be="bundle exec"
 
 ## local固有設定
 [ -f ~/.local/zsh.local ] && source ~/.local/zsh.local
-
-# added by travis gem
-[ -f /Users/whywaita/.travis/travis.sh ] && source /Users/whywaita/.travis/travis.sh
