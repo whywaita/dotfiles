@@ -68,6 +68,7 @@ alias rm="rm -i"
 alias nnmap="sudo nmap -sS -sV -Pn -p 1-65535"
 alias gen-rand="cat /dev/urandom | LC_CTYPE=C tr -dc '[:alnum:]' | head -c"
 #tmux
+alias tmux="tmux -2"
 alias ta="tmux a -t"
 alias tns="tmux new-session -s"
 alias td="tmux detach"
