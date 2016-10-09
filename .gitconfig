@@ -1,9 +1,12 @@
 [user]
 	name = whywaita
 	email = whywaita@whywrite.it
+	signingkey = 7D2F4F0E
 [color]
 	status = auto
 	ui = auto
 [core]
 	editor = vim
-	excludesfile = ~/.gitignore
+  excludesfile = ~/.gitignore
+[gpg]
+	program = gpg2
