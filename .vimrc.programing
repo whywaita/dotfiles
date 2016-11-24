@@ -1,6 +1,7 @@
 call dein#begin(expand('~/.cache/dein'))
   " 各種シンタックスチェッカ
   call dein#add('scrooloose/syntastic')
+  call dein#add('fatih/vim-go') " for golang
 call dein#end()
 
   "全角スペースのハイライトを設定
@@ -27,3 +28,5 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+" vim-go
+let g:go_fmt_command = "goimports"
