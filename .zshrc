@@ -12,7 +12,7 @@ setopt equals
 #history
 HISTFILE=~/.zsh_history
 HISTSIZE=1000
-SAVEHIST=1000
+SAVEHIST=100000000
 setopt bang_hist
 setopt extended_history
 setopt hist_ignore_dups
