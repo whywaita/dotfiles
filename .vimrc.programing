@@ -30,3 +30,4 @@ let g:syntastic_check_on_wq = 0
 
 " vim-go
 let g:go_fmt_command = "goimports"
+nnoremap <silent> <C-g> :GoRun<CR>
