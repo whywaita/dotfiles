@@ -1,12 +1,16 @@
-" 標準設定
+"標準設定
 source ~/dotfiles/.vimrc.basic
 
-" dein
+"dein
 source ~/dotfiles/.vimrc.dein
 
-" インフラ
+"インフラ
 source ~/dotfiles/.vimrc.infra
 
-" プログラミング
+"プログラミング
 source ~/dotfiles/.vimrc.programing
 
+"if NeoVim
+if has('nvim')
+  source ~/dotfiles/.vimrc.nvim
+endif

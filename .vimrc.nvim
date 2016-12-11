@@ -1,0 +1,18 @@
+"Python3 support
+let g:python3_host_prog = expand('$HOME') . '/.pyenv/shims/python'
+
+" install nvim
+call dein#begin(expand('~/.cache/dein'))
+  call dein#add('Shougo/deoplete.nvim')
+
+  call dein#add('osyo-manga/vim-monster')
+call dein#end()
+
+" enable deoplete
+let g:deoplete#enable_at_startup = 1
+
+" for ruby
+let g:monster#completion#rcodetools#backend = "async_rct_complete"
+let g:deoplete#sources#omni#input_patterns = {
+        \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
+        \}
