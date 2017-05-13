@@ -21,7 +21,7 @@ set smarttab
 set backspace=indent,eol,start
 
 " 列を強調表示
-" set cursorcolumn
+set cursorcolumn
 set cursorline
 
 " エンコーディング
