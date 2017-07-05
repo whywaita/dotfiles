@@ -53,6 +53,7 @@ let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*f
 
 let g:jedi#rename_command = "<leader>R"
 let g:jedi#popup_on_dot = 1
+let g:flake8_ignore="E501"
 autocmd FileType python let b:did_ftplugin = 1
 " Flake8
 autocmd BufWrite *{.py} :call Flake8()
