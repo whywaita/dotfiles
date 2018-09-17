@@ -22,13 +22,17 @@ setopt hist_reduce_blanks
 export EDITER=vi
 export GIT_EDITER=vi
 
+# set shell
+export SHELL=/usr/local/bin/zsh
+
 #compl
 autoload -U compinit;compinit
 
 #color
 autoload -U colors;colors
 # 一般ユーザ時
- tmp_prompt="%{${fg[cyan]}%}%n%# %{${reset_color}%}"
+ # tmp_prompt="%{${fg[cyan]}%}%n%# %{${reset_color}%}"
+ tmp_prompt="%{${fg[cyan]}%}whywaita%# %{${reset_color}%}"
  tmp_prompt2="%{${fg[cyan]}%}%_> %{${reset_color}%}"
  tmp_rprompt="%{${fg[green]}%}[%~]%{${reset_color}%}"
  tmp_sprompt="%{${fg[yellow]}%}%r is correct? [Yes, No, Abort, Edit]:%{${reset_color}%}"
@@ -75,6 +79,34 @@ alias td="tmux detach"
 alias trm="tmux kill-session -t"
 #Lang
 alias be="bundle exec"
+
+# nodejs
+export PATH=$PATH:./node_modules/.bin
+
+
+ex () {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xvjf $1    ;;
+      *.tar.gz)    tar xvzf $1    ;;
+      *.tar.xz)    tar xvJf $1    ;;
+      *.bz2)       bunzip2 $1     ;;
+      *.rar)       unrar x $1     ;;
+      *.gz)        gunzip $1      ;;
+      *.tar)       tar xvf $1     ;;
+      *.tbz2)      tar xvjf $1    ;;
+      *.tgz)       tar xvzf $1    ;;
+      *.zip)       unzip $1 -d ${1%.zip}  ;;
+      *.Z)         uncompress $1  ;;
+      *.7z)        7z x $1        ;;
+      *.lzma)      lzma -dv $1    ;;
+      *.xz)        xz -dv $1      ;;
+      *)           echo "don't know how to extract '$1'..." ;;
+    esac
+  else
+    echo "'$1' is not a valid file!"
+  fi
+}
 
 ## local固有設定
 [ -f ~/.local/zsh.local ] && source ~/.local/zsh.local
