@@ -9,6 +9,13 @@ call dein#begin(expand('~/.cache/dein'))
   " for Python
   call dein#add('davidhalter/jedi-vim')
   call dein#add('nvie/vim-flake8')
+  " for JavaScript
+  call dein#add('pmsorhaindo/syntastic-local-eslint.vim')
+  " for Vue.JS
+  call dein#add('posva/vim-vue')
+
+  " enable editor config
+  call dein#add('editorconfig/editorconfig-vim')
 call dein#end()
 
   "全角スペースのハイライトを設定
@@ -30,9 +37,13 @@ endif
 "#set statusline+=%{SyntasticStatuslineFlag()}
 "set statusline+=%*
 
+" location listを更新しない
 let g:syntastic_always_populate_loc_list = 1
+" location listを表示しない
 let g:syntastic_auto_loc_list = 1
+" ファイルを開いたときにもチェックする
 let g:syntastic_check_on_open = 1
+" :wq で終了時にもチェック
 let g:syntastic_check_on_wq = 0
 
 " vim-go
@@ -57,3 +68,6 @@ let g:flake8_ignore="E501"
 autocmd FileType python let b:did_ftplugin = 1
 " Flake8
 autocmd BufWrite *{.py} :call Flake8()
+
+" ESLint
+let g:syntastic_javascript_checkers=['eslint']
