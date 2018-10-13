@@ -50,6 +50,23 @@ call dein#begin(expand('~/.cache/dein'))
 " エラー箇所のハイライト
   call dein#add('vim-scripts/errormarker.vim')
 
+  " 各種シンタックスチェッカ
+  call dein#add('scrooloose/syntastic')
+  " auto end
+  call dein#add('tpope/vim-endwise')
+  
+  " for golang
+  call dein#add('fatih/vim-go')
+  " for Python
+  call dein#add('davidhalter/jedi-vim')
+  call dein#add('nvie/vim-flake8')
+  " for JavaScript
+  call dein#add('pmsorhaindo/syntastic-local-eslint.vim')
+  " for Vue.JS
+  call dein#add('posva/vim-vue')
+  
+  " enable editor config
+  call dein#add('editorconfig/editorconfig-vim')
 call dein#end()
 
 let g:dein#types#git#clone_depth = 1
