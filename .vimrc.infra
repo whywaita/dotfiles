@@ -1,4 +1,0 @@
-call dein#begin(expand('~/.cache/dein'))
-  " nginx syntax
-  call dein#add('vim-scripts/nginx.vim')
-call dein#end()
