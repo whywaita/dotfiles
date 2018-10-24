@@ -24,6 +24,7 @@ export GIT_EDITER=vi
 
 # set shell
 export SHELL=/usr/local/bin/zsh
+export TERM="screen-256color"
 
 #compl
 autoload -U compinit;compinit
