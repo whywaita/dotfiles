@@ -21,6 +21,7 @@ call dein#begin(expand('~/.cache/dein'))
   " call dein#add('Shougo/neosnippet.vim')
   " call dein#add('Shougo/neosnippet-snippets')
   call dein#add('Shougo/deoplete.nvim')  " dark mode neocomplete
+  let g:deoplete#enable_at_startup = 1
   inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"  " tab completion
 
   call dein#add('roxma/vim-hug-neovim-rpc')
@@ -62,7 +63,7 @@ call dein#begin(expand('~/.cache/dein'))
   call dein#add('tpope/vim-endwise')
   
   " for golang
-  " call dein#add('fatih/vim-go')a
+  " call dein#add('fatih/vim-go')
   call dein#add('zchee/nvim-go', {'build': 'make'})
   call dein#add('zchee/deoplete-go', {'build': 'make'})
   " for Python
@@ -83,62 +84,6 @@ if dein#check_install()
 endif
 
 filetype plugin indent on
-
-" neocompleteの設定
-if dein#tap('deoplete.nvim')
-  let g:deoplete#enable_at_startup = 1
-elseif dein#tap('neocomplete.vim')
-  let g:neocomplete#enable_at_startup = 1
-endif
-
-"  " 起動時に有効化
-"  let g:neocomplete#enable_at_startup = 1
-"  
-"  " 大文字小文字無視
-"  let g:neocomplete#enable_smart_case = 1
-"  
-"  " _(アンダースコア)区切りの補完を有効化
-"  let g:neocomplete#enable_underbar_completion = 1
-"  let g:neocomplete#enable_camel_case_completion  =  1
-"  " ポップアップメニューで表示される候補の数
-"  let g:neocomplete#max_list = 20
-"  
-"  " Set minimum syntax keyword length.
-"  let g:neocomplete#sources#syntax#min_keyword_length = 3
-"  let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-"  
-"  " Define dictionary.
-"  let g:neocomplete#sources#dictionary#dictionaries = {
-"      \ 'default' : '',
-"      \ 'vimshell' : $HOME.'/.vimshell_hist',
-"      \ 'scheme' : $HOME.'/.gosh_completions'
-"          \ }
-"  
-"  " Define keyword.
-"  if !exists('g:neocomplete#keyword_patterns')
-"      let g:neocomplete#keyword_patterns = {}
-"  endif
-"  let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-"  
-"  " Plugin key-mappings.
-"  inoremap <expr><C-g>     neocomplete#undo_completion()
-"  inoremap <expr><C-l>     neocomplete#complete_common_string()
-"  
-"  " Recommended key-mappings.
-"  " <CR>: close popup and save indent.
-"  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-"  function! s:my_cr_function()
-"    return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-"    " For no inserting <CR> key.
-"    "return pumvisible() ? "\<C-y>" : "\<CR>"
-"  endfunction
-"  " <TAB>: completion.
-"  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-"  " <C-h>, <BS>: close popup and delete backword char.
-"  inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-"  inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-"  " Close popup by <Space>.
-"  "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
