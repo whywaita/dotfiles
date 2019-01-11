@@ -84,6 +84,7 @@ alias be="bundle exec"
 # nodejs
 export PATH=$PATH:./node_modules/.bin
 
+alias vim="nvim"
 
 ex () {
   if [ -f $1 ] ; then
