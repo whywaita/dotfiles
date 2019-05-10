@@ -26,6 +26,7 @@ brew tap sanemat/font
 brew install tmux
 brew install nkf
 brew install vim 
+brew install nvim
 brew install w3m
 brew install curl
 brew install wget
@@ -34,7 +35,7 @@ brew install nmap
 
 # dev
 brew install go
-brew install nvim
+brew install docker
 brew install kubectl
 brew install gpg2
 
@@ -51,6 +52,7 @@ brew cask install xquartz
 brew cask install karabiner-elements
 brew cask install slack
 brew cask install 1password
+brew cask install docker
 
 #remove dust
 brew cleanup
