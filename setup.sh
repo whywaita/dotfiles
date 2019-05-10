@@ -9,7 +9,7 @@ do
 done
 
 mkdir -p $HOME/.vim/dein/repos/github.com/Shougo/dein.vim
-git clone https://github.com/Shougo/dein.vim.git $HOME/.vim/dein/repos/github.com/Shougo/dein.vim
+git clone https://github.com/Shougo/dein.vim.git $HOME/.cache/dein/repos/github.com/Shougo/dein.vim
 
 echo "install rbenv? (yes/no)"
 read rbenv
