@@ -83,6 +83,8 @@ alias be="bundle exec"
 
 # nodejs
 export PATH=$PATH:./node_modules/.bin
+# Go
+export PATH=$PATH:$HOME/go/bin
 
 alias vim="nvim"
 
