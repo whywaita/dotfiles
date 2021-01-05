@@ -26,7 +26,7 @@ brew tap sanemat/font
 #tools
 brew install tmux
 brew install nkf
-brew install vim --with-lua
+brew install vim
 brew install w3m
 brew install curl
 brew install wget
@@ -42,8 +42,8 @@ brew install nmap
 #brew install libcasa --use-gcc
 ## peco
 brew install go
-brew tap peco/peco
-brew install peco
+# brew tap peco/peco
+# brew install peco
 
 ## Homebrew-cask
 brew tap caskroom/cask
@@ -63,7 +63,7 @@ brew cask install growlnotify
 #brew cask install skype
 #brew cask install yorufukurou
 brew cask install alfred
-brew cask install pandoc
+#brew cask install pandoc
 brew cask install adobe-reader
 #cask install wiresheke
 brew cask install xquartz
