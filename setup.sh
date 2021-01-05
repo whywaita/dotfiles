@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOT_FILES=(.zshrc .vim .vimrc .tmux .tmux.conf .gitconfig .gemrc .latexmkrc)
+DOT_FILES=(.zshrc .vim .vimrc .tmux .tmux.conf .gitconfig .gemrc .latexmkrc .screenrc)
 RCFILE=(.${SHELL}rc)
 
 for file in ${DOT_FILES[@]}
@@ -8,8 +8,8 @@ do
   ln -s $HOME/dotfiles/$file $HOME/$file
 done
 
-mkdir -p $HOME/.vim/dein/repos/github.com/Shougo/dein.vim
-git clone https://github.com/Shougo/dein.vim.git $HOME/.vim/dein/repos/github.com/Shougo/dein.vim
+mkdir -p $HOME/.cache/dein/repos/github.com/Shougo/dein.vim
+git clone https://github.com/Shougo/dein.vim.git $HOME/.cache/dein/repos/github.com/Shougo/dein.vim
 
 echo "install rbenv? (yes/no)"
 read rbenv
