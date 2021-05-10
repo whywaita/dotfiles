@@ -2,7 +2,7 @@ set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
 call dein#begin(expand('~/.cache/dein'))
 
-" 標準プラグイン
+  " basic
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/vimproc.vim', {
       \ 'build': {
@@ -13,28 +13,28 @@ call dein#begin(expand('~/.cache/dein'))
       \     'unix'    : 'gmake',
       \    },
       \ })
-
-" 補完
-  " call dein#add('Shougo/neocomplete.vim')
-  call dein#add('Shougo/context_filetype.vim')
-  " call dein#add('Shougo/neosnippet')
-  " call dein#add('Shougo/neosnippet.vim')
-  " call dein#add('Shougo/neosnippet-snippets')
-  call dein#add('Shougo/deoplete.nvim')  " dark mode neocomplete
-  let g:deoplete#enable_at_startup = 1
-  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"  " tab completion
-
   call dein#add('roxma/vim-hug-neovim-rpc')
   call dein#add('roxma/nvim-yarp')
 
-  call dein#add('ujihisa/neco-look')  " 英単語補完
+  call dein#add('Shougo/context_filetype.vim')
+  call dein#add('Shougo/deoplete.nvim')  " dark mode neocomplete
+  let g:deoplete#enable_at_startup = 1
+   " vim-lsp
+  call dein#add('prabirshrestha/vim-lsp')
+  call dein#add('mattn/vim-lsp-settings')
+  call dein#add('prabirshrestha/asyncomplete-lsp.vim') inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"  " tab completion
+
+  " English
+  call dein#add('ujihisa/neco-look')
   call dein#add('Shougo/neco-syntax')
 
-" 自動括弧閉じ
+  " autoclose ()
   call dein#add('yuroyoro/vim-autoclose')
   let g:autoclose_vim_commentmode = 1
+  " auto end
+  call dein#add('tpope/vim-endwise')
  
-" powerline
+  " powerline
   call dein#add('itchyny/lightline.vim')
   let g:lightline = {
         \ 'colorscheme': 'wombat',
@@ -59,23 +59,23 @@ call dein#begin(expand('~/.cache/dein'))
 
   " 各種シンタックスチェッカ
   call dein#add('scrooloose/syntastic')
-  " auto end
-  call dein#add('tpope/vim-endwise')
   
-  " for golang
-  " call dein#add('fatih/vim-go')
-  call dein#add('zchee/nvim-go', {'build': 'make'})
-  call dein#add('zchee/deoplete-go', {'build': 'make'})
-  " for Python
-  call dein#add('davidhalter/jedi-vim')
-  call dein#add('nvie/vim-flake8')
-  " for JavaScript
-  call dein#add('pmsorhaindo/syntastic-local-eslint.vim')
-  " for Vue.JS
-  call dein#add('posva/vim-vue')
+  "" for golang
+  "" call dein#add('fatih/vim-go')
+  "call dein#add('zchee/nvim-go', {'build': 'make'})
+  "call dein#add('zchee/deoplete-go', {'build': 'make'})
+  "" for Python
+  "call dein#add('davidhalter/jedi-vim')
+  "call dein#add('nvie/vim-flake8')
+  "" for JavaScript
+  "call dein#add('pmsorhaindo/syntastic-local-eslint.vim')
+  "" for Vue.JS
+  "call dein#add('posva/vim-vue')
   
   " enable editor config
   call dein#add('editorconfig/editorconfig-vim')
+
+
 call dein#end()
 
 let g:dein#types#git#clone_depth = 1
