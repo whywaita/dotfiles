@@ -15,13 +15,6 @@ let g:syntastic_check_on_wq = 0
 let g:go_fmt_command = "goimports"
 nnoremap <silent> <C-g> :GoRun<CR>
 
-" jedi-vim
-autocmd FileType python setlocal omnifunc=jedi#completions
-"let g:jedi#popup_select_first=0
-let g:jedi#auto_initialization = 1
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-
 if !exists('g:neocomplete#force_omni_input_patterns')
   let g:neocomplete#force_omni_input_patterns = {}
 endif
@@ -33,6 +26,3 @@ let g:flake8_ignore="E501"
 autocmd FileType python let b:did_ftplugin = 1
 " Flake8
 autocmd BufWrite *{.py} :call Flake8()
-
-" ESLint
-let g:syntastic_javascript_checkers=['eslint']
