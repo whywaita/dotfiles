@@ -9,4 +9,6 @@
 	editor = vim
   excludesfile = ~/.gitignore
 [gpg]
-	program = gpg2
+  program = gpg
+[ghq]
+  root = ~/go/src
