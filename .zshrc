@@ -85,6 +85,8 @@ alias be="bundle exec"
 export PATH=$PATH:./node_modules/.bin
 # Go
 export PATH=$PATH:$HOME/go/bin
+# homebrew
+export PATH=/usr/local/bin:$PATH
 
 alias vim="nvim"
 
