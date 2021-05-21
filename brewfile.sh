@@ -1,6 +1,9 @@
 #!/bin/bash
 
 set -eux
+if [ ${CI} == "true" ]; then
+  set +e
+fi
 
 # update Homebrew
 brew update
