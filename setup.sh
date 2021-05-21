@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eux
+
 DOT_FILES=(.zshrc .vim .vimrc .tmux .tmux.conf .gitconfig .gemrc .latexmkrc .screenrc)
 RCFILE=(.${SHELL}rc)
 

@@ -1,4 +1,6 @@
-#!/bin/bash -eux
+#!/bin/bash
+
+set -eux
 
 # update Homebrew
 brew update
