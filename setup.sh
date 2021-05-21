@@ -11,24 +11,4 @@ done
 mkdir -p $HOME/.cache/dein/repos/github.com/Shougo/dein.vim
 git clone https://github.com/Shougo/dein.vim.git $HOME/.cache/dein/repos/github.com/Shougo/dein.vim
 
-echo "install rbenv? (yes/no)"
-read rbenv
-
-case "${rbenv}" in
-	yes)
-	git clone https://github.com/sstephenson/rbenv.git $HOME/.rbenv
-	mkdir -p $HOME/.rbenv/plugins
-	git clone https://github.com/sstephenson/ruby-build.git $HOME/.rbenv/plugins/ruby-build
-	;;
-*)
-	;;
-esac
-
-# rbenv PATH
-CHECKrbenv=`grep "rbenv init -"  ${HOME}/${RCFILE}`
-
-if [ "CHECKrbenv" != "rbenv init -" ]; then
-  echo "" >> ${RCFILE}
-  echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ${HOME}/${RCFILE}
-  echo 'eval "$(rbenv init -)"' >> ${HOME}/${RCFILE}
-fi
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
