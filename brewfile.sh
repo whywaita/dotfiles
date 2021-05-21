@@ -1,25 +1,23 @@
-#!/bin/bash -eu
+#!/bin/bash -eux
 
-#update Homebrew
+# update Homebrew
 brew update
 brew upgrade
 
-#shell
+# shell
 brew install zsh
-#brew install mobile-shell
 
-#Utilities
-#install coreutills
+# Utilities
 brew install openssl
 brew install libyaml
 brew install readline
+brew install anyenv
 
-#git
+# git
 brew install git
-#brew install tig
 
 #font
-brew tap sanemat/font
+#brew tap sanemat/font
 #install ricty --powerline
 
 #tools
@@ -41,20 +39,16 @@ brew install docker
 brew install kubectl
 brew install gpg2
 
-## Homebrew-cask
-brew tap caskroom/cask
+brew install --cask iterm2
+brew install --cask vlc
+brew install --cask coteditor
+brew install --cask alfred
+brew install --cask adobe-reader
+brew install --cask xquartz
+brew install --cask karabiner-elements
+brew install --cask slack
+brew install --cask 1password
+brew install --cask docker
 
-brew cask install iterm2
-brew cask install vlc
-brew cask install coteditor
-brew cask install alfred
-#brew cask install pandoc
-brew cask install adobe-reader
-brew cask install xquartz
-brew cask install karabiner-elements
-brew cask install slack
-brew cask install 1password
-brew cask install docker
-
-#remove dust
+# remove dust
 brew cleanup
