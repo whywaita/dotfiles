@@ -1,6 +1,10 @@
 #!/bin/bash
 
-set -ux
+set -eux
+
+if [ ${CI} == "true" ]; then
+  set +e
+fi
 
 DOT_FILES=(.zshrc .vim .vimrc .tmux .tmux.conf .gitconfig .gemrc .latexmkrc .screenrc)
 RCFILE=(.${SHELL}rc)
