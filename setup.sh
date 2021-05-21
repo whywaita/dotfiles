@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eux
+set -ux
 
 DOT_FILES=(.zshrc .vim .vimrc .tmux .tmux.conf .gitconfig .gemrc .latexmkrc .screenrc)
 RCFILE=(.${SHELL}rc)
