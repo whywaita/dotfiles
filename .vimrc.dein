@@ -26,6 +26,11 @@ call dein#begin(expand('~/.cache/dein'))
   call dein#add('mattn/vim-lsp-settings')
   call dein#add('prabirshrestha/asyncomplete-lsp.vim')
 
+  " Golang
+  call dein#add('mattn/vim-goimports')
+  " TypeScript syntax
+  call dein#add('leafgarland/typescript-vim')
+
   " English
   call dein#add('ujihisa/neco-look')
   call dein#add('Shougo/neco-syntax')
@@ -62,22 +67,8 @@ call dein#begin(expand('~/.cache/dein'))
   " 各種シンタックスチェッカ
   call dein#add('scrooloose/syntastic')
   
-  "" for golang
-  "" call dein#add('fatih/vim-go')
-  "call dein#add('zchee/nvim-go', {'build': 'make'})
-  "call dein#add('zchee/deoplete-go', {'build': 'make'})
-  "" for Python
-  "call dein#add('davidhalter/jedi-vim')
-  "call dein#add('nvie/vim-flake8')
-  "" for JavaScript
-  "call dein#add('pmsorhaindo/syntastic-local-eslint.vim')
-  "" for Vue.JS
-  "call dein#add('posva/vim-vue')
-  
   " enable editor config
   call dein#add('editorconfig/editorconfig-vim')
-
-
 call dein#end()
 
 let g:dein#types#git#clone_depth = 1
