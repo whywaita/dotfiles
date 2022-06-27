@@ -12,3 +12,5 @@
   program = gpg
 [ghq]
   root = ~/go/src
+[init]
+	defaultBranch = main
