@@ -26,3 +26,5 @@ let g:flake8_ignore="E501"
 autocmd FileType python let b:did_ftplugin = 1
 " Flake8
 autocmd BufWrite *{.py} :call Flake8()
+
+let g:rustfmt_autosave = 1
