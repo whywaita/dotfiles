@@ -40,20 +40,22 @@ brew install nmap
 brew install go
 # brew tap peco/peco
 # brew install peco
-brew install docker
 brew install kubectl
 brew install gpg2
+brew install ghq
+brew install watch
 
 brew install --cask iterm2
 brew install --cask vlc
 brew install --cask coteditor
 brew install --cask alfred
-brew install --cask adobe-reader
+brew install --cask adobe-acrobat-reader
 brew install --cask xquartz
 brew install --cask karabiner-elements
 brew install --cask slack
 brew install --cask 1password
 brew install --cask docker
+brew install --cask gpg-suite
 
 # remove dust
 brew cleanup
