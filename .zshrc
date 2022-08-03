@@ -23,7 +23,7 @@ export EDITER=vi
 export GIT_EDITER=vi
 
 # set shell
-export SHELL=/usr/local/bin/zsh
+export SHELL=/opt/homebrew/bin/zsh
 export TERM="screen-256color"
 
 #compl
@@ -86,7 +86,9 @@ export PATH=$PATH:./node_modules/.bin
 # Go
 export PATH=$PATH:$HOME/go/bin
 # homebrew
-export PATH=/usr/local/bin:$PATH
+export PATH=/opt/homebrew/bin:$PATH
+# Util
+export PATH=$HOME/bin:$PATH
 
 alias vim="nvim"
 
