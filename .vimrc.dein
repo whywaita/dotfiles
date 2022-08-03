@@ -13,12 +13,8 @@ call dein#begin(expand('~/.cache/dein'))
       \     'unix'    : 'gmake',
       \    },
       \ })
-  call dein#add('roxma/vim-hug-neovim-rpc')
-  call dein#add('roxma/nvim-yarp')
 
   call dein#add('Shougo/context_filetype.vim')
-  call dein#add('Shougo/deoplete.nvim')  " dark mode neocomplete
-  let g:deoplete#enable_at_startup = 1
   inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"  " tab completion
 
    " vim-lsp
