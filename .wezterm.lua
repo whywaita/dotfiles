@@ -31,4 +31,6 @@ config.window_frame = {
 }
 config.use_fancy_tab_bar = false
 
+config.term = "xterm-256color"
+
 return config
