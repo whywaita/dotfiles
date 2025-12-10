@@ -53,7 +53,7 @@ jobs:
       - name: Install taplo
         if: steps.cache-taplo.outputs.cache-hit != 'true'
         run: |
-          curl -fsSL https://github.com/tamasfe/taplo/releases/latest/download/taplo-full-linux-x86_64.gz | gunzip > taplo
+          curl -fsSL https://github.com/tamasfe/taplo/releases/latest/download/taplo-linux-x86_64.gz | gunzip > taplo
           chmod +x taplo
           sudo mv taplo /usr/local/bin/
       - name: Check TOML syntax
@@ -78,7 +78,7 @@ jobs:
       - name: Install Neovim
         run: |
           sudo apt-get install -y software-properties-common
-          sudo add-apt-repository ppa:neovim-ppa/stable -y
+          sudo add-apt-repository ppa:neovim-ppa/unstable -y
           sudo apt-get update
           sudo apt-get install -y neovim
       - name: Setup Neovim config
@@ -108,11 +108,11 @@ jobs:
       - name: Check gitconfig syntax
         run: git config --file .gitconfig --list > /dev/null
 
-  install-test:
-    runs-on: macos-latest
+  homebrew-check:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-      - name: Setup
-        run: ./setup.sh
-      - name: Homebrew
+      - name: Setup Homebrew
+        uses: Homebrew/actions/setup-homebrew@87bce249d22b06c91bedce4cbf2f325e6ccbb7d5 # master
+      - name: Check Homebrew packages exist
         run: ./brewfile.sh
