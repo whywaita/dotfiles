@@ -3,7 +3,7 @@ repo = 'Shougo/ddc.vim'
 depends = ['denops.vim']
 hook_add = '''
 call ddc#custom#patch_global('ui', 'native')
-call ddc#custom#patch_global('sources', ['nvim-lsp', 'around'])
+call ddc#custom#patch_global('sources', ['lsp', 'around'])
 call ddc#custom#patch_global('sourceOptions', {
      \ '_': {
      \ 'matchers': ['matcher_head'],
@@ -11,7 +11,7 @@ call ddc#custom#patch_global('sourceOptions', {
      \ 'converters': ['converter_remove_overlap'],
      \ },
      \ 'around': {'mark': 'A'},
-     \ 'nvim-lsp': {
+     \ 'lsp': {
      \   'mark': 'L',
      \   'forceCompletionPattern': '\.\w*|:\w*|->\w*',
      \ },
@@ -36,7 +36,7 @@ call ddc#enable()
 repo = 'Shougo/ddc-ui-native'
 
 [[plugins]]
-repo = 'Shougo/ddc-nvim-lsp'
+repo = 'Shougo/ddc-source-lsp'
 
 [[plugins]]
 repo = 'Shougo/ddc-source-around'
