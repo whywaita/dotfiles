@@ -1,0 +1,29 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'nvim-lualine/lualine.nvim'
+depends = ['nvim-web-devicons']
+hook_add = '''
+lua << EOF
+  require('lualine').setup {
+    icons_enabled = true,
+    theme = 'auto'
+  }
+EOF
+'''
+
+[[plugins]]
+repo = 'nvim-tree/nvim-web-devicons'
+
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+
+[[plugins]]
+repo = 'williamboman/mason.nvim'
+
+[[plugins]]
+repo = 'williamboman/mason-lspconfig.nvim'
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
