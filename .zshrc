@@ -19,8 +19,8 @@ setopt hist_ignore_dups
 setopt hist_reduce_blanks
 
 #default editer set
-export EDITER=nvim
-export GIT_EDITER=nvim
+export EDITOR=nvim
+export GIT_EDITOR=nvim
 
 # set shell
 export SHELL=/opt/homebrew/bin/zsh
