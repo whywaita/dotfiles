@@ -44,7 +44,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Cache taplo
+        id: cache-taplo
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: /usr/local/bin/taplo
+          key: taplo-linux-x86_64
       - name: Install taplo
+        if: steps.cache-taplo.outputs.cache-hit != 'true'
         run: |
           curl -fsSL https://github.com/tamasfe/taplo/releases/latest/download/taplo-full-linux-x86_64.gz | gunzip > taplo
           chmod +x taplo
@@ -56,15 +63,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-      - name: Install Neovim and Deno
+      - name: Setup Deno
+        uses: denoland/setup-deno@909cc5acb0fdd60627fb858598759246509fa755 # v2.0.2
+        with:
+          deno-version: v2.x
+      - name: Cache dein.vim
+        id: cache-dein
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: ~/.cache/dein
+          key: dein-${{ runner.os }}-${{ hashFiles('nvim/*.toml') }}
+          restore-keys: |
+            dein-${{ runner.os }}-
+      - name: Install Neovim
         run: |
           sudo apt-get install -y software-properties-common
           sudo add-apt-repository ppa:neovim-ppa/stable -y
           sudo apt-get update
           sudo apt-get install -y neovim
-          # denops.vim に必要な Deno をインストール
-          curl -fsSL https://deno.land/install.sh | sh
-          echo "$HOME/.deno/bin" >> $GITHUB_PATH
       - name: Setup Neovim config
         run: |
           mkdir -p ~/.config/nvim
@@ -74,8 +90,10 @@ jobs:
       - name: Install dein.vim and plugins
         run: |
           # dein.vim をインストール
-          mkdir -p ~/.cache/dein/repos/github.com/Shougo
-          git clone https://github.com/Shougo/dein.vim.git ~/.cache/dein/repos/github.com/Shougo/dein.vim
+          if [ ! -d "$HOME/.cache/dein/repos/github.com/Shougo/dein.vim" ]; then
+            mkdir -p ~/.cache/dein/repos/github.com/Shougo
+            git clone https://github.com/Shougo/dein.vim.git ~/.cache/dein/repos/github.com/Shougo/dein.vim
+          fi
           # プラグインをインストール
           nvim --headless -c "call dein#install()" -c "qall" 2>&1
       - name: Check Neovim config
