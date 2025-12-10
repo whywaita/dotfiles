@@ -70,15 +70,18 @@ local on_attach = function(client, bufnr)
  set('n', 'gn', '<cmd>lua vim.lsp.buf.rename()<CR>')
  set('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
  set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
- set('n', 'gx', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
- set('n', 'g[', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
- set('n', 'g]', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
- set('n', 'gf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+ set('n', 'gx', '<cmd>lua vim.diagnostic.open_float()<CR>')
+ set('n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+ set('n', 'g]', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+ set('n', 'gf', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>')
 end
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-	vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false }
-)
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+})
 
 require("mason").setup()
 require("mason-lspconfig").setup()
