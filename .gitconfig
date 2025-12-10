@@ -1,16 +1,18 @@
 [user]
-	name = whywaita
-	email = whywaita@whywrite.it
-	signingkey = 7D2F4F0E
+  name = whywaita
+  email = whywaita@whywrite.it
+  signingkey = 7D2F4F0E
 [color]
-	status = auto
-	ui = auto
+  status = auto
+  ui = auto
 [core]
-	editor = vim
+  editor = vim
   excludesfile = ~/.gitignore
 [gpg]
   program = gpg
 [ghq]
   root = ~/go/src
 [init]
-	defaultBranch = main
+  defaultBranch = main
+[url "ssh://git@github.com/"]
+  insteadOf = https://github.com/
