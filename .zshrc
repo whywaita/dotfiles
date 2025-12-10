@@ -24,10 +24,12 @@ export GIT_EDITOR=nvim
 
 # set shell
 export SHELL=/opt/homebrew/bin/zsh
-export TERM="screen-256color"
 
 #compl
 autoload -U compinit;compinit
+
+# emacs キーバインドを使用
+bindkey -e
 
 #color
 autoload -U colors;colors
