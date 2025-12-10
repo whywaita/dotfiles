@@ -84,12 +84,14 @@ vim.diagnostic.config({
 })
 
 require("mason").setup()
-require("mason-lspconfig").setup()
-require("mason-lspconfig").setup_handlers {
-  function(server_name) -- default handler (optional)
-    require("lspconfig")[server_name].setup {
-      on_attach = on_attach,
-    }
-  end,
+require("mason-lspconfig").setup {
+  automatic_enable = true,
 }
+
+local lspconfig = require("lspconfig")
+lspconfig.util.default_config = vim.tbl_deep_extend(
+  "force",
+  lspconfig.util.default_config,
+  { on_attach = on_attach }
+)
 EOF
