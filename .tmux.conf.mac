@@ -1,9 +1,0 @@
-# Mac Specific Settings:
-#-------------------------------------------------------------------
-set-option -g default-command "reattach-to-user-namespace -l zsh"
-
-# Setup 'v' to begin selection as in Vim
-bind-key -t vi-copy Space begin-selection
-bind-key -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
-
-#-------------------------------------------------------------------

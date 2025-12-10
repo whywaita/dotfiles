@@ -19,15 +19,17 @@ setopt hist_ignore_dups
 setopt hist_reduce_blanks
 
 #default editer set
-export EDITER=vi
-export GIT_EDITER=vi
+export EDITOR=nvim
+export GIT_EDITOR=nvim
 
 # set shell
 export SHELL=/opt/homebrew/bin/zsh
-export TERM="screen-256color"
 
 #compl
 autoload -U compinit;compinit
+
+# emacs キーバインドを使用
+bindkey -e
 
 #color
 autoload -U colors;colors
@@ -73,7 +75,7 @@ alias rm="rm -i"
 alias nnmap="sudo nmap -sS -sV -Pn -p 1-65535"
 alias gen-rand="cat /dev/urandom | LC_CTYPE=C tr -dc '[:alnum:]' | head -c"
 #tmux
-alias tmux="tmux -2"
+alias tmux="tmux -2 -u"
 alias ta="tmux a -t"
 alias tns="tmux new-session -s"
 alias td="tmux detach"
@@ -89,8 +91,6 @@ export PATH=$PATH:$HOME/go/bin
 export PATH=/opt/homebrew/bin:$PATH
 # Util
 export PATH=$HOME/bin:$PATH
-
-alias vim="nvim"
 
 ex () {
   if [ -f $1 ] ; then
@@ -116,7 +116,16 @@ ex () {
   fi
 }
 
+function peco-src () {
+  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-src
+bindkey '^|' peco-src
+
 ## local固有設定
 [ -f ~/.config/zsh.local ] && source ~/.config/zsh.local
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
