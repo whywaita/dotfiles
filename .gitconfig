@@ -6,10 +6,10 @@
   status = auto
   ui = auto
 [core]
-  editor = vim
+  editor = nvim
   excludesfile = ~/.gitignore
 [gpg]
-  program = gpg
+  program = gpg2
 [ghq]
   root = ~/go/src
 [init]
