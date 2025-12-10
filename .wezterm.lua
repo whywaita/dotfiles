@@ -12,7 +12,7 @@ config.text_background_opacity = 1.0
 config.use_ime = true
 config.ime_preedit_rendering = "Builtin"
 config.colors = {
-  compose_cursor = "orange", 
+  compose_cursor = "orange",
 }
 
 config.font = wezterm.font_with_fallback({
