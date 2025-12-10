@@ -1,20 +1,100 @@
-name: install test
+name: dotfiles lint and check
+
 on:
   push:
-    branches:
-      - "**"
+    branches: ["**"]
+  pull_request:
   schedule:
     - cron: '5 0 * * *'
   workflow_dispatch:
 
 jobs:
-  install_test:
+  shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Install shellcheck
+        run: sudo apt-get install -y shellcheck zsh
+      - name: Check shell scripts with shellcheck
+        run: shellcheck setup.sh brewfile.sh
+      - name: Check zshrc syntax
+        run: zsh -n .zshrc
+
+  lua-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Install luacheck
+        run: sudo apt-get install -y lua-check
+      - name: Check Lua files
+        run: luacheck .wezterm.lua --no-unused-args --no-redefined --no-max-line-length
+
+  tmux-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Install tmux
+        run: sudo apt-get install -y tmux
+      - name: Check tmux config syntax
+        run: |
+          # tmux の設定ファイルを読み込んでエラーがないか確認
+          tmux -f .tmux.conf start-server \; kill-server
+
+  toml-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Install taplo
+        run: |
+          curl -fsSL https://github.com/tamasfe/taplo/releases/latest/download/taplo-full-linux-x86_64.gz | gunzip > taplo
+          chmod +x taplo
+          sudo mv taplo /usr/local/bin/
+      - name: Check TOML syntax
+        run: taplo check nvim/*.toml
+
+  neovim-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Install Neovim and Deno
+        run: |
+          sudo apt-get install -y software-properties-common
+          sudo add-apt-repository ppa:neovim-ppa/stable -y
+          sudo apt-get update
+          sudo apt-get install -y neovim
+          # denops.vim に必要な Deno をインストール
+          curl -fsSL https://deno.land/install.sh | sh
+          echo "$HOME/.deno/bin" >> $GITHUB_PATH
+      - name: Setup Neovim config
+        run: |
+          mkdir -p ~/.config/nvim
+          ln -s $PWD/init.vim ~/.config/nvim/init.vim
+          mkdir -p ~/dotfiles
+          ln -s $PWD/nvim ~/dotfiles/nvim
+      - name: Install dein.vim and plugins
+        run: |
+          # dein.vim をインストール
+          mkdir -p ~/.cache/dein/repos/github.com/Shougo
+          git clone https://github.com/Shougo/dein.vim.git ~/.cache/dein/repos/github.com/Shougo/dein.vim
+          # プラグインをインストール
+          nvim --headless -c "call dein#install()" -c "qall" 2>&1
+      - name: Check Neovim config
+        run: |
+          # 設定を読み込んでエラーがないか確認
+          nvim --headless -c "if v:errmsg != '' | cquit 1 | endif" -c "qall" 2>&1
+
+  git-config-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Check gitconfig syntax
+        run: git config --file .gitconfig --list > /dev/null
+
+  install-test:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Setup
-        run: |
-          ./setup.sh
+        run: ./setup.sh
       - name: Homebrew
-        run: |
-          ./brewfile.sh
+        run: ./brewfile.sh
