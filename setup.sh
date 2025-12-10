@@ -6,7 +6,7 @@ if [ ${CI} == "true" ]; then
   set +e
 fi
 
-DOT_FILES=(.zshrc .vim .vimrc .tmux .tmux.conf .gitconfig .gemrc .latexmkrc .screenrc)
+DOT_FILES=(.zshrc .vim .vimrc .tmux .tmux.conf .gitconfig .gemrc .latexmkrc .screenrc .wezterm.lua)
 RCFILE=(.${SHELL}rc)
 
 for file in ${DOT_FILES[@]}
