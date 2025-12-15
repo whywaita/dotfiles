@@ -33,9 +33,19 @@ bindkey -e
 
 #color
 autoload -U colors;colors
+
+# gitブランチ名を取得する関数
+function git_branch_name() {
+  local branch
+  branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+  if [ -n "$branch" ]; then
+    echo " ($branch)"
+  fi
+}
+
 # 一般ユーザ時
  # tmp_prompt="%{${fg[cyan]}%}%n%# %{${reset_color}%}"
- tmp_prompt="%{${fg[green]}%}[%~]%{${reset_color}%} %{${fg[cyan]}%}whywaita%# %{${reset_color}%}"
+ tmp_prompt="%{${fg[green]}%}[%~]%{${reset_color}%}%{${fg[yellow]}%}\$(git_branch_name)%{${reset_color}%} %{${fg[cyan]}%}whywaita%# %{${reset_color}%}"
  tmp_prompt2="%{${fg[cyan]}%}%_> %{${reset_color}%}"
  tmp_rprompt=""
  tmp_sprompt="%{${fg[yellow]}%}%r is correct? [Yes, No, Abort, Edit]:%{${reset_color}%}"
