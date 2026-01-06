@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git branch:*), Bash(git checkout:*)
+allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git branch:*), Bash(git switch:*)
 argument-hint: [message]
 description: Create a git commit
 ---
@@ -30,7 +30,7 @@ Before committing, ensure you are on a feature branch (not main/master):
        - `<type>/<ticket-id>-<description>` (e.g., `feature/PROJ-123-add-login`)
      - If no clear pattern exists, default to `feature/<description>` or `fix/<description>`
    - Suggest a branch name following the detected pattern based on the changes
-   - Create and switch to the new branch with `git checkout -b <branch-name>`
+   - Create and switch to the new branch with `git switch -c <branch-name>`
 3. If already on a feature branch, proceed to the next step
 
 ## Step 2: Create Commit
