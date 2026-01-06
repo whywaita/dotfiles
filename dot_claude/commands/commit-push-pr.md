@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git branch:*), Bash(git switch:*)
+allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git branch:*), Bash(git switch:*), Bash(git config:*)
 argument-hint: [message]
 description: Create a git commit
 ---
@@ -33,7 +33,20 @@ Before committing, ensure you are on a feature branch (not main/master):
    - Create and switch to the new branch with `git switch -c <branch-name>`
 3. If already on a feature branch, proceed to the next step
 
-## Step 2: Create Commit
+## Step 2: Check GPG Signing Configuration
+Before creating a commit, check if GPG signing is configured:
+
+1. Check if `commit.gpgsign` is set to `true`:
+   - Run `git config --get commit.gpgsign`
+   - If `true`, Git will automatically sign commits (no extra flag needed)
+
+2. If `commit.gpgsign` is not `true`, check if a signing key is configured:
+   - Run `git config --get user.signingkey`
+   - If a signing key exists, use `git commit -S` to sign the commit
+
+3. If neither is configured, create a normal unsigned commit
+
+## Step 3: Create Commit
 Create a commit following Conventional Commits format:
 
 ```
@@ -58,12 +71,12 @@ prompt: <user's input prompt>
 - Description: Present tense, lowercase, under 50 chars, no period
 - Separate conversation exchanges with ----
 
-## Step 3: Push to Remote
+## Step 4: Push to Remote
 After committing, push the branch to the remote repository:
 - If the branch doesn't have an upstream, use `git push -u origin <branch-name>`
 - If the branch already has an upstream, use `git push`
 
-## Step 4: Create Pull Request
+## Step 5: Create Pull Request
 Create a Pull Request using `gh pr create`:
 
 1. First, check if a PULL_REQUEST_TEMPLATE exists in the repository:
