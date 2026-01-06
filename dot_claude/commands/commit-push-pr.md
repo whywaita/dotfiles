@@ -36,15 +36,11 @@ Before committing, ensure you are on a feature branch (not main/master):
 ## Step 2: Check GPG Signing Configuration
 Before creating a commit, check if GPG signing is configured:
 
-1. Check if `commit.gpgsign` is set to `true`:
-   - Run `git config --get commit.gpgsign`
-   - If `true`, Git will automatically sign commits (no extra flag needed)
-
-2. If `commit.gpgsign` is not `true`, check if a signing key is configured:
+1. If `commit.gpgsign` is not `true`, check if a signing key is configured:
    - Run `git config --get user.signingkey`
    - If a signing key exists, use `git commit -S` to sign the commit
 
-3. If neither is configured, create a normal unsigned commit
+2. If neither is configured, create a normal unsigned commit
 
 ## Step 3: Create Commit
 Create a commit following Conventional Commits format:
