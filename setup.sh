@@ -10,10 +10,33 @@ DOT_FILES=(.zshrc .vim .vimrc .tmux .tmux.conf .gitconfig .gemrc .latexmkrc .scr
 
 for file in "${DOT_FILES[@]}"
 do
-  ln -s "$HOME"/dotfiles/"$file" "$HOME"/"$file"
+  src="$HOME/dotfiles/$file"
+  dst="$HOME/$file"
+  if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$src" ]; then
+    echo "Skip: $dst already linked correctly"
+  else
+    ln -sf "$src" "$dst"
+  fi
 done
 
-mkdir -p "$HOME"/.cache/dein/repos/github.com/Shougo/dein.vim
-git clone https://github.com/Shougo/dein.vim.git "$HOME"/.cache/dein/repos/github.com/Shougo/dein.vim
+# Setup Claude Code configuration
+mkdir -p "$HOME"/.claude
+
+# Symlink Claude Code configuration files
+ln -sf "$HOME"/dotfiles/dot_claude/CLAUDE.md "$HOME"/.claude/CLAUDE.md
+ln -sf "$HOME"/dotfiles/dot_claude/settings.json "$HOME"/.claude/settings.json
+
+# Symlink directories
+ln -sfn "$HOME"/dotfiles/dot_claude/commands "$HOME"/.claude/commands
+ln -sfn "$HOME"/dotfiles/dot_claude/agents "$HOME"/.claude/agents
+ln -sfn "$HOME"/dotfiles/dot_claude/rules "$HOME"/.claude/rules
+
+DEIN_DIR="$HOME/.cache/dein/repos/github.com/Shougo/dein.vim"
+if [ -d "$DEIN_DIR/.git" ]; then
+  echo "Skip: dein.vim already cloned"
+else
+  mkdir -p "$HOME"/.cache/dein/repos/github.com/Shougo
+  git clone https://github.com/Shougo/dein.vim.git "$DEIN_DIR"
+fi
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
