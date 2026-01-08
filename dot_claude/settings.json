@@ -46,6 +46,17 @@
           }
         ]
       }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "Plan",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '\\n✅ Planning complete! To create a worktree for this feature, run:\\n   /worktree-impl <feature-name>\\n'"
+          }
+        ]
+      }
     ]
   },
   "enabledPlugins": {
