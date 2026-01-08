@@ -19,6 +19,19 @@ do
   fi
 done
 
+DOT_CONFIG_DIRS=(mdp)
+
+for dir in "${DOT_CONFIG_DIRS[@]}"
+do
+  src="$HOME/dotfiles/$dir"
+  dst="$HOME/.config/$dir"
+  if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$src" ]; then
+    echo "Skip: $dst already linked correctly"
+  else
+    ln -sf "$src" "$dst"
+  fi
+done
+
 # Setup Claude Code configuration
 mkdir -p "$HOME"/.claude
 
@@ -39,4 +52,8 @@ else
   git clone https://github.com/Shougo/dein.vim.git "$DEIN_DIR"
 fi
 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if command -v brew >/dev/null 2>&1; then
+  echo "Skip: Homebrew already installed"
+else
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
