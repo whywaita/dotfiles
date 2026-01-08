@@ -1,0 +1,9 @@
+# mdp configuration
+# Output directory for generated HTML files
+output_dir: ~/.mdp
+
+# Command to open browser (default: open on macOS)
+browser_command: open
+
+# Theme name (uses themes/github.html)
+theme: github
