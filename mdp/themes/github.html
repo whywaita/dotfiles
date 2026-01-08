@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{.Title}</title>
+  <!-- GitHub Markdown CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
+  <!-- Highlight.js for syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="highlight-light">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="highlight-dark" disabled>
+  <style>
+    :root {
+      color-scheme: light dark;
+    }
+    body {
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 45px;
+      background-color: #ffffff;
+    }
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #0d1117;
+      }
+      #highlight-light {
+        display: none;
+      }
+      #highlight-dark {
+        display: block;
+      }
+    }
+    @media (max-width: 767px) {
+      body {
+        padding: 15px;
+      }
+    }
+    .markdown-body {
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    /* Mermaid diagram styling */
+    .mermaid {
+      text-align: center;
+      margin: 1em 0;
+    }
+    /* Code block improvements */
+    .markdown-body pre {
+      position: relative;
+    }
+    /* Task list improvements */
+    .markdown-body .task-list-item {
+      list-style-type: none;
+    }
+    .markdown-body .task-list-item input {
+      margin: 0 0.2em 0.25em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+  <article class="markdown-body">
+    {{.Content}}
+  </article>
+
+  <!-- Highlight.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <!-- Mermaid JS -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    // Initialize highlight.js
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('pre code').forEach((block) => {
+        // Skip mermaid blocks
+        if (!block.classList.contains('language-mermaid')) {
+          hljs.highlightElement(block);
+        }
+      });
+    });
+
+    // Initialize Mermaid with theme detection
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: isDarkMode ? 'dark' : 'default',
+      securityLevel: 'loose',
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true
+      }
+    });
+
+    // Convert mermaid code blocks to diagrams
+    document.addEventListener('DOMContentLoaded', async function() {
+      const mermaidBlocks = document.querySelectorAll('pre code.language-mermaid');
+      for (let i = 0; i < mermaidBlocks.length; i++) {
+        const block = mermaidBlocks[i];
+        const pre = block.parentElement;
+        const code = block.textContent;
+
+        // Create a new div for the mermaid diagram
+        const div = document.createElement('div');
+        div.className = 'mermaid';
+        div.textContent = code;
+
+        // Replace the pre element with the mermaid div
+        pre.parentNode.replaceChild(div, pre);
+      }
+
+      // Render all mermaid diagrams
+      await mermaid.run();
+    });
+
+    // Handle dark mode changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      const highlightLight = document.getElementById('highlight-light');
+      const highlightDark = document.getElementById('highlight-dark');
+      if (e.matches) {
+        highlightLight.disabled = true;
+        highlightDark.disabled = false;
+      } else {
+        highlightLight.disabled = false;
+        highlightDark.disabled = true;
+      }
+    });
+  </script>
+</body>
+</html>
