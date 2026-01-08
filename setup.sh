@@ -43,6 +43,7 @@ ln -sf "$HOME"/dotfiles/dot_claude/settings.json "$HOME"/.claude/settings.json
 ln -sfn "$HOME"/dotfiles/dot_claude/commands "$HOME"/.claude/commands
 ln -sfn "$HOME"/dotfiles/dot_claude/agents "$HOME"/.claude/agents
 ln -sfn "$HOME"/dotfiles/dot_claude/rules "$HOME"/.claude/rules
+ln -sfn "$HOME"/dotfiles/dot_claude/skills "$HOME"/.claude/skills
 
 DEIN_DIR="$HOME/.cache/dein/repos/github.com/Shougo/dein.vim"
 if [ -d "$DEIN_DIR/.git" ]; then
