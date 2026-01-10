@@ -1,0 +1,17 @@
+hide_agent_reasoning = true
+model = "gpt-5.2-codex"
+model_reasoning_effort = "high"
+
+[sandbox_workspace_write]
+network_access = true
+
+# Notification command after responses (single hook only)
+notify = ["bash", "-lc", "afplay /System/Library/Sounds/Ping.aiff"]
+
+[features]
+web_search_request = true
+
+# MCP servers
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
