@@ -16,7 +16,9 @@ jobs:
       - name: Install shellcheck
         run: sudo apt-get install -y shellcheck zsh
       - name: Check shell scripts with shellcheck
-        run: shellcheck setup.sh brewfile.sh
+        run: shellcheck setup.sh brewfile.sh dot_claude/scripts/setup.sh tests/setup_claude_test.sh
+      - name: Run Claude setup test
+        run: ./tests/setup_claude_test.sh
       - name: Check zshrc syntax
         run: zsh -n .zshrc
 
