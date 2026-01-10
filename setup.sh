@@ -33,17 +33,10 @@ do
 done
 
 # Setup Claude Code configuration
-mkdir -p "$HOME"/.claude
+"$HOME"/dotfiles/dot_claude/scripts/setup.sh
 
-# Symlink Claude Code configuration files
-ln -sf "$HOME"/dotfiles/dot_claude/CLAUDE.md "$HOME"/.claude/CLAUDE.md
-ln -sf "$HOME"/dotfiles/dot_claude/settings.json "$HOME"/.claude/settings.json
-
-# Symlink directories
-ln -sfn "$HOME"/dotfiles/dot_claude/commands "$HOME"/.claude/commands
-ln -sfn "$HOME"/dotfiles/dot_claude/agents "$HOME"/.claude/agents
-ln -sfn "$HOME"/dotfiles/dot_claude/rules "$HOME"/.claude/rules
-ln -sfn "$HOME"/dotfiles/dot_claude/skills "$HOME"/.claude/skills
+# Setup Codex configuration
+"$HOME"/dotfiles/dot_codex/scripts/setup-codex.sh
 
 DEIN_DIR="$HOME/.cache/dein/repos/github.com/Shougo/dein.vim"
 if [ -d "$DEIN_DIR/.git" ]; then
