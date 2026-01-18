@@ -12,9 +12,9 @@ description: Create a git commit, push a branch, and open a Pull Request with gh
 2. Ensure a feature branch.
    - Run `git branch --show-current`.
    - If on `main` or `master`, infer branch naming from `git branch -r --list 'origin/*' | grep -v 'HEAD\|main\|master'`, propose a name, then run `git switch -c <branch-name>`.
-3. Check GPG signing.
-   - If `git config --get commit.gpgsign` is not `true`, check `git config --get user.signingkey`.
-   - If a signing key exists, use `git commit -S`; otherwise commit normally.
+3. Try signed commit first, fallback if it fails.
+   - Attempt a signed commit with `git commit -S`.
+   - If the signed commit fails, retry without signing using `git -c commit.gpgsign=false commit` and note the fallback in the response.
 4. Create a Conventional Commit.
    - Format:
      - `<type>[optional scope]: <description>`
