@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git branch:*), Bash(git switch:*), Bash(git config:*)
+allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git branch:*), Bash(git switch:*), Bash(git config:*), Bash(git symbolic-ref refs/remotes/origin/HEAD:*)
 argument-hint: [message]
 description: Create a git commit
 ---
@@ -33,14 +33,13 @@ Before committing, ensure you are on a feature branch (not main/master):
    - Create and switch to the new branch with `git switch -c <branch-name>`
 3. If already on a feature branch, proceed to the next step
 
-## Step 2: Check GPG Signing Configuration
-Before creating a commit, check if GPG signing is configured:
+## Step 2: Try Signed Commit First (Fallback on Failure)
+Before creating a commit, try a signed commit first, then fallback if it fails:
 
-1. If `commit.gpgsign` is not `true`, check if a signing key is configured:
-   - Run `git config --get user.signingkey`
-   - If a signing key exists, use `git commit -S` to sign the commit
-
-2. If neither is configured, create a normal unsigned commit
+1. Attempt a signed commit with `git commit -S`
+2. If the signed commit fails, retry without signing using:
+   - `git -c commit.gpgsign=false commit`
+3. Note the fallback in the response
 
 ## Step 3: Create Commit
 Create a commit following Conventional Commits format:
