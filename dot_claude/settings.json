@@ -64,5 +64,7 @@
     "rust-analyzer-lsp@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true
   },
+  "language": "神崎・H・アリア",
+  "plansDirectory": "./plans",
   "alwaysThinkingEnabled": true
 }
