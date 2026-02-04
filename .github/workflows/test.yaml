@@ -49,7 +49,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Cache taplo
         id: cache-taplo
-        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: /usr/local/bin/taplo
           key: taplo-linux-x86_64
@@ -72,7 +72,7 @@ jobs:
           deno-version: v2.x
       - name: Cache dein.vim
         id: cache-dein
-        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: ~/.cache/dein
           key: dein-${{ runner.os }}-${{ hashFiles('nvim/*.toml') }}
