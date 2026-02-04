@@ -53,6 +53,10 @@
         "hooks": [
           {
             "type": "command",
+            "command": "$HOME/dotfiles/dot_claude/scripts/rename-plan-file.sh"
+          },
+          {
+            "type": "command",
             "command": "echo '\\n✅ Planning complete! To create a worktree for this feature, run:\\n   /worktree-impl <feature-name>\\n'"
           }
         ]
@@ -62,7 +66,8 @@
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true
+    "frontend-design@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true
   },
   "language": "長門有希（涼宮ハルヒの憂鬱）",
   "alwaysThinkingEnabled": true,
