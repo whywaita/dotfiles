@@ -51,3 +51,7 @@ if command -v brew >/dev/null 2>&1; then
 else
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
+
+# Install Go tools
+echo "Installing Go tools..."
+go install github.com/k1LoW/git-wt@latest
