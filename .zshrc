@@ -126,6 +126,12 @@ ex () {
   fi
 }
 
+# https://github.com/k1LoW/git-wt
+eval "$(git wt --init zsh)"
+function wt () {
+  git wt "$(git wt | tail -n +2 | peco | awk '{print $(NF-1)}')"
+}
+
 function peco-src () {
   local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
