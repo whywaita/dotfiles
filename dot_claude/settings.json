@@ -23,7 +23,7 @@
       "Bash(go install:*)"
     ]
   },
-  "model": "opusplan",
+  "model": "opus",
   "hooks": {
     "Notification": [
       {
