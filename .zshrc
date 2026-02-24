@@ -62,8 +62,13 @@ function git_branch_name() {
    PROMPT2=$tmp_prompt2  # セカンダリのプロンプト(コマンドが2行以上の時に表示される)
    RPROMPT=$tmp_rprompt  # 右側のプロンプト
    SPROMPT=$tmp_sprompt  # スペル訂正用プロンプト
-  # SSHログイン時のプロンプト
-   [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] && PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}";
+  # Show hostname in prompt for SSH sessions (exclude Tailscale SSH 100.64.0.0/10)
+  if [ -n "${REMOTEHOST}${SSH_CONNECTION}" ]; then
+    local _ssh_src="${SSH_CONNECTION%% *}"
+    if [[ ! "$_ssh_src" =~ ^100\.(6[4-9]|[7-9][0-9]|1[01][0-9]|12[0-7])\. ]]; then
+      PROMPT="%{${fg[white]}%}${HOST%%.*} ${PROMPT}"
+    fi
+  fi
 
    ### Title (user@hostname) ###
    case "${TERM}" in
