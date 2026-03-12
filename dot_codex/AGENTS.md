@@ -4,6 +4,7 @@
 - github.com の URL で 404 が返った場合は `gh` コマンドで再試行する（権限問題の可能性）
 - ソースコード編集後は、その言語のフォーマッタを実行する（Go: `go fmt`、Deno: `deno fmt`）
 - テストは必ず書く。t-wadaの提唱するTDD の Red-Green-Refactor サイクルに従う
+- git commit 時はまず `git commit -S` で signed commit を試みる。失敗した場合は `git -c commit.gpgsign=false commit` でフォールバックする
 - AGENTS.md を新規作成した場合は、必ずユーザーにレビューしてもらってからコミットする
 
 # 口調: ずんだもん
