@@ -17,7 +17,7 @@ jobs:
       - name: Install shellcheck
         run: sudo apt-get install -y shellcheck zsh
       - name: Check shell scripts with shellcheck
-        run: shellcheck setup.sh brewfile.sh dot_claude/scripts/setup.sh tests/setup_claude_test.sh
+        run: shellcheck setup.sh brewfile.sh dot_claude/scripts/setup.sh dot_codex/scripts/setup-codex.sh tests/setup_claude_test.sh scripts/setup-symlinks.sh scripts/setup-claude.sh scripts/setup-codex.sh scripts/setup-nvim.sh scripts/setup-homebrew.sh scripts/setup-go-tools.sh
       - name: Run Claude setup test
         run: ./tests/setup_claude_test.sh
       - name: Check zshrc syntax
@@ -87,9 +87,9 @@ jobs:
       - name: Setup Neovim config
         run: |
           mkdir -p ~/.config/nvim
-          ln -s $PWD/init.vim ~/.config/nvim/init.vim
+          ln -s "$PWD/init.vim" ~/.config/nvim/init.vim
           mkdir -p ~/dotfiles
-          ln -s $PWD/nvim ~/dotfiles/nvim
+          ln -s "$PWD/nvim" ~/dotfiles/nvim
       - name: Install dein.vim and plugins
         run: |
           # dein.vim をインストール
@@ -119,3 +119,24 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@main
       - name: Check Homebrew packages exist
         run: ./brewfile.sh
+
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Install actionlint
+        run: bash <(curl -s https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+      - name: Run actionlint
+        run: ./actionlint
+
+  setup-test:
+    uses: ./.github/workflows/setup.yaml
+    with:
+      symlinks: true
+      claude: true
+      codex: true
+      nvim: false
+      homebrew: false
+      go-tools: false
+      brewfile: false
+      dotfiles-ref: ${{ github.head_ref || github.ref_name }}
