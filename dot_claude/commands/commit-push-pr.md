@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git branch:*), Bash(git switch:*), Bash(git config:*), Bash(git symbolic-ref refs/remotes/origin/HEAD:*)
+allowed-tools: Bash(git add:*), Bash(git status:*), Bash(git commit:*), Bash(git branch:*), Bash(git switch:*), Bash(git config:*), Bash(git symbolic-ref refs/remotes/origin/HEAD:*), Bash(git fetch:*), Bash(git rebase:*), Bash(git log:*), Bash(git diff:*), Bash(gh pr checks:*), Bash(gh run view:*), Bash(gh run watch:*), Bash(gh run list:*)
 argument-hint: [message]
 description: Create a git commit
 ---
@@ -66,12 +66,31 @@ prompt: <user's input prompt>
 - Description: Present tense, lowercase, under 50 chars, no period
 - Separate conversation exchanges with ----
 
-## Step 4: Push to Remote
-After committing, push the branch to the remote repository:
-- If the branch doesn't have an upstream, use `git push -u origin <branch-name>`
-- If the branch already has an upstream, use `git push`
+## Step 4: Rebase onto Base Branch to Detect and Resolve Conflicts
+Before pushing, rebase onto the latest base branch to ensure a clean merge:
 
-## Step 5: Create Pull Request
+1. Determine the base branch:
+   - Run `git symbolic-ref refs/remotes/origin/HEAD` to get the default branch (e.g., `origin/main`)
+   - Strip the `refs/remotes/origin/` prefix to get the branch name
+2. Fetch the latest state of the base branch:
+   - `git fetch origin <base-branch>`
+3. Rebase the current branch onto the base branch:
+   - `git rebase origin/<base-branch>`
+   - If rebase succeeds cleanly, proceed to the next step
+   - If conflicts are detected during rebase:
+     a. Read the conflicting files and understand the intent of both sides
+     b. Edit files to resolve conflicts
+     c. `git add <resolved-files>`
+     d. `git rebase --continue`
+     e. Repeat for any subsequent conflicts in the rebase
+     f. After successful rebase, inform the user which files had conflicts and how they were resolved
+
+## Step 5: Push to Remote
+After committing and verifying no conflicts, push the branch to the remote repository:
+- If the branch doesn't have an upstream, use `git push -u origin <branch-name>`
+- If the branch already has an upstream, use `git push` (if rebase was performed, use `git push --force-with-lease`)
+
+## Step 6: Create Pull Request
 Create a Pull Request using `gh pr create`:
 
 1. First, check if a PULL_REQUEST_TEMPLATE exists in the repository:
@@ -122,3 +141,23 @@ EOF
 ```
 
 5. After creating the PR, output the PR URL so the user can access it.
+
+## Step 7: Verify CI Status
+After creating the PR, monitor CI checks and fix failures:
+
+1. Wait briefly for CI to start, then check status:
+   - `gh pr checks <pr-number> --watch` to watch CI progress (timeout after 10 minutes)
+   - Alternatively, use `gh run list --branch <branch-name> --limit 5` to find the run, then `gh run view <run-id>` for details
+2. If all checks pass, report success and finish
+3. If any check fails:
+   a. Identify the failed check(s) from the output
+   b. Get detailed logs: `gh run view <run-id> --log-failed`
+   c. Analyze the failure:
+      - Build errors: read the error messages and fix the source code
+      - Test failures: identify which tests failed, read the test and source code, and fix
+      - Lint errors: run the linter locally, fix the issues
+      - Other failures: investigate the logs and determine the root cause
+   d. After fixing, create a new commit (following Step 2-3 format) with a message like `fix(ci): <description of fix>`
+   e. Push the fix with `git push`
+   f. Go back to sub-step 1 to re-check CI status
+   g. Repeat up to 3 times. If CI still fails after 3 attempts, report the remaining failures to the user with detailed context
