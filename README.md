@@ -1,6 +1,7 @@
 # whywaita/dotfiles
 
-[![install test](https://github.com/whywaita/dotfiles/actions/workflows/test.yaml/badge.svg)](https://github.com/whywaita/dotfiles/actions/workflows/test.yaml)
+[![lint and check](https://github.com/whywaita/dotfiles/actions/workflows/test.yaml/badge.svg)](https://github.com/whywaita/dotfiles/actions/workflows/test.yaml)
+[![setup](https://github.com/whywaita/dotfiles/actions/workflows/setup.yaml/badge.svg)](https://github.com/whywaita/dotfiles/actions/workflows/setup.yaml)
 
 ## Usage
 
