@@ -139,3 +139,4 @@ jobs:
       homebrew: false
       go-tools: false
       brewfile: false
+      dotfiles-ref: ${{ github.head_ref || github.ref_name }}
