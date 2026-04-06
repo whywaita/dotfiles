@@ -27,10 +27,17 @@ description: Create a git commit, push a branch, and open a Pull Request with gh
      - Optional footer(s)
    - Use `feat|fix|docs|style|refactor|test|chore|ci|build|perf` as needed.
    - Keep description present tense, lowercase, under 50 chars, no period.
-5. Push the branch.
+5. Rebase onto the base branch to detect and resolve conflicts.
+   - Determine the base branch via `git symbolic-ref refs/remotes/origin/HEAD`.
+   - `git fetch origin <base-branch>`.
+   - `git rebase origin/<base-branch>`.
+     - If clean: proceed.
+     - If conflicts: resolve them, `git add <files>`, `git rebase --continue`. Repeat for each conflicting commit.
+     - Report which files had conflicts and how they were resolved.
+6. Push the branch.
    - If no upstream: `git push -u origin <branch-name>`.
-   - Otherwise: `git push`.
-6. Create a PR with `gh pr create`.
+   - Otherwise: `git push` (use `git push --force-with-lease` if rebase was performed).
+7. Create a PR with `gh pr create`.
    - Look for PR templates in `.github/PULL_REQUEST_TEMPLATE.md`, `.github/PULL_REQUEST_TEMPLATE/`, or `docs/PULL_REQUEST_TEMPLATE.md`.
    - If no template, use a language-appropriate default template.
    - Use a HEREDOC body:
@@ -40,7 +47,16 @@ description: Create a git commit, push a branch, and open a Pull Request with gh
      EOF
      )"
      ```
-7. Output the PR URL.
+8. Output the PR URL.
+9. Verify CI status.
+   - `gh pr checks <pr-number> --watch` (timeout 10 minutes), or `gh run list --branch <branch> --limit 5` + `gh run view <run-id>`.
+   - If all checks pass: report success.
+   - If any check fails:
+     a. `gh run view <run-id> --log-failed` to get detailed logs.
+     b. Analyze and fix the failure (build errors, test failures, lint errors, etc.).
+     c. Create a new commit (`fix(ci): <description>`), push.
+     d. Re-check CI. Repeat up to 3 times.
+     e. If still failing after 3 attempts, report remaining failures to the user.
 
 ## Default PR templates
 
