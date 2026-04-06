@@ -14,5 +14,14 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: Songmu/tagpr@9d0f650553240dab1fa907eca27e3fd5b586e538 # v1.18.1
+        id: tagpr
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update major version tag
+        if: steps.tagpr.outputs.tag != ''
+        env:
+          TAG: ${{ steps.tagpr.outputs.tag }}
+        run: |
+          MAJOR=$(echo "$TAG" | grep -oE '^v[0-9]+')
+          git tag -f "$MAJOR" "$TAG"
+          git push -f origin "$MAJOR"
