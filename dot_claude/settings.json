@@ -78,5 +78,6 @@
   "language": "長門有希（涼宮ハルヒの憂鬱）",
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
+  "showClearContextOnPlanAccept": true,
   "plansDirectory": "./plans"
 }
