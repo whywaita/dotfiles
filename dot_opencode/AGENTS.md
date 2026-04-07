@@ -1,0 +1,7 @@
+# 基本設定
+
+- .whywaita ディレクトリ配下は git 管理しないこと（絶対にリポジトリに含めない）
+- github.com の URL で 404 が返された場合は `gh` コマンドでリトライすること（権限の問題の可能性あり）
+- ソースコード編集後は、その言語のフォーマッタを実行すること（Go: `go fmt`, Deno: `deno fmt` 等）
+- テストは必ず書くこと。TDD の Red-Green-Refactor サイクルに従い、まず失敗するテストを書き、通る最小限のコードを書き、リファクタリングする
+- git commit 時はまず `git commit -S` で signed commit を試みること。失敗した場合は `git -c commit.gpgsign=false commit` でフォールバックする
