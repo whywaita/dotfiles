@@ -1,2 +1,6 @@
 *.swp
 .vim/*
+
+# opencode.json contains sensitive information
+opencode.json
+.claude/worktrees/

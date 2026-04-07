@@ -17,7 +17,7 @@ jobs:
       - name: Install shellcheck
         run: sudo apt-get install -y shellcheck zsh
       - name: Check shell scripts with shellcheck
-        run: shellcheck setup.sh brewfile.sh dot_claude/scripts/setup.sh dot_codex/scripts/setup-codex.sh tests/setup_claude_test.sh scripts/setup-symlinks.sh scripts/setup-claude.sh scripts/setup-codex.sh scripts/setup-nvim.sh scripts/setup-homebrew.sh scripts/setup-go-tools.sh
+        run: shellcheck setup.sh brewfile.sh dot_claude/scripts/setup.sh dot_codex/scripts/setup-codex.sh tests/setup_claude_test.sh scripts/setup-symlinks.sh scripts/setup-claude.sh scripts/setup-codex.sh scripts/setup-nvim.sh scripts/setup-homebrew.sh scripts/setup-go-tools.sh scripts/setup-opencode.sh
       - name: Run Claude setup test
         run: ./tests/setup_claude_test.sh
       - name: Check zshrc syntax
@@ -135,6 +135,7 @@ jobs:
       symlinks: true
       claude: true
       codex: true
+      opencode: true
       nvim: false
       homebrew: false
       go-tools: false
