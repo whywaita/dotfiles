@@ -1,5 +1,8 @@
 # Changelog
 
+## [v1.0.2](https://github.com/whywaita/dotfiles/compare/v1.0.1...v1.0.2) - 2026-04-06
+- feat(skill): add conflict detection and CI verification to commit-push-pr by @whywaita in https://github.com/whywaita/dotfiles/pull/47
+
 ## [v1.0.1](https://github.com/whywaita/dotfiles/compare/v1...v1.0.1) - 2026-04-06
 - ci: add tagpr workflow for automatic semver tagging by @whywaita in https://github.com/whywaita/dotfiles/pull/45
 
