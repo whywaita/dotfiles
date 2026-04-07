@@ -23,6 +23,11 @@ on:
         type: boolean
         default: true
         required: false
+      opencode:
+        description: "Setup OpenCode configuration"
+        type: boolean
+        default: false
+        required: false
       nvim:
         description: "Setup Neovim (dein.vim)"
         type: boolean
@@ -70,6 +75,10 @@ jobs:
       - name: Setup Codex
         if: ${{ inputs.codex }}
         run: ./dotfiles/scripts/setup-codex.sh
+
+      - name: Setup OpenCode
+        if: ${{ inputs.opencode }}
+        run: ./dotfiles/scripts/setup-opencode.sh
 
       - name: Setup Neovim
         if: ${{ inputs.nvim }}
