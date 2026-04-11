@@ -102,12 +102,32 @@ CDP `Fetch` ドメインを使い、`spot-solution` API レスポンスをキャ
 
 ## スクリーンショット取得
 
-GTO Wizard のページは描画が重く、agent-browser の screenshot コマンドがタイムアウトすることがある。Raw CDP WebSocket 経由で直接取得する:
+GTO Wizard のページは描画が重く、agent-browser の screenshot コマンドがタイムアウトすることがある。Raw CDP WebSocket 経由で直接取得する。
+
+### ビューポート固定（必須）
+
+スクリーンショットの解像度とアスペクト比を一定にするため、**撮影前に必ず `Emulation.setDeviceMetricsOverride` を呼ぶこと**:
 
 ```
-1. Page.bringToFront()          // ページをフォアグラウンドに
-2. Page.captureScreenshot({
-     format: "jpeg",            // JPEG 推奨（軽量・高速）
+Emulation.setDeviceMetricsOverride({
+  width: 1920,
+  height: 1080,
+  deviceScaleFactor: 2,       // Retina 相当（実ピクセル 3840x2160）
+  mobile: false
+})
+```
+
+- 16:9、1920x1080 @ 2x を標準とする
+- CDP 接続ごとに1回呼べばよい（同一セッション中は維持される）
+- スクリーンショット不要になったら `Emulation.clearDeviceMetricsOverride()` でリセット可能
+
+### 撮影手順
+
+```
+1. Emulation.setDeviceMetricsOverride(...)  // 初回のみ
+2. Page.bringToFront()                      // ページをフォアグラウンドに
+3. Page.captureScreenshot({
+     format: "jpeg",                        // JPEG 推奨（軽量・高速）
      quality: 80
    })
 ```
