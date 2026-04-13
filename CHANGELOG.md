@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.0.4](https://github.com/whywaita/dotfiles/compare/v1.0.3...v1.0.4) - 2026-04-13
+- feat(rules): add GitHub Actions workflow rules for all AI assistants by @whywaita in https://github.com/whywaita/dotfiles/pull/52
+- feat: add poker-hand-review skill with review/study modes by @whywaita in https://github.com/whywaita/dotfiles/pull/55
+
 ## [v1.0.3](https://github.com/whywaita/dotfiles/compare/v1.0.2...v1.0.3) - 2026-04-07
 - Add opencode files and common skills by @whywaita in https://github.com/whywaita/dotfiles/pull/50
 
