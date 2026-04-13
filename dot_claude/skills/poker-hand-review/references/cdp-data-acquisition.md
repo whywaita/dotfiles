@@ -134,6 +134,228 @@ Emulation.setDeviceMetricsOverride({
 
 レスポンスの `data` フィールドに base64 エンコードされた画像が含まれる。
 
+## 集合分析（Aggregate Analysis）データ取得
+
+### 概要
+
+集合分析は GTO Wizard のソリューションページ内のビューモードで、**個別ハンドではなくレンジ全体の戦略をボード群・カード群で俯瞰する**。study mode の根幹データ。
+
+個別ソリューション（`spot-solution`）は「特定ボードでの各ハンドの戦略」を返すのに対し、集合分析は「全ボード（or 全Turn card / 全River card）にわたる戦略の傾向」を返す。
+
+### ストリート別の集合分析
+
+| Street | 集合分析の内容 | 取得タイミング |
+|--------|--------------|--------------|
+| **Flop** | 全フロップボードにおける bet/check/raise 頻度のヒートマップ | プリフロップ解法ページからAggregate viewに切替 |
+| **Turn** | 特定フロップ＋Flopアクション後の、全52枚中の残りTurn cardごとの戦略変化 | Flopアクション後のノードからTurn Aggregate viewに切替 |
+| **River** | 特定Turn＋Turnアクション後の、全残りRiver cardごとの戦略変化 | Turnアクション後のノードからRiver Aggregate viewに切替 |
+
+### Aggregate View へのナビゲーション
+
+GTO Wizard の Aggregate Analysis は solutions ページ内のビュー切替で表示する。
+
+**手順:**
+
+1. solutions ページに通常通りナビゲート（Step 2 の URL構築参照）
+2. `npx agent-browser snapshot` で UI 要素を確認
+3. "Aggregate" / "Overview" / バーチャートアイコン等のトグルを発見
+4. `npx agent-browser eval` でクリックして Aggregate view に切替
+5. ビュー切替時に新たな API コールが発生する → Fetch インターセプトで取得
+
+**UI要素の発見例:**
+
+```bash
+# snapshot でページ構造を確認し、Aggregate トグルを探す
+npx agent-browser snapshot -i
+
+# 発見した要素をクリック（セレクタはページ構造に応じて調整）
+npx agent-browser eval "document.querySelector('[data-testid=\"aggregate-tab\"]')?.click() || document.querySelector('button[aria-label*=\"Aggregate\"]')?.click()"
+```
+
+**注意:** セレクタは GTO Wizard のアップデートで変わる可能性がある。snapshot で実際の DOM を確認してからクリックすること。
+
+### API インターセプトパターン
+
+集合分析のデータは `spot-solution` とは**異なるエンドポイント**から返される場合がある。幅広いパターンでインターセプトする:
+
+```
+Fetch.enable({
+  patterns: [
+    { urlPattern: "*spot-solution*",  requestStage: "Response" },
+    { urlPattern: "*aggregate*",      requestStage: "Response" },
+    { urlPattern: "*overview*",       requestStage: "Response" },
+    { urlPattern: "*report*",         requestStage: "Response" }
+  ]
+})
+```
+
+**エンドポイント発見のフォールバック:** 上記パターンで捕捉できない場合、`Network.enable` + `Network.responseReceived` でページ内の全APIコールを監視し、Aggregate view 切替時に発生するリクエストURLを特定する:
+
+```
+1. Network.enable()
+2. Aggregate viewに切替（UI要素クリック）
+3. Network.responseReceived イベントを収集
+4. URL に "api" や "solution" を含むレスポンスを確認
+5. 発見したURLパターンで Fetch.enable を再設定
+```
+
+### Flop 集合分析の取得
+
+プリフロップのアクションシーケンスが確定した状態で、全フロップボードの戦略を俯瞰する。
+
+**取得手順:**
+
+```
+1. solutions ページにナビゲート（board パラメータなし）
+   URL例: ?gametype=MTTGeneral_8m&depth=100.125&stacks=...&preflop_actions=F-F-F-F-F-R2.5-F-C
+
+2. ページロード完了を待つ（sleep 8-10秒）
+
+3. Fetch.enable（上記の広めのパターン）
+
+4. Aggregate view トグルをクリック
+   → API コールが発生 → Fetch.requestPaused でキャプチャ
+
+5. レスポンス JSON を取得
+   → ボードごとの bet/check 頻度データ
+
+6. スクリーンショットを撮影
+   → screenshots/flop-aggregate-oop.jpg
+
+7. OOP/IP 切替（後述）→ もう一方も同様に取得
+   → screenshots/flop-aggregate-ip.jpg
+```
+
+**Flop 集合分析から読み取るデータ:**
+
+| データ | 分析用途 |
+|--------|---------|
+| ボード別 bet 頻度 | ボードをカテゴリ分類する基準（Step 4 [study]） |
+| ボード別 check 頻度 | check range の太さを確認 |
+| 使用される bet size 分布 | small CB / large CB / overbet の傾向 |
+| ボードテクスチャとの相関 | ハイカード構成・コネクト度・スート構成と戦略の関係 |
+
+### Turn 集合分析の取得
+
+特定のフロップ＋Flopアクション後に、全Turn cardでの戦略変化を確認する。
+
+**前提:** Flopのアクションノードまで進んだ状態（ゲームツリーで該当ノードをクリック済み）
+
+**取得手順:**
+
+```
+1. Flopアクション後のノードに遷移済みの状態
+   （例: Flop AJ5r で OOP が small CB → IP が call した後のノード）
+
+2. Turn ストリートの Aggregate view に切替
+   → Flopアクション後のノードで Aggregate トグルをクリック
+
+3. Fetch インターセプトでデータ取得
+
+4. スクリーンショットを撮影
+   → screenshots/turn-aggregate-{flop}-{action}.jpg
+   例: turn-aggregate-AJ5r-smallCB-call.jpg
+```
+
+**Turn 集合分析から読み取るデータ:**
+
+| データ | 分析用途 |
+|--------|---------|
+| Turn card 別 bet 頻度 | どのカードで second barrel / probe が増減するか |
+| Turn card の分類 | BW / middle paired / low / flush complete / A 等 |
+| 頻度変化の大きい card | 戦略が大きく変わるランクの特定 |
+| OOP/IP 各プレイヤーの反応差 | ポジション差がTurnで拡大/縮小するか |
+
+**Turn card の自然分類（参考）:**
+
+```
+Broadway (BW): A, K, Q, J, T     — ハイカードが増えるとレンジにヒットする組合せが変化
+Middle:        9, 8, 7            — ストレートドローの完成/進行
+Low:           6, 5, 4, 3, 2     — 多くのレンジに影響が少ない
+Paired:        Flopとペアになるカード — ボードペアはベット頻度を下げることが多い
+Flush complete: 3枚目のスート     — フラッシュ完成で戦略が大きく変化
+```
+
+### River 集合分析の取得
+
+Turn アクション後の全 River card での戦略変化を確認する。
+
+**取得手順:**
+
+```
+1. Turnアクション後のノードに遷移済みの状態
+
+2. River ストリートの Aggregate view に切替
+
+3. Fetch インターセプトでデータ取得
+
+4. スクリーンショットを撮影
+   → screenshots/river-aggregate-{flop}-{turn}-{action}.jpg
+```
+
+**River 集合分析から読み取るデータ:**
+
+| データ | 分析用途 |
+|--------|---------|
+| River card 別 bet 頻度 | どのカードで value bet / bluff が増減するか |
+| ポーラライズ度合い | bet range がポーラライズ or マージか |
+| ブラフ候補の変化 | ミスドドローがブラフに使われるか |
+| check range の強度 | SDV（ショーダウンバリュー）のあるハンドの分布 |
+
+### OOP / IP の切替
+
+集合分析は**プレイヤー視点ごと**に別のデータを持つ。両方を取得すること。
+
+```
+1. 集合分析を表示した状態で snapshot
+2. OOP/IP の切替 UI を発見
+   - ポジション名（例: "SB", "BTN"）のタブ
+   - "OOP" / "IP" のトグル
+3. クリックして切替 → 新しいデータが表示
+4. 切替後にスクリーンショットとデータを取得
+```
+
+**OOP / IP で確認する観点の違い:**
+
+| 視点 | 主に確認すること |
+|------|----------------|
+| **OOP** | bet range の構成、check range にトラップしているハンド、bet size の選択 |
+| **IP** | ディフェンス戦略（call/fold/raise）、ID帯の位置、raise に回すハンド |
+
+### 集合分析の Fetch フロー（まとめ）
+
+```
+1. Target.createTarget(url) → 新タブを作成
+2. /json から新ページ WS 取得 → 接続
+3. sleep(8-10秒) でページロード待ち
+4. Fetch.enable({
+     patterns: [
+       { urlPattern: "*spot-solution*", requestStage: "Response" },
+       { urlPattern: "*aggregate*",     requestStage: "Response" },
+       { urlPattern: "*overview*",      requestStage: "Response" },
+       { urlPattern: "*report*",        requestStage: "Response" }
+     ]
+   })
+5. Aggregate view トグルをクリック
+6. Fetch.requestPaused → getResponseBody → JSON パース
+7. Fetch.continueRequest（必須）
+8. Page.captureScreenshot → OOP のスクリーンショット保存
+9. OOP/IP 切替 → 再度 Fetch.requestPaused → データ取得
+10. Page.captureScreenshot → IP のスクリーンショット保存
+11. 必要に応じてゲームツリーを進め、Turn/River の集合分析を繰り返す
+```
+
+### ボードテクスチャフィルタ
+
+GTO Wizard の集合分析にはボードテクスチャのフィルタ機能がある。特定のテクスチャに絞った分析が可能:
+
+- **ハイカード構成:** Ahi / Khi / Qhi / low board
+- **ペアボード:** paired / unpaired
+- **スート構成:** rainbow / two-tone / monotone
+- **コネクト度:** connected / disconnected
+
+snapshot で filter UI を発見し、`eval` でクリックしてフィルタを適用する。フィルタ適用後にスクリーンショットを取得する。
+
 ## ゲームツリーナビゲーション
 
 GTO Wizard は SPA のため、ゲームツリーのノードクリックで新しいソリューションデータが非同期に取得される。
