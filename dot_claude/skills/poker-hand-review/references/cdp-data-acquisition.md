@@ -104,35 +104,39 @@ CDP `Fetch` ドメインを使い、`spot-solution` API レスポンスをキャ
 
 GTO Wizard のページは描画が重く、agent-browser の screenshot コマンドがタイムアウトすることがある。Raw CDP WebSocket 経由で直接取得する。
 
-### ビューポート固定（必須）
+### ビューポートサイズ: ブラウザ実測値を使う
 
-スクリーンショットの解像度とアスペクト比を一定にするため、**撮影前に必ず `Emulation.setDeviceMetricsOverride` を呼ぶこと**:
+**`Emulation.setDeviceMetricsOverride` は使わないこと。** 固定値を上書きすると GTO Wizard のレイアウトが崩れてスクリーンショットが壊れる。
+
+代わりに、ブラウザのネイティブビューポートサイズを実測して記録する:
 
 ```
-Emulation.setDeviceMetricsOverride({
-  width: 1920,
-  height: 1080,
-  deviceScaleFactor: 2,       // Retina 相当（実ピクセル 3840x2160）
-  mobile: false
+Runtime.evaluate({
+  expression: "JSON.stringify({innerW: window.innerWidth, innerH: window.innerHeight, dpr: window.devicePixelRatio})"
 })
 ```
 
-- 16:9、1920x1080 @ 2x を標準とする
-- CDP 接続ごとに1回呼べばよい（同一セッション中は維持される）
-- スクリーンショット不要になったら `Emulation.clearDeviceMetricsOverride()` でリセット可能
+実測値の例（環境依存）:
+```json
+{"innerW": 1552, "innerH": 1075, "dpr": 2}
+```
+
+- GTO Wizard はこのネイティブサイズで正常にレンダリングされる
+- 実ピクセルは `innerW * dpr` × `innerH * dpr`（例: 3104x2150）
+- ブラウザウィンドウのサイズを変えなければ、セッション中は一定
 
 ### 撮影手順
 
 ```
-1. Emulation.setDeviceMetricsOverride(...)  // 初回のみ
-2. Page.bringToFront()                      // ページをフォアグラウンドに
-3. Page.captureScreenshot({
-     format: "jpeg",                        // JPEG 推奨（軽量・高速）
+1. Page.bringToFront()            // ページをフォアグラウンドに
+2. Page.captureScreenshot({
+     format: "jpeg",              // JPEG 推奨（軽量・高速）
      quality: 80
    })
 ```
 
 レスポンスの `data` フィールドに base64 エンコードされた画像が含まれる。
+スクリーンショットの解像度はブラウザのネイティブビューポート × devicePixelRatio で決まる。
 
 ## 集合分析（Aggregate Analysis）データ取得
 
