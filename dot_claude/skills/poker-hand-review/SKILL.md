@@ -493,337 +493,81 @@ Node D: Flop x/x → Turn
 WebSearch で `site:blog.gtowizard.com` を検索し、該当スポットの exploit 記事を取得。
 exploit考察には必ずブログ記事のURLを付与する（Evidence Policy準拠）。
 
-### Step 8: HTMLレポート生成
+### Step 8: ジャーナルエントリ生成
 
-レビュー/座学の内容を HTML として生成する。スクリーンショットは **base64 エンコード**してインラインで埋め込む（外部ファイル参照だと PDF 変換時に読み込めないため）。
+分析結果を GitHub Pages ジャーナルのエントリとして出力する。review と study は**同一エントリ（同一ページ）に統合**する。
 
-**base64 変換:**
+**出力先とテンプレート:**
+- ディレクトリ構成・パス命名規則: [references/journal-structure.md](references/journal-structure.md)
+- HTML テンプレート: [references/journal-template.html](references/journal-template.html)
+
+#### 8a. 出力先の決定
+
+1. ジャーナルルートを確認する（初回は AskUserQuestion で聞く）
+2. エントリディレクトリを作成:
+   ```bash
+   mkdir -p {journal-root}/entries/{YYYY-MM-DD}_{slug}/screenshots
+   ```
+3. 同一スポットの既存エントリがあれば追記モード（既存 `index.html` を Read → 対応 `<section>` を追加）
+
+#### 8b. スクリーンショットの配置
+
+撮影済み画像を `screenshots/` に移動:
+```bash
+mv ./hand-review-assets/*.jpg {entry-dir}/screenshots/   # [review]
+mv ./study-assets/*.jpg {entry-dir}/screenshots/          # [study]
+```
+
+ファイル名規則: `{street}-{content}.jpg`（例: `preflop-grid.jpg`, `flop-AJ5r-oop.jpg`）
+
+#### 8c. HTML 生成
+
+[references/journal-template.html](references/journal-template.html) に従い `{entry-dir}/index.html` を Write で出力する。
+
+**モード別セクション:**
+- review mode → `<section id="hand-review">` を出力、`<section id="study">` は省略
+- study mode → `<section id="study">` を出力、`<section id="hand-review">` は省略
+- 両方 → 両セクションを出力
+
+**スクリーンショット参照:**
+- `<img src="screenshots/{name}.jpg">` で相対パス参照（GitHub Pages で直接表示可能）
+
+#### 8d. meta.json 生成
+
+エントリディレクトリに `meta.json` を Write で出力する。
+フォーマットは [references/journal-structure.md](references/journal-structure.md#metajson) 参照。
+
+AIエージェントが過去エントリを検索するためのインデックス。`tags` には検索しやすいキーワードを付与する。
+
+### Step 9: PDF変換（オプション）
+
+ユーザが PDF 出力を希望した場合のみ実行する。
+
+**PDF用の前処理:**
+スクリーンショットを base64 インラインに変換した一時ファイルを作成する:
 
 ```bash
-python3 -c "import base64,sys; print(base64.b64encode(open(sys.argv[1],'rb').read()).decode())" ./hand-review-assets/preflop-grid.jpg
+# screenshots/*.jpg → base64 inline に変換
+python3 -c "
+import base64, re, sys
+html = open(sys.argv[1]).read()
+import glob, os
+for img in glob.glob(os.path.join(os.path.dirname(sys.argv[1]), 'screenshots', '*.jpg')):
+    name = os.path.basename(img)
+    b64 = base64.b64encode(open(img, 'rb').read()).decode()
+    html = html.replace(f'src=\"screenshots/{name}\"', f'src=\"data:image/jpeg;base64,{b64}\"')
+open('/tmp/poker-journal-print.html', 'w').write(html)
+" {entry-dir}/index.html
 ```
 
-#### [review] HTML テンプレート
-
-以下のテンプレートに従い、`/tmp/hand-review-{日付}-{ハンド}-{スポット概要}.html` に Write で出力する。
-
-```html
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <title>Hand Review: {ヒーローハンド}</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
-  <style>
-    body {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 30px;
-      background: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    }
-    .markdown-body { max-width: 100%; }
-    .screenshot { max-width: 100%; border: 1px solid #d0d7de; border-radius: 6px; margin: 12px 0; }
-    .math-block { background: #f6f8fa; border-left: 3px solid #0969da; padding: 12px 16px; margin: 12px 0; font-family: monospace; }
-    .assessment-good { border-left-color: #1a7f37; }
-    .assessment-warn { border-left-color: #bf8700; }
-    .assessment-bad  { border-left-color: #cf222e; }
-    .exploit-quote { background: #fff8c5; border-left: 3px solid #bf8700; padding: 12px 16px; margin: 12px 0; }
-    .source-link { font-size: 0.85em; color: #656d76; }
-    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
-    th, td { border: 1px solid #d0d7de; padding: 8px 12px; text-align: left; }
-    th { background: #f6f8fa; }
-    h1 { border-bottom: 1px solid #d0d7de; padding-bottom: 8px; }
-    h2 { border-bottom: 1px solid #d0d7de; padding-bottom: 6px; margin-top: 32px; }
-    @media print {
-      body { padding: 0; }
-      .page-break { page-break-before: always; }
-    }
-  </style>
-</head>
-<body class="markdown-body">
-
-<h1>Hand Review: {ヒーローハンド} — {スポット説明}</h1>
-
-<table>
-  <tr><th>Game Type</th><td>{MTT/Cash} {人数}max</td></tr>
-  <tr><th>Effective Stack</th><td>{X}bb</td></tr>
-  <tr><th>Hero Position</th><td>{ポジション}</td></tr>
-  <tr><th>Hero Hand</th><td>{ハンド}</td></tr>
-  <tr><th>Board</th><td>{ボード or "Preflop"}</td></tr>
-</table>
-
-<h3>Action Summary</h3>
-<p>{各ストリートのアクションを時系列で記述}</p>
-
-<hr>
-<h2>Street-by-Street Analysis</h2>
-
-<!-- ===== 各ストリートで以下を繰り返す ===== -->
-
-<h3>Preflop</h3>
-
-<p><strong>GTO Strategy</strong>
-  (<a href="{ハンドURL}">GTO Wizard</a>):</p>
-
-<img class="screenshot" src="data:image/jpeg;base64,{preflop-grid-base64}" alt="Preflop GTO Grid">
-
-<ul>
-  <li>{ハンド}: Raise {X}%, Call {Y}%, Fold {Z}%</li>
-  <li>EV: Raise = {+A}bb, Call = {+B}bb</li>
-</ul>
-
-<h4>Aggregate Analysis</h4>
-
-<img class="screenshot" src="data:image/jpeg;base64,{preflop-aggregate-base64}" alt="Preflop Aggregate">
-
-<table>
-  <tr><th>アクション</th><th>レンジ全体の頻度</th><th>コンボ数</th></tr>
-  <tr><td>Raise</td><td>{X}%</td><td>{N} combos</td></tr>
-  <tr><td>Call</td><td>{Y}%</td><td>{N} combos</td></tr>
-  <tr><td>Fold</td><td>{Z}%</td><td>{N} combos</td></tr>
-</table>
-
-<p>{レンジ構成の特徴}</p>
-
-<p><strong>Actual Play:</strong> {ヒーローの実際のアクション}</p>
-
-<div class="math-block {assessment-good|assessment-warn|assessment-bad}">
-  <strong>計算根拠:</strong><br>
-  {具体的な計算式と途中過程}
-</div>
-
-<!-- Flop / Turn / River も同様の構造 -->
-<!-- ストリート間に <div class="page-break"></div> を入れてPDFのページ送りを制御可能 -->
-
-<hr>
-<h2>Mathematical Summary</h2>
-
-<table>
-  <tr><th>Decision Point</th><th>GTO Action</th><th>Hero Action</th><th>GTO EV</th><th>Source</th><th>Assessment</th></tr>
-  <tr><td>Preflop</td><td>...</td><td>...</td><td>...</td><td><a href="{URL}">GTO Wizard</a></td><td>...</td></tr>
-  <tr><td>Flop</td><td>...</td><td>...</td><td>...</td><td><a href="{URL}">GTO Wizard</a></td><td>...</td></tr>
-</table>
-
-<hr>
-<h2>Exploit Considerations</h2>
-
-<div class="exploit-quote">
-  {exploit に関する主張}<br>
-  <span class="source-link">— <a href="https://blog.gtowizard.com/...">{記事タイトル}</a></span>
-</div>
-
-<!-- ブログ記事が見つからなかった場合 -->
-<p><em>※ 一般的なポーカー理論に基づく推奨（GTO Wizard ブログに該当記事なし）</em></p>
-
-<hr>
-<h2>Key Takeaways</h2>
-
-<ol>
-  <li>{最も重要な学び}</li>
-  <li>{改善ポイント}</li>
-  <li>{良かった点}</li>
-</ol>
-
-<h2>References</h2>
-
-<h3>GTO Wizard ソルバーデータ</h3>
-<ul>
-  <li><a href="{ハンドURL}">Preflop: {スポット説明}</a></li>
-  <li><a href="{ハンドURL}">Flop: {スポット説明}</a></li>
-</ul>
-
-<h3>GTO Wizard ブログ記事</h3>
-<ul>
-  <li><a href="{URL}">{記事タイトル1}</a></li>
-  <li><a href="{URL}">{記事タイトル2}</a></li>
-</ul>
-
-<h3>使用した計算式</h3>
-<ul>
-  <li>ポットオッズ: 必要エクイティ = コール額 / (ポット + ベット + コール額)</li>
-  <li>MDF: ポット / (ポット + ベット)</li>
-</ul>
-
-</body>
-</html>
-```
-
-#### [study] HTML テンプレート
-
-以下のテンプレートに従い、`/tmp/study-{日付}-{スポット概要}.html` に Write で出力する。
-
-```html
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <title>Study: {スポット概要}</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
-  <style>
-    body { max-width: 980px; margin: 0 auto; padding: 30px; background: #fff; }
-    .markdown-body { max-width: 100%; }
-    .screenshot { max-width: 100%; border: 1px solid #d0d7de; border-radius: 6px; margin: 12px 0; }
-    .insight { background: #dafbe1; border-left: 3px solid #1a7f37; padding: 12px 16px; margin: 12px 0; }
-    .question { background: #fff8c5; border-left: 3px solid #bf8700; padding: 12px 16px; margin: 12px 0; }
-    .exploit { background: #ffebe9; border-left: 3px solid #cf222e; padding: 12px 16px; margin: 12px 0; }
-    .future-topic { background: #ddf4ff; border-left: 3px solid #0969da; padding: 12px 16px; margin: 12px 0; }
-    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
-    th, td { border: 1px solid #d0d7de; padding: 8px 12px; }
-    th { background: #f6f8fa; }
-    .source-link { font-size: 0.85em; color: #656d76; }
-    @media print { .page-break { page-break-before: always; } }
-  </style>
-</head>
-<body class="markdown-body">
-
-<h1>Study: {スポット概要}</h1>
-
-<table>
-  <tr><th>ポジション関係</th><td>{OOP} vs {IP}</td></tr>
-  <tr><th>ポットタイプ</th><td>{SRP / 3bp / 4bp}</td></tr>
-  <tr><th>スタック深度</th><td>{X}bb</td></tr>
-  <tr><th>ゲームタイプ</th><td>{MTT / Cash}</td></tr>
-</table>
-
-<hr>
-<h2>1. 集合分析 — 全体像</h2>
-
-<img class="screenshot" src="data:image/jpeg;base64,{aggregate-base64}" alt="Aggregate Overview">
-
-<h3>分類</h3>
-<table>
-  <tr><th>カテゴリ</th><th>特徴</th><th>代表ボード</th></tr>
-  <tr><td>{カテゴリ1}</td><td>{特徴}</td><td>{ボード}</td></tr>
-  <!-- ... -->
-</table>
-
-<div class="insight">
-  <strong>分類の理由:</strong><br>
-  {なぜこの分類になるのか、レンジとボードの関係から考察}
-</div>
-
-<div class="question">
-  <strong>疑問点:</strong><br>
-  {集合分析から生まれた疑問}
-</div>
-
-<hr>
-<h2>2. 個別ボード分析</h2>
-
-<!-- 各ボードについて繰り返す -->
-<h3>Board: {ボード} （カテゴリ: {分類名}）</h3>
-
-<h4>OOP戦略</h4>
-<img class="screenshot" src="data:image/jpeg;base64,{board-oop-base64}" alt="{board} OOP Strategy">
-
-<table>
-  <tr><th>Action</th><th>Size</th><th>Frequency</th><th>主なHand群</th></tr>
-  <tr><td>Bet</td><td>{size}</td><td>{freq}%</td><td>{hands}</td></tr>
-  <tr><td>Check</td><td>—</td><td>{freq}%</td><td>{hands}</td></tr>
-</table>
-
-<h4>IPディフェンス — ID帯</h4>
-<img class="screenshot" src="data:image/jpeg;base64,{board-ip-defense-base64}" alt="{board} IP Defense">
-
-<table>
-  <tr><th>Hand群</th><th>Action</th><th>備考</th></tr>
-  <tr><td>{hands}</td><td>Pure Call</td><td>{理由}</td></tr>
-  <tr><td>{hands}</td><td>Call/Fold ID</td><td>{理由}</td></tr>
-  <tr><td>{hands}</td><td>Pure Fold</td><td>{理由}</td></tr>
-</table>
-
-<div class="insight">
-  <strong>発見:</strong><br>
-  {このボードで発見した構造的な理解}
-</div>
-
-<!-- Turn分岐分析... -->
-
-<hr>
-<h2>3. Turn以降の分岐</h2>
-
-<h3>Node: {Flop action} → Turn</h3>
-
-<h4>Turn card別 集合分析</h4>
-<img class="screenshot" src="data:image/jpeg;base64,{turn-aggregate-base64}" alt="Turn Aggregate">
-
-<table>
-  <tr><th>Turn card分類</th><th>Bet頻度変化</th><th>Key insight</th></tr>
-  <tr><td>{分類}</td><td>{変化}</td><td>{insight}</td></tr>
-</table>
-
-<!-- 各Turn分類の詳細... -->
-
-<hr>
-<h2>4. Exploit考察</h2>
-
-<div class="exploit">
-  <strong>ID帯からのexploit:</strong><br>
-  {均衡のIDを起点としたexploit考察}<br>
-  <span class="source-link">— <a href="{blog-url}">{記事タイトル}</a></span>
-</div>
-
-<hr>
-<h2>5. 今後の座学テーマ</h2>
-
-<div class="future-topic">
-  <ul>
-    <li>{分析中に発見した、今後深掘りすべきテーマ}</li>
-    <li>{他ポジション関係での確認事項}</li>
-    <li>{類似スポットでの検証事項}</li>
-  </ul>
-</div>
-
-<h2>References</h2>
-<ul>
-  <li><a href="{URL}">GTO Wizard: {スポット}</a></li>
-  <li><a href="{blog-url}">{ブログ記事タイトル}</a></li>
-</ul>
-
-</body>
-</html>
-```
-
-### Step 9: PDF変換
-
-HTML を Chrome の `--print-to-pdf` で PDF に変換する。
-
-**ファイル名の構成:**
-
-- [review]: `hand-review-{日付}-{ハンド}-{スポット概要}.pdf`
-- [study]: `study-{日付}-{スポット概要}.pdf`
-
-**日付・命名ルール:**
-- `{日付}`: `YYYY-MM-DD`
-- `{ハンド}`: ヒーローのハンド（例: `AKo`, `9d9c`）— review のみ
-- `{スポット概要}`: スポットを特定できる短い説明（英語、ハイフン区切り、小文字）
-
-**ファイル名例:**
-- [review] `hand-review-2026-04-11-AKo-CO-vs-BTN-3bet-100bb.pdf`
-- [review] `hand-review-2026-04-11-9d9c-BTN-open-30bb-bubble.pdf`
-- [study] `study-2026-04-11-SBvBTN-3bp-Ahi.pdf`
-
+**PDF生成:**
 ```bash
 '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' \
-  --headless \
-  --disable-gpu \
-  --no-sandbox \
-  --print-to-pdf=./{ファイル名}.pdf \
+  --headless --disable-gpu --no-sandbox \
+  --print-to-pdf=./{YYYY-MM-DD}_{slug}.pdf \
   --print-to-pdf-no-header \
-  /tmp/{ファイル名}.html
+  /tmp/poker-journal-print.html
 ```
-
-**注意事項:**
-- `--print-to-pdf-no-header` でヘッダー/フッター（URL・日付）を除去する
-- スクリーンショットは base64 インラインなので外部参照の問題なし
-- CSS の `@media print` と `.page-break` でページ区切りを制御
-- github-markdown-css は CDN 参照のため、Chrome がネットワークアクセス可能であること
-- PDF 生成後、ターミナルにファイルパスを出力する
-
-**出力ファイル:**
-- PDF: `./{ファイル名}.pdf`（デフォルト）
-- HTML: `/tmp/{ファイル名}.html`（中間ファイル、デバッグ用に残す）
 
 ### Step 10: フォローアップ
 
@@ -832,7 +576,7 @@ HTML を Chrome の `--print-to-pdf` で PDF に変換する。
 1. ユーザに質問や追加分析の希望がないか確認する
 2. 特定のストリートの深掘りや、異なるラインのシミュレーションを提案する
 3. 類似スポットの学習リソース（GTO Wizard ブログ記事）を提案する
-4. **座学モードへの移行を提案**: レビューで課題が見つかったスポットについて「座学したい」で study mode に移行できることを案内する
+4. **座学モードへの移行を提案**: レビューで課題が見つかったスポットについて「座学したい」で同一エントリに study を追記できることを案内する
 
 #### [study] フォローアップ
 
@@ -842,6 +586,11 @@ HTML を Chrome の `--print-to-pdf` で PDF に変換する。
    - GTO Wizard の Training > Custom でスポットを設定
    - 座学で学んだ内容を仮説として持ちながらプレイ
    - プレイ後に仮説を検証
+
+#### 過去エントリの活用提案
+
+`meta.json` の `tags` で類似の過去エントリを検索し、関連するエントリがあれば提示する。
+過去の `future_topics` に今回のスポットが含まれていれば言及する。
 
 ## [study] 思考フレームワーク
 
@@ -880,3 +629,5 @@ HTML を Chrome の `--print-to-pdf` で PDF に変換する。
 | [references/cdp-data-acquisition.md](references/cdp-data-acquisition.md) | **PRIMARY** CDP Fetch インターセプトによるデータ取得 |
 | [references/poker-math.md](references/poker-math.md) | ポーカー数学リファレンス |
 | [references/exploit-guide.md](references/exploit-guide.md) | Exploit戦略ガイド |
+| [references/journal-template.html](references/journal-template.html) | HTML テンプレート（review + study 統合） |
+| [references/journal-structure.md](references/journal-structure.md) | ジャーナル出力構成・パス設計・meta.json スキーマ |
