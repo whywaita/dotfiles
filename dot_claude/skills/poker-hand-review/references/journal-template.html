@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
+  <style>
+    /* ===== Layout ===== */
+    body {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 30px;
+      background: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    .markdown-body { max-width: 100%; }
+    h1 { border-bottom: 1px solid #d0d7de; padding-bottom: 8px; }
+    h2 { border-bottom: 1px solid #d0d7de; padding-bottom: 6px; margin-top: 32px; }
+
+    /* ===== Common components ===== */
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    th, td { border: 1px solid #d0d7de; padding: 8px 12px; text-align: left; }
+    th { background: #f6f8fa; }
+    .screenshot { max-width: 100%; border: 1px solid #d0d7de; border-radius: 6px; margin: 12px 0; }
+    .source-link { font-size: 0.85em; color: #656d76; }
+
+    /* ===== [review] Math / Assessment blocks ===== */
+    .math-block { background: #f6f8fa; border-left: 3px solid #0969da; padding: 12px 16px; margin: 12px 0; font-family: monospace; }
+    .assessment-good { border-left-color: #1a7f37; }
+    .assessment-warn { border-left-color: #bf8700; }
+    .assessment-bad  { border-left-color: #cf222e; }
+
+    /* ===== [review] Exploit quote ===== */
+    .exploit-quote { background: #fff8c5; border-left: 3px solid #bf8700; padding: 12px 16px; margin: 12px 0; }
+
+    /* ===== [study] Callout blocks ===== */
+    .insight { background: #dafbe1; border-left: 3px solid #1a7f37; padding: 12px 16px; margin: 12px 0; }
+    .question { background: #fff8c5; border-left: 3px solid #bf8700; padding: 12px 16px; margin: 12px 0; }
+    .exploit { background: #ffebe9; border-left: 3px solid #cf222e; padding: 12px 16px; margin: 12px 0; }
+    .future-topic { background: #ddf4ff; border-left: 3px solid #0969da; padding: 12px 16px; margin: 12px 0; }
+
+    /* ===== Print ===== */
+    @media print {
+      body { padding: 0; }
+      .page-break { page-break-before: always; }
+    }
+  </style>
+</head>
+<body class="markdown-body">
+
+<h1>{{title}}</h1>
+
+<!-- ===== Metadata ===== -->
+<table>
+  <tr><th>Date</th><td>{{date}}</td></tr>
+  <tr><th>Game Type</th><td>{{gametype}} {{table_size}}</td></tr>
+  <tr><th>Position</th><td>{{hero_position}} vs {{villain_position}}</td></tr>
+  <tr><th>Pot Type</th><td>{{pot_type}}</td></tr>
+  <tr><th>Effective Stack</th><td>{{stack}}bb</td></tr>
+  <!-- [review] のみ -->
+  <tr><th>Hero Hand</th><td>{{hero_hand}}</td></tr>
+  <tr><th>Board</th><td>{{board}}</td></tr>
+</table>
+
+<!-- ============================================================
+     [review] Hand Review セクション
+     review mode 実行時のみ出力する
+     ============================================================ -->
+<section id="hand-review">
+
+<h2>Hand Review</h2>
+
+<h3>Action Summary</h3>
+<p>{{action_summary}}</p>
+
+<hr>
+<h3>Street-by-Street Analysis</h3>
+
+<!-- ===== 各ストリートで繰り返し ===== -->
+<h4>{{street_name}}</h4>
+
+<p><strong>GTO Strategy</strong>
+  (<a href="{{gtowizard_url}}">GTO Wizard</a>):</p>
+
+<!-- journal: file reference / PDF: data:image/jpeg;base64,... -->
+<img class="screenshot" src="screenshots/{{street}}-grid.jpg" alt="{{street_name}} GTO Grid">
+
+<ul>
+  <li>{{hand}}: Raise {{X}}%, Call {{Y}}%, Fold {{Z}}%</li>
+  <li>EV: Raise = {{+A}}bb, Call = {{+B}}bb</li>
+</ul>
+
+<h5>Aggregate Analysis</h5>
+<img class="screenshot" src="screenshots/{{street}}-aggregate.jpg" alt="{{street_name}} Aggregate">
+
+<table>
+  <tr><th>Action</th><th>Frequency</th><th>Combos</th></tr>
+  <tr><td>{{action}}</td><td>{{freq}}%</td><td>{{combos}}</td></tr>
+</table>
+
+<p>{{range_characteristics}}</p>
+
+<p><strong>Actual Play:</strong> {{actual_play}}</p>
+
+<div class="math-block assessment-good">
+  <strong>計算根拠:</strong><br>
+  {{math_calculation}}
+</div>
+<!-- assessment-good / assessment-warn / assessment-bad を使い分ける -->
+
+<!-- ストリート間に page-break を挿入可能 -->
+<div class="page-break"></div>
+<!-- ===== ストリート繰り返しここまで ===== -->
+
+<h3>Mathematical Summary</h3>
+<table>
+  <tr><th>Decision Point</th><th>GTO Action</th><th>Hero Action</th><th>GTO EV</th><th>Source</th><th>Assessment</th></tr>
+  <tr>
+    <td>{{street}}</td><td>{{gto_action}}</td><td>{{hero_action}}</td>
+    <td>{{ev}}</td><td><a href="{{url}}">GTO Wizard</a></td><td>{{assessment_icon}}</td>
+  </tr>
+</table>
+
+</section>
+
+<!-- ============================================================
+     [study] Spot Study セクション
+     study mode 実行時のみ出力する
+     ============================================================ -->
+<section id="study">
+
+<h2>Spot Study</h2>
+
+<h3>1. 集合分析 — 全体像</h3>
+<img class="screenshot" src="screenshots/aggregate-overview.jpg" alt="Aggregate Overview">
+
+<h4>分類</h4>
+<table>
+  <tr><th>カテゴリ</th><th>特徴</th><th>代表ボード</th></tr>
+  <tr><td>{{category}}</td><td>{{feature}}</td><td>{{board}}</td></tr>
+</table>
+
+<div class="insight">
+  <strong>分類の理由:</strong><br>
+  {{classification_reasoning}}
+</div>
+
+<div class="question">
+  <strong>疑問点:</strong><br>
+  {{questions}}
+</div>
+
+<h3>2. 個別ボード分析</h3>
+
+<!-- ===== 各ボードで繰り返し ===== -->
+<h4>Board: {{board}} ({{category}})</h4>
+
+<h5>OOP戦略</h5>
+<img class="screenshot" src="screenshots/flop-{{board}}-oop.jpg" alt="{{board}} OOP Strategy">
+
+<table>
+  <tr><th>Action</th><th>Size</th><th>Frequency</th><th>主なHand群</th></tr>
+  <tr><td>{{action}}</td><td>{{size}}</td><td>{{freq}}%</td><td>{{hands}}</td></tr>
+</table>
+
+<h5>IPディフェンス — ID帯</h5>
+<img class="screenshot" src="screenshots/flop-{{board}}-ip-defense.jpg" alt="{{board}} IP Defense">
+
+<table>
+  <tr><th>Hand群</th><th>Action</th><th>備考</th></tr>
+  <tr><td>{{hands}}</td><td>{{action}}</td><td>{{note}}</td></tr>
+</table>
+
+<div class="insight">
+  <strong>発見:</strong><br>
+  {{discovery}}
+</div>
+<!-- ===== ボード繰り返しここまで ===== -->
+
+<h3>3. Turn以降の分岐</h3>
+
+<!-- ===== 各ノードで繰り返し ===== -->
+<h4>Node: {{flop_action}} → Turn</h4>
+<img class="screenshot" src="screenshots/turn-aggregate-{{node}}.jpg" alt="Turn Aggregate">
+
+<table>
+  <tr><th>Turn card分類</th><th>Bet頻度変化</th><th>Key insight</th></tr>
+  <tr><td>{{classification}}</td><td>{{change}}</td><td>{{insight}}</td></tr>
+</table>
+<!-- ===== ノード繰り返しここまで ===== -->
+
+</section>
+
+<!-- ============================================================
+     Exploit Considerations（共通）
+     ============================================================ -->
+<section id="exploit">
+
+<h2>Exploit Considerations</h2>
+
+<!-- [review] スタイル -->
+<div class="exploit-quote">
+  {{exploit_content}}<br>
+  <span class="source-link">— <a href="{{blog_url}}">{{article_title}}</a></span>
+</div>
+
+<!-- [study] ID帯ベースのexploit考察 -->
+<div class="exploit">
+  <strong>ID帯からのexploit:</strong><br>
+  {{id_based_exploit}}<br>
+  <span class="source-link">— <a href="{{blog_url}}">{{article_title}}</a></span>
+</div>
+
+<!-- ブログ記事が見つからなかった場合 -->
+<p><em>※ 一般的なポーカー理論に基づく推奨（GTO Wizard ブログに該当記事なし）</em></p>
+
+</section>
+
+<!-- ============================================================
+     Key Takeaways & Next Steps（共通）
+     ============================================================ -->
+<section id="takeaways">
+
+<h2>Key Takeaways & Next Steps</h2>
+
+<!-- [review] -->
+<ol>
+  <li>{{takeaway}}</li>
+</ol>
+
+<!-- [study] 今後の座学テーマ -->
+<div class="future-topic">
+  <strong>今後の座学テーマ:</strong>
+  <ul>
+    <li>{{future_topic}}</li>
+  </ul>
+</div>
+
+</section>
+
+<!-- ============================================================
+     References（共通）
+     ============================================================ -->
+<section id="references">
+
+<h2>References</h2>
+
+<h3>GTO Wizard ソルバーデータ</h3>
+<ul>
+  <li><a href="{{gtowizard_url}}">{{spot_description}}</a></li>
+</ul>
+
+<h3>GTO Wizard ブログ記事</h3>
+<ul>
+  <li><a href="{{blog_url}}">{{article_title}}</a></li>
+</ul>
+
+<!-- [review] -->
+<h3>使用した計算式</h3>
+<ul>
+  <li>ポットオッズ: 必要エクイティ = コール額 / (ポット + ベット + コール額)</li>
+  <li>MDF: ポット / (ポット + ベット)</li>
+</ul>
+
+</section>
+
+</body>
+</html>
