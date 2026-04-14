@@ -1,5 +1,8 @@
 # Changelog
 
+## [v1.0.5](https://github.com/whywaita/dotfiles/compare/v1.0.4...v1.0.5) - 2026-04-14
+- refactor: reorder poker journal template sections by @whywaita in https://github.com/whywaita/dotfiles/pull/56
+
 ## [v1.0.4](https://github.com/whywaita/dotfiles/compare/v1.0.3...v1.0.4) - 2026-04-13
 - feat(rules): add GitHub Actions workflow rules for all AI assistants by @whywaita in https://github.com/whywaita/dotfiles/pull/52
 - feat: add poker-hand-review skill with review/study modes by @whywaita in https://github.com/whywaita/dotfiles/pull/55
