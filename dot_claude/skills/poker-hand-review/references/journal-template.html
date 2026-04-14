@@ -63,67 +63,6 @@
 </table>
 
 <!-- ============================================================
-     [review] Hand Review セクション
-     review mode 実行時のみ出力する
-     ============================================================ -->
-<section id="hand-review">
-
-<h2>Hand Review</h2>
-
-<h3>Action Summary</h3>
-<p>{{action_summary}}</p>
-
-<hr>
-<h3>Street-by-Street Analysis</h3>
-
-<!-- ===== 各ストリートで繰り返し ===== -->
-<h4>{{street_name}}</h4>
-
-<p><strong>GTO Strategy</strong>
-  (<a href="{{gtowizard_url}}">GTO Wizard</a>):</p>
-
-<!-- journal: file reference / PDF: data:image/jpeg;base64,... -->
-<img class="screenshot" src="screenshots/{{street}}-grid.jpg" alt="{{street_name}} GTO Grid">
-
-<ul>
-  <li>{{hand}}: Raise {{X}}%, Call {{Y}}%, Fold {{Z}}%</li>
-  <li>EV: Raise = {{+A}}bb, Call = {{+B}}bb</li>
-</ul>
-
-<h5>Aggregate Analysis</h5>
-<img class="screenshot" src="screenshots/{{street}}-aggregate.jpg" alt="{{street_name}} Aggregate">
-
-<table>
-  <tr><th>Action</th><th>Frequency</th><th>Combos</th></tr>
-  <tr><td>{{action}}</td><td>{{freq}}%</td><td>{{combos}}</td></tr>
-</table>
-
-<p>{{range_characteristics}}</p>
-
-<p><strong>Actual Play:</strong> {{actual_play}}</p>
-
-<div class="math-block assessment-good">
-  <strong>計算根拠:</strong><br>
-  {{math_calculation}}
-</div>
-<!-- assessment-good / assessment-warn / assessment-bad を使い分ける -->
-
-<!-- ストリート間に page-break を挿入可能 -->
-<div class="page-break"></div>
-<!-- ===== ストリート繰り返しここまで ===== -->
-
-<h3>Mathematical Summary</h3>
-<table>
-  <tr><th>Decision Point</th><th>GTO Action</th><th>Hero Action</th><th>GTO EV</th><th>Source</th><th>Assessment</th></tr>
-  <tr>
-    <td>{{street}}</td><td>{{gto_action}}</td><td>{{hero_action}}</td>
-    <td>{{ev}}</td><td><a href="{{url}}">GTO Wizard</a></td><td>{{assessment_icon}}</td>
-  </tr>
-</table>
-
-</section>
-
-<!-- ============================================================
      [study] Spot Study セクション
      study mode 実行時のみ出力する
      ============================================================ -->
@@ -188,6 +127,67 @@
   <tr><td>{{classification}}</td><td>{{change}}</td><td>{{insight}}</td></tr>
 </table>
 <!-- ===== ノード繰り返しここまで ===== -->
+
+</section>
+
+<!-- ============================================================
+     [review] Hand Review セクション
+     review mode 実行時のみ出力する
+     ============================================================ -->
+<section id="hand-review">
+
+<h2>Hand Review</h2>
+
+<h3>Action Summary</h3>
+<p>{{action_summary}}</p>
+
+<hr>
+<h3>Street-by-Street Analysis</h3>
+
+<!-- ===== 各ストリートで繰り返し ===== -->
+<h4>{{street_name}}</h4>
+
+<p><strong>GTO Strategy</strong>
+  (<a href="{{gtowizard_url}}">GTO Wizard</a>):</p>
+
+<!-- journal: file reference / PDF: data:image/jpeg;base64,... -->
+<img class="screenshot" src="screenshots/{{street}}-grid.jpg" alt="{{street_name}} GTO Grid">
+
+<ul>
+  <li>{{hand}}: Raise {{X}}%, Call {{Y}}%, Fold {{Z}}%</li>
+  <li>EV: Raise = {{+A}}bb, Call = {{+B}}bb</li>
+</ul>
+
+<h5>Aggregate Analysis</h5>
+<img class="screenshot" src="screenshots/{{street}}-aggregate.jpg" alt="{{street_name}} Aggregate">
+
+<table>
+  <tr><th>Action</th><th>Frequency</th><th>Combos</th></tr>
+  <tr><td>{{action}}</td><td>{{freq}}%</td><td>{{combos}}</td></tr>
+</table>
+
+<p>{{range_characteristics}}</p>
+
+<p><strong>Actual Play:</strong> {{actual_play}}</p>
+
+<div class="math-block assessment-good">
+  <strong>計算根拠:</strong><br>
+  {{math_calculation}}
+</div>
+<!-- assessment-good / assessment-warn / assessment-bad を使い分ける -->
+
+<!-- ストリート間に page-break を挿入可能 -->
+<div class="page-break"></div>
+<!-- ===== ストリート繰り返しここまで ===== -->
+
+<h3>Mathematical Summary</h3>
+<table>
+  <tr><th>Decision Point</th><th>GTO Action</th><th>Hero Action</th><th>GTO EV</th><th>Source</th><th>Assessment</th></tr>
+  <tr>
+    <td>{{street}}</td><td>{{gto_action}}</td><td>{{hero_action}}</td>
+    <td>{{ev}}</td><td><a href="{{url}}">GTO Wizard</a></td><td>{{assessment_icon}}</td>
+  </tr>
+</table>
 
 </section>
 
