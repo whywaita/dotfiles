@@ -1,5 +1,8 @@
 # Changelog
 
+## [v1.0.6](https://github.com/whywaita/dotfiles/compare/v1.0.5...v1.0.6) - 2026-04-14
+- fix(poker): add dark theme support to journal template by @whywaita in https://github.com/whywaita/dotfiles/pull/58
+
 ## [v1.0.5](https://github.com/whywaita/dotfiles/compare/v1.0.4...v1.0.5) - 2026-04-14
 - refactor: reorder poker journal template sections by @whywaita in https://github.com/whywaita/dotfiles/pull/56
 
