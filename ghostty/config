@@ -1,0 +1,21 @@
+# Theme
+theme = Iceberg Dark
+background-opacity = 0.9
+
+# Font
+font-family = JetBrains Mono
+font-family = Biz UDGothic
+font-size = 17
+
+# Scrollback
+scrollback-limit = 1000
+
+# Terminal
+term = xterm-256color
+
+# Quick Terminal (Quake mode)
+keybind = global:ctrl+s=toggle_quick_terminal
+quick-terminal-position = top
+quick-terminal-screen = main
+quick-terminal-animation-duration = 0
+quick-terminal-size = 100%
