@@ -17,7 +17,7 @@ do
   fi
 done
 
-DOT_CONFIG_DIRS=(mdp)
+DOT_CONFIG_DIRS=(mdp ghostty)
 
 mkdir -p "$HOME/.config"
 
