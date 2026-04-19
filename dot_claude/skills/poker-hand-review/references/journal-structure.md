@@ -24,32 +24,45 @@
 
 slug の構成要素（該当するもののみ `_` で連結）:
 
-1. [review] ヒーローハンド: `AKo`, `9d9c`
+1. ヒーローハンド: `AKo`, `9d9c`
 2. ポジション関係: `CO-vs-BTN`, `SB-vs-BB`
 3. ポットタイプ: `SRP`, `3bp`, `4bp`
 4. スタック深度: `100bb`, `30bb`
-5. [study] ボードテクスチャ補足: `Ahi`, `low`, `monotone`
+5. ボードテクスチャ補足: `Ahi`, `low`, `monotone`
 
 例:
 ```
-entries/2026-04-13_AKo_CO-vs-BTN_3bp_100bb/       # review
-entries/2026-04-13_SB-vs-BTN_3bp_Ahi/              # study
-entries/2026-04-13_AKo_CO-vs-BTN_3bp_100bb/        # review → study 追記（同一エントリ）
+entries/2026-04-13_AKo_CO-vs-BTN_3bp_100bb/       # review + study 統合エントリ
+entries/2026-04-13_SB-vs-BTN_3bp_Ahi/              # スポット指定型エントリ（代表ハンドで review）
 ```
+
+すべてのエントリは review + study が同居する。
 
 ### スクリーンショットファイル名
 
-`{street}-{content}.jpg` 形式:
+統合形式に対応した命名規則:
 
 ```
 screenshots/
-├── preflop-grid.jpg
-├── preflop-aggregate.jpg
-├── flop-AJ5r-oop.jpg
-├── flop-AJ5r-ip-defense.jpg
-├── turn-aggregate-nodeA.jpg
-└── aggregate-overview.jpg
+├── flop-aggregate-oop.jpg                          # ストリートゲート: Flop 集合分析 OOP
+├── flop-aggregate-ip.jpg                           # ストリートゲート: Flop 集合分析 IP
+├── flop-AJ5r-oop-strategy-ev.jpg                   # 個別ボード: Strategy + EV
+├── flop-AJ5r-oop-equity.jpg                        # 個別ボード: Equity Charts
+├── flop-AJ5r-ip-strategy-ev.jpg
+├── flop-AJ5r-ip-equity.jpg
+├── turn-aggregate-{nodeA}-oop.jpg                  # ストリートゲート: Turn 集合分析 OOP
+├── turn-aggregate-{nodeA}-ip.jpg                   # ストリートゲート: Turn 集合分析 IP
+├── turn-AJ5r7h-strategy-ev.jpg                     # Turn 個別カード
+├── turn-AJ5r7h-equity.jpg
+├── river-aggregate-{nodeA}-oop.jpg                 # ストリートゲート: River 集合分析 OOP
+├── river-aggregate-{nodeA}-ip.jpg
+├── river-AJ5r7h2c-strategy-ev.jpg
+└── river-AJ5r7h2c-equity.jpg
 ```
+
+**必須ルール:**
+- 個別ボード/カードのスクリーンショットは Strategy+EV と Equity の**両方**を保存する
+- 各ストリートの集合分析は OOP / IP **両方**を保存する
 
 ## meta.json
 
@@ -61,7 +74,7 @@ screenshots/
 {
   "version": 1,
   "date": "2026-04-13",
-  "mode": ["review"],
+  "mode": ["review", "study"],
   "title": "AKo CO vs BTN 3bet pot 100bb",
   "spot": {
     "gametype": "MTT",
@@ -126,12 +139,12 @@ screenshots/
 |-------|------|-------------|
 | `version` | number | スキーマバージョン（現在: 1） |
 | `date` | string | 作成日 `YYYY-MM-DD` |
-| `mode` | string[] | 実行モード: `["review"]`, `["study"]`, `["review", "study"]` |
+| `mode` | string[] | 常に `["review", "study"]`（統合形式） |
 | `title` | string | エントリタイトル（人間可読） |
-| `spot` | object | スポット情報（`hero_hand` は review のみ必須） |
+| `spot` | object | スポット情報 |
 | `tags` | string[] | 検索用タグ（ポットタイプ、ボード特徴、ポジション等） |
-| `review` | object\|null | review モードの要約 |
-| `study` | object\|null | study モードの要約 |
+| `review` | object | review 部分の要約（必須） |
+| `study` | object | study 部分の要約（必須） |
 | `references` | object | 使用した外部ソースURL |
 
 ### assessments 値
@@ -144,11 +157,13 @@ screenshots/
 
 ## 既存エントリへの追記
 
-同一スポットで review → study を連続実行した場合、**同じエントリディレクトリに追記**する:
+同一スポットを再度分析した場合、**同じエントリディレクトリに追記**する:
 
 1. 既存の `index.html` を Read で読み込む
-2. 対応する `<section>` を追加する（`#hand-review` or `#study`）
-3. `meta.json` の `mode` 配列に追加し、対応フィールドを埋める
+2. 必要に応じて新たな個別ボード/カードのセクションを追加する
+3. `meta.json` の対応フィールド（`review.assessments`, `study.board_categories` 等）を更新する
+
+統合形式のため `mode` 配列の変更は不要（常に `["review", "study"]`）。
 
 ## AIエージェント向け: 過去エントリの検索
 
