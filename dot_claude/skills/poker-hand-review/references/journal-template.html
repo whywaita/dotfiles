@@ -117,76 +117,7 @@
 </table>
 
 <!-- ============================================================
-     [study] Spot Study セクション
-     study mode 実行時のみ出力する
-     ============================================================ -->
-<section id="study">
-
-<h2>Spot Study</h2>
-
-<h3>1. 集合分析 — 全体像</h3>
-<img class="screenshot" src="screenshots/aggregate-overview.jpg" alt="Aggregate Overview">
-
-<h4>分類</h4>
-<table>
-  <tr><th>カテゴリ</th><th>特徴</th><th>代表ボード</th></tr>
-  <tr><td>{{category}}</td><td>{{feature}}</td><td>{{board}}</td></tr>
-</table>
-
-<div class="insight">
-  <strong>分類の理由:</strong><br>
-  {{classification_reasoning}}
-</div>
-
-<div class="question">
-  <strong>疑問点:</strong><br>
-  {{questions}}
-</div>
-
-<h3>2. 個別ボード分析</h3>
-
-<!-- ===== 各ボードで繰り返し ===== -->
-<h4>Board: {{board}} ({{category}})</h4>
-
-<h5>OOP戦略</h5>
-<img class="screenshot" src="screenshots/flop-{{board}}-oop.jpg" alt="{{board}} OOP Strategy">
-
-<table>
-  <tr><th>Action</th><th>Size</th><th>Frequency</th><th>主なHand群</th></tr>
-  <tr><td>{{action}}</td><td>{{size}}</td><td>{{freq}}%</td><td>{{hands}}</td></tr>
-</table>
-
-<h5>IPディフェンス — ID帯</h5>
-<img class="screenshot" src="screenshots/flop-{{board}}-ip-defense.jpg" alt="{{board}} IP Defense">
-
-<table>
-  <tr><th>Hand群</th><th>Action</th><th>備考</th></tr>
-  <tr><td>{{hands}}</td><td>{{action}}</td><td>{{note}}</td></tr>
-</table>
-
-<div class="insight">
-  <strong>発見:</strong><br>
-  {{discovery}}
-</div>
-<!-- ===== ボード繰り返しここまで ===== -->
-
-<h3>3. Turn以降の分岐</h3>
-
-<!-- ===== 各ノードで繰り返し ===== -->
-<h4>Node: {{flop_action}} → Turn</h4>
-<img class="screenshot" src="screenshots/turn-aggregate-{{node}}.jpg" alt="Turn Aggregate">
-
-<table>
-  <tr><th>Turn card分類</th><th>Bet頻度変化</th><th>Key insight</th></tr>
-  <tr><td>{{classification}}</td><td>{{change}}</td><td>{{insight}}</td></tr>
-</table>
-<!-- ===== ノード繰り返しここまで ===== -->
-
-</section>
-
-<!-- ============================================================
-     [review] Hand Review セクション
-     review mode 実行時のみ出力する
+     Hand Review セクション（必須・常に出力）
      ============================================================ -->
 <section id="hand-review">
 
@@ -204,21 +135,16 @@
 <p><strong>GTO Strategy</strong>
   (<a href="{{gtowizard_url}}">GTO Wizard</a>):</p>
 
-<!-- journal: file reference / PDF: data:image/jpeg;base64,... -->
-<img class="screenshot" src="screenshots/{{street}}-grid.jpg" alt="{{street_name}} GTO Grid">
+<!-- 必須: Strategy + EV ビューを表示した状態のスクリーンショット -->
+<img class="screenshot" src="screenshots/{{street}}-{{board}}-{{action}}-strategy-ev.jpg" alt="{{street_name}} Strategy + EV">
+
+<!-- 必須: Equity Charts -->
+<img class="screenshot" src="screenshots/{{street}}-{{board}}-{{action}}-equity.jpg" alt="{{street_name}} Equity Charts">
 
 <ul>
   <li>{{hand}}: Raise {{X}}%, Call {{Y}}%, Fold {{Z}}%</li>
   <li>EV: Raise = {{+A}}bb, Call = {{+B}}bb</li>
 </ul>
-
-<h5>Aggregate Analysis</h5>
-<img class="screenshot" src="screenshots/{{street}}-aggregate.jpg" alt="{{street_name}} Aggregate">
-
-<table>
-  <tr><th>Action</th><th>Frequency</th><th>Combos</th></tr>
-  <tr><td>{{action}}</td><td>{{freq}}%</td><td>{{combos}}</td></tr>
-</table>
 
 <p>{{range_characteristics}}</p>
 
@@ -242,6 +168,128 @@
     <td>{{ev}}</td><td><a href="{{url}}">GTO Wizard</a></td><td>{{assessment_icon}}</td>
   </tr>
 </table>
+
+</section>
+
+<!-- ============================================================
+     Spot Study セクション（必須・常に出力）
+     review と study は同一ジャーナルに統合される
+     ============================================================ -->
+<section id="study">
+
+<h2>Spot Study</h2>
+
+<!-- ===== ストリートゲート: 個別分析の前に必ず集合分析を掲載 ===== -->
+
+<h3>1. Flop 集合分析（ストリートゲート）</h3>
+<p>個別ボード分析の前に、全フロップボードの戦略傾向を OOP / IP 両視点で確認する。</p>
+
+<h4>OOP 集合分析</h4>
+<img class="screenshot" src="screenshots/flop-aggregate-oop.jpg" alt="Flop Aggregate OOP">
+
+<h4>IP 集合分析</h4>
+<img class="screenshot" src="screenshots/flop-aggregate-ip.jpg" alt="Flop Aggregate IP">
+
+<h4>分類</h4>
+<table>
+  <tr><th>カテゴリ</th><th>特徴</th><th>代表ボード</th></tr>
+  <tr><td>{{category}}</td><td>{{feature}}</td><td>{{board}}</td></tr>
+</table>
+
+<div class="insight">
+  <strong>分類の理由:</strong><br>
+  {{classification_reasoning}}
+</div>
+
+<div class="question">
+  <strong>疑問点:</strong><br>
+  {{questions}}
+</div>
+
+<h3>2. Flop 個別ボード分析</h3>
+
+<!-- ===== 各ボードで繰り返し ===== -->
+<h4>Board: {{board}} ({{category}})</h4>
+
+<h5>OOP戦略 (Strategy + EV)</h5>
+<img class="screenshot" src="screenshots/flop-{{board}}-oop-strategy-ev.jpg" alt="{{board}} OOP Strategy + EV">
+
+<h5>OOP Equity Charts</h5>
+<img class="screenshot" src="screenshots/flop-{{board}}-oop-equity.jpg" alt="{{board}} OOP Equity">
+
+<table>
+  <tr><th>Action</th><th>Size</th><th>Frequency</th><th>主なHand群</th></tr>
+  <tr><td>{{action}}</td><td>{{size}}</td><td>{{freq}}%</td><td>{{hands}}</td></tr>
+</table>
+
+<h5>IPディフェンス (Strategy + EV) — ID帯</h5>
+<img class="screenshot" src="screenshots/flop-{{board}}-ip-strategy-ev.jpg" alt="{{board}} IP Strategy + EV">
+
+<h5>IP Equity Charts</h5>
+<img class="screenshot" src="screenshots/flop-{{board}}-ip-equity.jpg" alt="{{board}} IP Equity">
+
+<table>
+  <tr><th>Hand群</th><th>Action</th><th>備考</th></tr>
+  <tr><td>{{hands}}</td><td>{{action}}</td><td>{{note}}</td></tr>
+</table>
+
+<div class="insight">
+  <strong>発見:</strong><br>
+  {{discovery}}
+</div>
+<!-- ===== ボード繰り返しここまで ===== -->
+
+<h3>3. Turn 集合分析（ストリートゲート）</h3>
+<p>Turn 個別カード分析の前に、Flopアクション後の全Turn cardでの戦略変化を OOP / IP 両視点で確認する。</p>
+
+<!-- ===== 各 Flop ノードについて繰り返し ===== -->
+<h4>Node: {{flop_action}} → Turn</h4>
+
+<h5>OOP 集合分析</h5>
+<img class="screenshot" src="screenshots/turn-aggregate-{{node}}-oop.jpg" alt="Turn Aggregate OOP {{node}}">
+
+<h5>IP 集合分析</h5>
+<img class="screenshot" src="screenshots/turn-aggregate-{{node}}-ip.jpg" alt="Turn Aggregate IP {{node}}">
+
+<table>
+  <tr><th>Turn card分類</th><th>Bet頻度変化</th><th>Key insight</th></tr>
+  <tr><td>BW (A,K,Q,J,T)</td><td>{{change}}</td><td>{{insight}}</td></tr>
+  <tr><td>Middle (9,8,7)</td><td>{{change}}</td><td>{{insight}}</td></tr>
+  <tr><td>Low (6,5,4,3,2)</td><td>{{change}}</td><td>{{insight}}</td></tr>
+  <tr><td>Paired</td><td>{{change}}</td><td>{{insight}}</td></tr>
+  <tr><td>Flush complete</td><td>{{change}}</td><td>{{insight}}</td></tr>
+</table>
+<!-- ===== ノード繰り返しここまで ===== -->
+
+<h3>4. Turn 個別カード分析</h3>
+
+<h4>Turn: {{turn_card}}</h4>
+<img class="screenshot" src="screenshots/turn-{{board}}{{turn_card}}-strategy-ev.jpg" alt="Turn {{turn_card}} Strategy + EV">
+<img class="screenshot" src="screenshots/turn-{{board}}{{turn_card}}-equity.jpg" alt="Turn {{turn_card}} Equity">
+
+<h3>5. River 集合分析（ストリートゲート）</h3>
+<p>River 個別カード分析の前に、Turnアクション後の全River cardでの戦略変化を OOP / IP 両視点で確認する。</p>
+
+<h5>OOP 集合分析</h5>
+<img class="screenshot" src="screenshots/river-aggregate-{{node}}-oop.jpg" alt="River Aggregate OOP {{node}}">
+
+<h5>IP 集合分析</h5>
+<img class="screenshot" src="screenshots/river-aggregate-{{node}}-ip.jpg" alt="River Aggregate IP {{node}}">
+
+<table>
+  <tr><th>River card分類</th><th>戦略変化（ポーラライズ度合い等）</th><th>Key insight</th></tr>
+  <tr><td>BW</td><td>{{change}}</td><td>{{insight}}</td></tr>
+  <tr><td>Middle</td><td>{{change}}</td><td>{{insight}}</td></tr>
+  <tr><td>Low</td><td>{{change}}</td><td>{{insight}}</td></tr>
+  <tr><td>Paired</td><td>{{change}}</td><td>{{insight}}</td></tr>
+  <tr><td>Flush/Straight complete</td><td>{{change}}</td><td>{{insight}}</td></tr>
+</table>
+
+<h3>6. River 個別カード分析</h3>
+
+<h4>River: {{river_card}}</h4>
+<img class="screenshot" src="screenshots/river-{{board}}{{turn_card}}{{river_card}}-strategy-ev.jpg" alt="River {{river_card}} Strategy + EV">
+<img class="screenshot" src="screenshots/river-{{board}}{{turn_card}}{{river_card}}-equity.jpg" alt="River {{river_card}} Equity">
 
 </section>
 

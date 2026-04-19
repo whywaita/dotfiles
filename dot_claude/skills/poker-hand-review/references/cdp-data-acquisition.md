@@ -104,6 +104,66 @@ CDP `Fetch` ドメインを使い、`spot-solution` API レスポンスをキャ
 
 GTO Wizard のページは描画が重く、agent-browser の screenshot コマンドがタイムアウトすることがある。Raw CDP WebSocket 経由で直接取得する。
 
+### 表示状態の必須要件（最重要）
+
+**スクリーンショットを撮影する前に、以下の表示状態を必ず確保すること。**
+
+#### Strategy + EV ビューを有効化
+
+ハンドマトリクスの個別スポット撮影では、各セルに **アクション頻度（Strategy）と EV 値の両方** を表示すること。
+
+```bash
+# 1. EV 表示が有効か snapshot で確認
+npx agent-browser snapshot -i | grep -iE "(EV|expected value)"
+
+# 2. 無効ならトグル/タブをクリック
+npx agent-browser eval "
+  // 候補セレクタ（GTO Wizard のUI更新で変わる可能性あり）
+  const candidates = [
+    '[data-testid=\"ev-toggle\"]',
+    'button[aria-label*=\"EV\"]',
+    'button[title*=\"EV\"]'
+  ];
+  for (const sel of candidates) {
+    const el = document.querySelector(sel);
+    if (el && !el.classList.contains('active')) { el.click(); break; }
+  }
+"
+
+# 3. 反映を待ってから再 snapshot で確認 → OK なら撮影
+```
+
+**撮影後の検査:** スクリーンショット内に EV 値（数字 + bb 表記）が描画されていることを目視確認する。映っていなければ再撮影。
+
+#### Equity Charts を表示
+
+エクイティ分布グラフ（OOP / IP のレンジ vs レンジ）を表示してから撮影すること。
+
+```bash
+# Equity タブ/パネルを開く
+npx agent-browser eval "
+  const candidates = [
+    '[data-testid=\"equity-tab\"]',
+    'button[aria-label*=\"Equity\"]',
+    'button[title*=\"Equity\"]'
+  ];
+  for (const sel of candidates) {
+    const el = document.querySelector(sel);
+    if (el) { el.click(); break; }
+  }
+"
+
+# snapshot で Equity チャートが描画されているか確認
+npx agent-browser snapshot -i | grep -iE "(equity|distribution)"
+```
+
+**撮影後の検査:** Equity Charts は通常、横軸エクイティ % × 縦軸頻度のヒストグラムまたはCDFラインとして描画される。OOP / IP 両方のラインが見えていることを目視確認する。
+
+**ファイル名規則:**
+- Strategy+EV: `{street}-{board}-{action}-strategy-ev.jpg`
+- Equity Charts: `{street}-{board}-{action}-equity.jpg`
+- 集合分析（OOP/IP別）: `{street}-aggregate-{oop|ip}.jpg`
+
 ### ビューポートサイズ: ブラウザ実測値を使う
 
 **`Emulation.setDeviceMetricsOverride` は使わないこと。** 固定値を上書きすると GTO Wizard のレイアウトが崩れてスクリーンショットが壊れる。
@@ -153,6 +213,28 @@ Runtime.evaluate({
 | **Flop** | 全フロップボードにおける bet/check/raise 頻度のヒートマップ | プリフロップ解法ページからAggregate viewに切替 |
 | **Turn** | 特定フロップ＋Flopアクション後の、全52枚中の残りTurn cardごとの戦略変化 | Flopアクション後のノードからTurn Aggregate viewに切替 |
 | **River** | 特定Turn＋Turnアクション後の、全残りRiver cardごとの戦略変化 | Turnアクション後のノードからRiver Aggregate viewに切替 |
+
+### ストリート進行ゲート（必須プロトコル）
+
+**個別カード分析に進む前に、必ず該当ストリートの集合分析データを取得すること。**
+
+順序の鉄則:
+
+```
+[Flop 集合分析 (OOP/IP)] → [Flop 個別ボード分析]
+                              ↓
+                        [Turn 集合分析 (OOP/IP)] → [Turn 個別カード分析]
+                                                      ↓
+                                                [River 集合分析 (OOP/IP)] → [River 個別カード分析]
+```
+
+各ゲートでは:
+1. 集合分析ビューに切替
+2. OOP / IP 両視点のスクリーンショットを取得
+3. **落ちるカードのカテゴリ別の戦略変化を観察してメモ**（Turn なら Broadway / Middle / Low / Paired / Flush complete など）
+4. メモが取れて初めて個別カード分析に進む
+
+このゲートを飛ばして個別カード分析だけを行うことは禁止。Turn / River のカードがどのような系譜で戦略変化を引き起こしているか俯瞰する目的。
 
 ### Aggregate View へのナビゲーション
 
