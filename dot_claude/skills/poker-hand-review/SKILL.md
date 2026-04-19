@@ -473,6 +473,54 @@ mv ./poker-assets/*.jpg {entry-dir}/screenshots/
 - 各個別ボードについて Strategy+EV と Equity Charts の**両方**を必ず掲載
 - 各ストリートの集合分析（OOP / IP）を必ず掲載
 
+##### Action Summary フォーマット規約
+
+`<section id="hand-review">` 内の `<pre class="action-summary">` に以下の規約で記載する。
+
+```
+Preflop (Effective stack: {bb}bb)
+{opener_pos} (Hero) open raises {size}bb
+{caller_pos} calls
+
+Flop {flop_cards} (pot {pot}bb)
+{pos} bets {bb}bb ({pct}% pot)
+{pos} calls
+
+Turn {turn_card} (pot {pot}bb)
+{pos} checks
+{pos} checks
+
+River {river_card} (pot {pot}bb)
+{pos} bets {bb}bb ({pct}% pot)
+{pos} calls
+
+{winner_pos} win with {hand}
+{loser_pos} defeat with {hand}
+```
+
+**規約:**
+
+1. **1アクション1行。** 複数アクションを矢印（`→`）や `&rarr;` で繋げてはならない。
+2. **使用する動詞は限定:**
+   - `calls` / `raises` / `bets` / `folds` / `checks` / `open raises`（プリフロップの最初のレイズ）
+3. **bets / raises にはサイジングを必ず併記:**
+   - 形式: `bets {X}bb ({Y}% pot)` もしくは `raises to {X}bb ({Y}% pot)`
+   - BB数 と ポット比率 の両方を明記する
+   - `%` はベット直前のポットに対するベット額の割合（`bet / pot_before_bet × 100`）
+4. **Preflop 行に Effective stack を必ず表記:**
+   - 形式: `Preflop (Effective stack: {X}bb)`
+5. **各ポストフロップストリートの見出し行にカードと開始時ポットを記載:**
+   - 形式: `Flop {cards} (pot {X}bb)` / `Turn {card} (pot {X}bb)` / `River {card} (pot {X}bb)`
+   - `pot` はそのストリート開始時（まだベットが入る前）のサイズ
+   - カードは `Ts7h2d` もしくはスペース区切り `Ts 7h 2d`。Unicode suit（`♠ ♥ ♦ ♣`）を使ってもよい
+6. **Hero のポジションには `(Hero)` を併記:**
+   - 例: `UTG (Hero) open raises 2bb`
+7. **ショーダウン行:**
+   - 勝者: `{winner_pos} win with {hand}`
+   - 敗者: `{loser_pos} defeat with {hand}`
+   - フォールドで終局した場合は勝敗行を省略（最終アクションの `folds` で終わる）
+8. **空行でストリート間を区切る。**
+
 #### 9d. meta.json 生成
 
 エントリディレクトリに `meta.json` を Write で出力する。
