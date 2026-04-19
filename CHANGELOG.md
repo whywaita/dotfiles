@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.0.7](https://github.com/whywaita/dotfiles/compare/v1.0.6...v1.0.7) - 2026-04-19
+- feat: add Ghostty terminal configuration by @whywaita in https://github.com/whywaita/dotfiles/pull/62
+- feat(poker-hand-review): integrate review and study modes by @whywaita in https://github.com/whywaita/dotfiles/pull/64
+- ci: bump Songmu/tagpr from 1.18.1 to 1.18.2 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/61
+- ci: bump actions/cache from 5.0.4 to 5.0.5 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/60
+
 ## [v1.0.6](https://github.com/whywaita/dotfiles/compare/v1.0.5...v1.0.6) - 2026-04-14
 - fix(poker): add dark theme support to journal template by @whywaita in https://github.com/whywaita/dotfiles/pull/58
 
