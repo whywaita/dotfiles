@@ -1,5 +1,8 @@
 # Changelog
 
+## [v1.0.8](https://github.com/whywaita/dotfiles/compare/v1.0.7...v1.0.8) - 2026-04-28
+- feat: symlink nvim config directory by @whywaita in https://github.com/whywaita/dotfiles/pull/66
+
 ## [v1.0.7](https://github.com/whywaita/dotfiles/compare/v1.0.6...v1.0.7) - 2026-04-19
 - feat: add Ghostty terminal configuration by @whywaita in https://github.com/whywaita/dotfiles/pull/62
 - feat(poker-hand-review): integrate review and study modes by @whywaita in https://github.com/whywaita/dotfiles/pull/64
