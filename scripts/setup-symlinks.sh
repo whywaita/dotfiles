@@ -17,7 +17,7 @@ do
   fi
 done
 
-DOT_CONFIG_DIRS=(mdp ghostty)
+DOT_CONFIG_DIRS=(mdp ghostty nvim)
 
 mkdir -p "$HOME/.config"
 
