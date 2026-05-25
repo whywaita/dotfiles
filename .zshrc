@@ -148,5 +148,7 @@ function peco-src () {
 zle -N peco-src
 bindkey '^|' peco-src
 
+export PATH="$HOME/.local/bin:$PATH"
+
 ## local固有設定
 [ -f ~/.config/zsh.local ] && source ~/.config/zsh.local
