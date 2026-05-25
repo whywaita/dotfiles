@@ -79,5 +79,6 @@
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
   "showClearContextOnPlanAccept": true,
-  "plansDirectory": "./plans"
+  "plansDirectory": "./plans",
+  "skipAutoPermissionPrompt": true
 }
