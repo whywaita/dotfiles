@@ -45,7 +45,7 @@ function git_branch_name() {
 
 # 一般ユーザ時
  # tmp_prompt="%{${fg[cyan]}%}%n%# %{${reset_color}%}"
- tmp_prompt="%{${fg[green]}%}[%~]%{${reset_color}%}%{${fg[yellow]}%}\$(git_branch_name)%{${reset_color}%} %{${fg[cyan]}%}whywaita%# %{${reset_color}%}"
+ tmp_prompt="%B%{${fg[green]}%}[%~]%f%{${fg[yellow]}%}\$(git_branch_name)%f %{${fg[cyan]}%}whywaita%# %f%b"
  tmp_prompt2="%{${fg[cyan]}%}%_> %{${reset_color}%}"
  tmp_rprompt=""
  tmp_sprompt="%{${fg[yellow]}%}%r is correct? [Yes, No, Abort, Edit]:%{${reset_color}%}"
