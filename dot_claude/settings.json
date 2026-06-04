@@ -25,6 +25,17 @@
   },
   "model": "opus[1m]",
   "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p ~/.claude/compact-memory && echo \"# Checkpoint $(date '+%Y-%m-%d %H:%M')\" > ~/.claude/compact-memory/checkpoint-$(date '+%Y%m%d-%H%M%S').md && echo '' >> ~/.claude/compact-memory/checkpoint-$(date '+%Y%m%d-%H%M%S').md && echo 'PreCompact hook fired. Key decisions, file changes, and next steps should be summarized by the session.' >> ~/.claude/compact-memory/checkpoint-$(date '+%Y%m%d-%H%M%S').md"
+          }
+        ]
+      }
+    ],
     "Notification": [
       {
         "matcher": "",
