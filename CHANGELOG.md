@@ -1,5 +1,17 @@
 # Changelog
 
+## [v1.0.8](https://github.com/whywaita/dotfiles/compare/v1.0.7...v1.0.8) - 2026-06-05
+
+- feat: symlink nvim config directory by @whywaita in https://github.com/whywaita/dotfiles/pull/66
+- feat: add ~/.local/bin to PATH and enable skipAutoPermissionPrompt by @whywaita in https://github.com/whywaita/dotfiles/pull/69
+- ci: bump Songmu/tagpr from 1.18.2 to 1.19.0 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/68
+- feat(ghostty,zsh): switch ghostty to Iceberg Light and bold the prompt by @whywaita in https://github.com/whywaita/dotfiles/pull/70
+- feat(claude): add tmux pane color change on permission prompt by @whywaita in https://github.com/whywaita/dotfiles/pull/74
+- ci: bump Songmu/tagpr from 1.19.0 to 1.20.0 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/72
+- ci: bump actions/checkout from 6.0.2 to 6.0.3 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/71
+- feat(claude): update model to claude-opus-4-6 by @whywaita in https://github.com/whywaita/dotfiles/pull/75
+- fix(git): fix indentation in gitconfig by @whywaita in https://github.com/whywaita/dotfiles/pull/76
+
 ## [v1.0.7](https://github.com/whywaita/dotfiles/compare/v1.0.6...v1.0.7) - 2026-04-19
 - feat: add Ghostty terminal configuration by @whywaita in https://github.com/whywaita/dotfiles/pull/62
 - feat(poker-hand-review): integrate review and study modes by @whywaita in https://github.com/whywaita/dotfiles/pull/64
