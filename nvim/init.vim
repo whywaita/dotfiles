@@ -33,7 +33,7 @@ let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 let g:rc_dir = expand('~/dotfiles/nvim')
 
 if !isdirectory(s:dein_repo_dir)
-  execute '!git clone <https://github.com/Shougo/dein.vim>' s:dein_repo_dir
+  execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
 endif
 execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
 
@@ -58,10 +58,7 @@ if dein#check_install()
 endif
 
 lua << EOF
-local nvim_lsp = require('lspconfig')
-
 local on_attach = function(client, bufnr)
- client.server_capabilities.documentFormattingProvider = false
  local set = vim.keymap.set
  set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
  set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
@@ -88,10 +85,10 @@ require("mason-lspconfig").setup {
   automatic_enable = true,
 }
 
-local lspconfig = require("lspconfig")
-lspconfig.util.default_config = vim.tbl_deep_extend(
-  "force",
-  lspconfig.util.default_config,
-  { on_attach = on_attach }
-)
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    on_attach(client, args.buf)
+  end,
+})
 EOF
