@@ -31,7 +31,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "osascript -e 'display notification \"Claude Codeが許可を求めています\" with title \"Claude Code\" subtitle \"確認待ち\" sound name \"Glass\"'"
+            "command": "osascript -e 'display notification \"Claude Code からの通知があります\" with title \"Claude Code\" sound name \"Glass\"'"
           },
           {
             "type": "command",
@@ -98,7 +98,7 @@
           },
           {
             "type": "command",
-            "command": "echo '\\n✅ Planning complete! To create a worktree for this feature, run:\\n   /worktree-impl <feature-name>\\n'"
+            "command": "printf '\\n✅ Planning complete! To create a worktree for this feature, run:\\n   /worktree-impl <feature-name>\\n'"
           }
         ]
       }
