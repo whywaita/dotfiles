@@ -10,16 +10,7 @@ git clone --recursive git@github.com:whywaita/dotfiles.git
 sh dotfiles/setup.sh
 ```
 
-`setup.sh` が以下を行う:
-
-- dotfiles のシンボリックリンク作成（`.zshrc`, `.tmux.conf`, `.gitconfig` 等）
-- `~/.config/` 配下へのリンク作成（`mdp`, `ghostty`, `nvim`, `git/ignore`）
-- Claude Code 設定のリンク作成（`dot_claude/scripts/setup.sh`）
-- Codex 設定のリンク作成（`dot_codex/scripts/setup-codex.sh`）
-- OpenCode 設定のリンク作成（`scripts/setup-opencode.sh`）
-- dein.vim のクローン
-- Homebrew のインストール
-- Go ツールのインストール（`go` が存在する場合のみ）
+`setup.sh` は `scripts/setup-*.sh` を順に実行するラッパー。各スクリプトの役割は README の表を参照（重複記載によるドリフトを避けるため、ここには列挙しない）。
 
 ## 重要なルール
 
@@ -52,16 +43,7 @@ sh dotfiles/setup.sh
 
 ## CI
 
-GitHub Actions で以下のチェックを実行する（push / PR / daily）:
-
-- `shellcheck`: リポジトリ内の全シェルスクリプト（`git ls-files '*.sh'` で動的に収集）
-- `zsh -n .zshrc`: Zsh 構文チェック
-- `luacheck .wezterm.lua`: Lua 静的解析
-- `tmux -f .tmux.conf`: tmux 設定の構文チェック
-- `taplo check nvim/*.toml`: TOML 構文チェック
-- Neovim 設定の読み込みチェック（出力に `E<number>:` パターンがあれば fail）
-- `git config --file .gitconfig --list`: gitconfig 構文チェック
-- `./brewfile.sh`: Homebrew パッケージの存在確認
+GitHub Actions（`.github/workflows/test.yaml`）で push / PR / daily に lint・構文チェックを実行する。shellcheck はリポジトリ内の全シェルスクリプト（`git ls-files '*.sh'`）が対象。個別のジョブ定義は workflow ファイルを参照。
 
 ### CI を変更するときの注意
 
