@@ -116,7 +116,7 @@ jobs:
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Setup Homebrew
-        uses: Homebrew/actions/setup-homebrew@main
+        uses: Homebrew/actions/setup-homebrew@097625b28a26ba4b7437926ab03b4d3bd2e6c3d1 # main
       - name: Check Homebrew packages exist
         run: ./brewfile.sh
 
@@ -140,4 +140,4 @@ jobs:
       homebrew: false
       go-tools: false
       brewfile: false
-      dotfiles-ref: ${{ github.head_ref || github.ref_name }}
+      dotfiles-ref: ${{ github.event_name == 'pull_request' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.ref_name }}
