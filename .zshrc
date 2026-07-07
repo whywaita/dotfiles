@@ -148,7 +148,7 @@ function peco-src () {
   zle clear-screen
 }
 zle -N peco-src
-bindkey '^]' peco-src
+bindkey '^|' peco-src
 
 export PATH="$HOME/.local/bin:$PATH"
 
