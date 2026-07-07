@@ -26,9 +26,6 @@ config.scrollback_lines = 1000
 config.animation_fps = 120
 config.max_fps = 120
 
-config.window_frame = {
-  active_titlebar_bg = "#282c34",
-}
 config.use_fancy_tab_bar = false
 
 config.term = "xterm-256color"
