@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2154
 
 input=$(cat)
 
@@ -43,4 +44,8 @@ if [ -n "$branch_str" ]; then
   parts+=("$branch_str")
 fi
 
-printf "%s" "$(IFS=' | '; echo "${parts[*]}")"
+out=""
+for part in "${parts[@]}"; do
+  if [ -z "$out" ]; then out="$part"; else out="$out | $part"; fi
+done
+printf "%s" "$out"
