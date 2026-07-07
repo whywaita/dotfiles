@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.0.9](https://github.com/whywaita/dotfiles/compare/v1.0.8...v1.0.9) - 2026-06-18
+
+- feat(skills): add japanese-tech-writing skill by @whywaita in https://github.com/whywaita/dotfiles/pull/77
+
 ## [v1.0.8](https://github.com/whywaita/dotfiles/compare/v1.0.7...v1.0.8) - 2026-06-05
 
 - feat: symlink nvim config directory by @whywaita in https://github.com/whywaita/dotfiles/pull/66
