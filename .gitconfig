@@ -7,7 +7,6 @@
   ui = auto
 [core]
   editor = nvim
-  excludesfile = ~/.gitignore
 [gpg]
   program = gpg2
 [ghq]
