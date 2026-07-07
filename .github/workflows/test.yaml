@@ -17,7 +17,7 @@ jobs:
       - name: Install shellcheck
         run: sudo apt-get install -y shellcheck zsh
       - name: Check shell scripts with shellcheck
-        run: shellcheck setup.sh brewfile.sh dot_claude/scripts/setup.sh dot_codex/scripts/setup-codex.sh tests/setup_claude_test.sh scripts/setup-symlinks.sh scripts/setup-claude.sh scripts/setup-codex.sh scripts/setup-nvim.sh scripts/setup-homebrew.sh scripts/setup-go-tools.sh scripts/setup-opencode.sh
+        run: git ls-files '*.sh' | xargs shellcheck
       - name: Run Claude setup test
         run: ./tests/setup_claude_test.sh
       - name: Check zshrc syntax
@@ -47,14 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - name: Cache taplo
-        id: cache-taplo
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: /usr/local/bin/taplo
-          key: taplo-linux-x86_64
       - name: Install taplo
-        if: steps.cache-taplo.outputs.cache-hit != 'true'
         run: |
           curl -fsSL https://github.com/tamasfe/taplo/releases/latest/download/taplo-linux-x86_64.gz | gunzip > taplo
           chmod +x taplo
@@ -67,7 +60,7 @@ jobs:
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Setup Deno
-        uses: denoland/setup-deno@667a34cdef165d8d2b2e98dde39547c9daac7282 # v2.0.4
+        uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
         with:
           deno-version: v2.x
       - name: Cache dein.vim
@@ -87,7 +80,7 @@ jobs:
       - name: Setup Neovim config
         run: |
           mkdir -p ~/.config/nvim
-          ln -s "$PWD/init.vim" ~/.config/nvim/init.vim
+          ln -s "$PWD/nvim/init.vim" ~/.config/nvim/init.vim
           mkdir -p ~/dotfiles
           ln -s "$PWD/nvim" ~/dotfiles/nvim
       - name: Install dein.vim and plugins
@@ -98,11 +91,15 @@ jobs:
             git clone https://github.com/Shougo/dein.vim.git ~/.cache/dein/repos/github.com/Shougo/dein.vim
           fi
           # プラグインをインストール
-          nvim --headless -c "call dein#install()" -c "qall" 2>&1
+          output=$(nvim --headless -c "call dein#install()" -c "qall" 2>&1) || true
+          echo "$output"
+          if echo "$output" | grep -qE 'E[0-9]+:'; then exit 1; fi
       - name: Check Neovim config
         run: |
           # 設定を読み込んでエラーがないか確認
-          nvim --headless -c "if v:errmsg != '' | cquit 1 | endif" -c "qall" 2>&1
+          output=$(nvim --headless -c "qall" 2>&1) || true
+          echo "$output"
+          if echo "$output" | grep -qE 'E[0-9]+:'; then exit 1; fi
 
   git-config-check:
     runs-on: ubuntu-latest
