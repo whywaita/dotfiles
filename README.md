@@ -1,7 +1,6 @@
 # whywaita/dotfiles
 
 [![lint and check](https://github.com/whywaita/dotfiles/actions/workflows/test.yaml/badge.svg)](https://github.com/whywaita/dotfiles/actions/workflows/test.yaml)
-[![setup](https://github.com/whywaita/dotfiles/actions/workflows/setup.yaml/badge.svg)](https://github.com/whywaita/dotfiles/actions/workflows/setup.yaml)
 
 ## Usage
 
@@ -22,6 +21,7 @@ sh dotfiles/setup.sh
 | `scripts/setup-symlinks.sh` | Create dotfile symlinks in `$HOME` |
 | `scripts/setup-claude.sh` | Setup Claude Code configuration |
 | `scripts/setup-codex.sh` | Setup Codex configuration |
+| `scripts/setup-opencode.sh` | Setup OpenCode configuration |
 | `scripts/setup-nvim.sh` | Clone dein.vim (Neovim plugin manager) |
 | `scripts/setup-homebrew.sh` | Install Homebrew |
 | `scripts/setup-go-tools.sh` | Install Go tools (git-wt) |
@@ -71,6 +71,7 @@ jobs:
 | `symlinks` | boolean | `true` | Create dotfile symlinks |
 | `claude` | boolean | `true` | Setup Claude Code |
 | `codex` | boolean | `true` | Setup Codex |
+| `opencode` | boolean | `false` | Setup OpenCode |
 | `nvim` | boolean | `false` | Setup Neovim (dein.vim) |
 | `homebrew` | boolean | `false` | Install Homebrew |
 | `go-tools` | boolean | `false` | Install Go tools |
