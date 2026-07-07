@@ -32,6 +32,7 @@ FORMULAE=(
   kubectl
   gpg2
   ghq
+  peco
   watch
 )
 
