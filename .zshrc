@@ -11,8 +11,8 @@ setopt equals
 
 #history
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=100000000
+HISTSIZE=100000
+SAVEHIST=100000
 setopt bang_hist
 setopt extended_history
 setopt hist_ignore_dups
@@ -23,7 +23,9 @@ export EDITOR=nvim
 export GIT_EDITOR=nvim
 
 # set shell
-export SHELL=/opt/homebrew/bin/zsh
+if command -v zsh >/dev/null 2>&1; then
+  export SHELL="$(command -v zsh)"
+fi
 
 #compl
 autoload -U compinit;compinit
@@ -98,8 +100,6 @@ alias trm="tmux kill-session -t"
 #Lang
 alias be="bundle exec"
 
-# nodejs
-export PATH=$PATH:./node_modules/.bin
 # Go
 export PATH=$PATH:$HOME/go/bin
 # homebrew
@@ -132,12 +132,14 @@ ex () {
 }
 
 # https://github.com/k1LoW/git-wt
-eval "$(git wt --init zsh)"
+command -v git-wt >/dev/null 2>&1 && eval "$(git wt --init zsh)"
 function wt () {
+  command -v peco >/dev/null 2>&1 || { echo "peco is not installed" >&2; return 1; }
   git wt "$(git wt | tail -n +2 | peco | awk '{print $(NF-1)}')"
 }
 
 function peco-src () {
+  command -v peco >/dev/null 2>&1 || { zle -M "peco is not installed"; return 1; }
   local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
@@ -146,7 +148,7 @@ function peco-src () {
   zle clear-screen
 }
 zle -N peco-src
-bindkey '^|' peco-src
+bindkey '^]' peco-src
 
 export PATH="$HOME/.local/bin:$PATH"
 
