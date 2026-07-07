@@ -12,6 +12,8 @@ if [ ! -d "$PLANS_DIR" ]; then
 fi
 
 # 最新のプランファイルを取得（.mdファイルのみ）
+# プランファイル名に改行や特殊文字は含まれないため ls -t で問題ない
+# shellcheck disable=SC2012
 latest_file=$(ls -t "$PLANS_DIR"/*.md 2>/dev/null | head -n 1)
 
 if [ -z "$latest_file" ]; then
