@@ -1,5 +1,24 @@
 # Changelog
 
+## [v1.0.10](https://github.com/whywaita/dotfiles/compare/v1.0.9...v1.0.10) - 2026-07-07
+
+- ci: bump actions/checkout from 6.0.3 to 7.0.0 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/79
+- ci: bump actions/cache from 5.0.5 to 6.1.0 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/82
+- ci: bump actions/setup-go from 6.4.0 to 6.5.0 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/80
+- fix(setup): stop masking failures under CI and skip go-tools when go is missing by @whywaita in https://github.com/whywaita/dotfiles/pull/102
+- docs(readme): document setup-opencode and opencode input, drop dead setup badge by @whywaita in https://github.com/whywaita/dotfiles/pull/103
+- fix(ghostty): remove scrollback-limit that capped history at ~1000 bytes by @whywaita in https://github.com/whywaita/dotfiles/pull/104
+- fix(claude): render statusline separators and correct hook output by @whywaita in https://github.com/whywaita/dotfiles/pull/108
+- fix: recover interrupted dein clone, pass wheel-up to mouse-aware apps, drop dead wezterm config by @whywaita in https://github.com/whywaita/dotfiles/pull/111
+- fix(ci): pin setup-homebrew to SHA and check out PR merge ref for fork PRs by @whywaita in https://github.com/whywaita/dotfiles/pull/110
+- fix(ci): make neovim-check actually validate config and close shellcheck/taplo gaps by @whywaita in https://github.com/whywaita/dotfiles/pull/112
+- fix(nvim): repair dein bootstrap URL and non-functional LSP setup by @whywaita in https://github.com/whywaita/dotfiles/pull/107
+- fix(codex): move notify to top level so notifications fire by @whywaita in https://github.com/whywaita/dotfiles/pull/106
+- chore: remove orphaned common_skills directory by @whywaita in https://github.com/whywaita/dotfiles/pull/105
+- fix(setup): replace pre-existing dirs safely, drop dead vim links, install global gitignore by @whywaita in https://github.com/whywaita/dotfiles/pull/114
+- fix(zsh): guard missing tools, drop relative PATH entry, fix history/keybind/SHELL by @whywaita in https://github.com/whywaita/dotfiles/pull/113
+- docs(agents): add recurrence-prevention rules learned from the recent bug-fix series by @whywaita in https://github.com/whywaita/dotfiles/pull/115
+
 ## [v1.0.9](https://github.com/whywaita/dotfiles/compare/v1.0.8...v1.0.9) - 2026-06-18
 
 - feat(skills): add japanese-tech-writing skill by @whywaita in https://github.com/whywaita/dotfiles/pull/77
