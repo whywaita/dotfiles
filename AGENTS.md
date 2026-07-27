@@ -48,7 +48,23 @@ sh dotfiles/setup.sh
   - Codex: `dot_codex/skills/`
 - OpenCode など新しいエージェントに skills を追加する場合も同じパターン（`dot_<agent>/skills/`）に従い、対応する setup スクリプトからリンクすること
 - ツール横断の共通ディレクトリ（かつての `common_skills/` のような場所）は作らないこと。どこからも参照されないままドリフトする
-- 同名の skill が複数のエージェントに存在する場合、各コピーはそのツール向けの個別実装として独立に管理する（機械的な同期はしない）
+- 同名の skill が複数のエージェントに存在する場合、既定では各コピーをそのツール向けの個別実装として独立に管理する
+
+#### skill の機械同期
+
+エージェント間で内容を書き分ける必要がない skill に限り、`dot_claude/skills/` を単一の情報源として `dot_codex/skills/` へ機械同期できる。
+
+- 対象は `scripts/synced-skills.txt` に列挙した skill のみ。ここに載っていない skill は従来どおり個別管理する
+- 同期は `scripts/sync-skills.sh` で行う。CI が `--check` で差分を検出する
+- **同期対象の `dot_codex/skills/<name>/` は生成物**。直接編集しないこと。編集は `dot_claude/skills/<name>/` に対して行い、`scripts/sync-skills.sh` を実行する
+- 変換内容は SKILL.md の frontmatter から Codex が解釈しないキー（`allowed-tools`、`disable-model-invocation`）を除くことのみ。本文を書き分けたくなった時点で、その skill は同期対象から外して個別管理に戻す
+- `disable-model-invocation` は Codex 側では失われるため、同期した skill は Codex では暗黙起動しうる
+
+### 外部 skill の取り込み
+
+- 外部リポジトリから skill を vendoring した場合は `THIRD_PARTY_NOTICES.md` に取り込み元・コミット SHA・ライセンス・ファイル対応表を記録すること
+- vendoring したファイルは原則として改変しない。改変すると上流の更新を取り込めなくなる
+- 応答言語のような横断的な設定は skill 本文に書かず、`dot_claude/CLAUDE.md` で定めること
 
 ## CI
 

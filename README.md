@@ -25,6 +25,7 @@ sh dotfiles/setup.sh
 | `scripts/setup-nvim.sh` | Clone dein.vim (Neovim plugin manager) |
 | `scripts/setup-homebrew.sh` | Install Homebrew |
 | `scripts/setup-go-tools.sh` | Install Go tools (git-wt) |
+| `scripts/sync-skills.sh` | Sync skills listed in `scripts/synced-skills.txt` from `dot_claude/skills/` to `dot_codex/skills/` (`--check` to verify only) |
 | `brewfile.sh` | Install Homebrew packages |
 
 ```bash

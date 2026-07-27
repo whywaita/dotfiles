@@ -20,6 +20,10 @@ jobs:
         run: git ls-files '*.sh' | xargs shellcheck
       - name: Run Claude setup test
         run: ./tests/setup_claude_test.sh
+      - name: Run skill sync test
+        run: ./tests/sync_skills_test.sh
+      - name: Check synced skills are up to date
+        run: ./scripts/sync-skills.sh --check
       - name: Check zshrc syntax
         run: zsh -n .zshrc
 

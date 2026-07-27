@@ -1,0 +1,11 @@
+# dot_claude/skills から dot_codex/skills へ機械的に同期する skill の一覧。
+# 1 行 1 skill。'#' 以降はコメント。
+# 消費者: scripts/sync-skills.sh
+#
+# ここに載せた skill の dot_codex 側コピーは同期の出力であり、直接編集しないこと。
+# エージェントごとに書き分けたい skill はここに載せない。
+
+# mattpocock/skills から vendoring したもの（THIRD_PARTY_NOTICES.md 参照）
+domain-modeling
+grill-with-docs
+grilling
