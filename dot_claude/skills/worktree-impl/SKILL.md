@@ -5,7 +5,11 @@ description: Plan mode終了後、実装開始前に使用する。git worktree�
 ---
 
 Plan mode が終わった後、実装を開始する前に git worktree を作成し、その中で作業を進めるためのスキル。
-git worktree の詳細は `rules/git-worktree.md` を参照すること。
+
+## 配置ルール
+
+- worktree は `<repo>/.worktrees/<branch-name>/` に配置する
+- `.worktrees/` は `.gitignore` に追加して管理対象外にする
 
 ## Step 1: 事前確認
 
@@ -41,3 +45,8 @@ git worktree の詳細は `rules/git-worktree.md` を参照すること。
    ```
 2. **現在のセッションで移動して続行**
 3. **手動で移動**
+
+## 注意点
+
+- 同じブランチを複数の worktree でチェックアウトできない
+- 作業完了後は `git worktree remove .worktrees/<name>` で削除してクリーンアップすること
