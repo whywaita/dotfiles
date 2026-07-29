@@ -1,5 +1,15 @@
 # Changelog
 
+## [v1.0.11](https://github.com/whywaita/dotfiles/compare/v1.0.10...v1.0.11) - 2026-07-29
+
+- feat(skills): vendor grill-with-docs and drop the design doc trio by @whywaita in https://github.com/whywaita/dotfiles/pull/121
+- ci: bump actions/checkout from 7.0.0 to 7.0.1 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/120
+- ci: bump Homebrew/actions/setup-homebrew from 097625b28a26ba4b7437926ab03b4d3bd2e6c3d1 to df4b09108a1de9d6f995fe68f302b3f68bd6d2ef by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/119
+- ci: bump actions/setup-go from 6.5.0 to 7.0.0 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/118
+- chore(claude): 未使用拡張の無効化と常時ロード context の削減 by @whywaita in https://github.com/whywaita/dotfiles/pull/122
+- ci: bump Songmu/tagpr from 1.20.0 to 1.20.1 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/117
+- ci: bump Homebrew/actions/setup-homebrew from 2026.07.20.1 to 2026.07.29.1 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/124
+
 ## [v1.0.10](https://github.com/whywaita/dotfiles/compare/v1.0.9...v1.0.10) - 2026-07-07
 
 - ci: bump actions/checkout from 6.0.3 to 7.0.0 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/79
