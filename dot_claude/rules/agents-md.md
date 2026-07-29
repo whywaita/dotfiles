@@ -1,5 +1,6 @@
 ---
-path: "**/AGENTS.md"
+paths:
+  - "**/AGENTS.md"
 ---
 
 # AGENTS.md 作成ルール

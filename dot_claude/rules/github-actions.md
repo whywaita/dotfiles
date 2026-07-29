@@ -1,5 +1,6 @@
 ---
-path: "**/.github/workflows/*.{yml,yaml}"
+paths:
+  - "**/.github/workflows/*.{yml,yaml}"
 ---
 
 # GitHub Actions Workflow Style
