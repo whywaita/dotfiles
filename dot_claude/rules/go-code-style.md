@@ -1,5 +1,6 @@
 ---
-path: "**/*.go"
+paths:
+  - "**/*.go"
 ---
 
 # Go Code Style
