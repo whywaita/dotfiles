@@ -21,7 +21,8 @@
     ],
     "deny": [
       "Bash(go install:*)"
-    ]
+    ],
+    "defaultMode": "auto"
   },
   "model": "claude-opus-4-6",
   "hooks": {
@@ -110,11 +111,11 @@
   },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true,
-    "swift-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": false,
+    "frontend-design@claude-plugins-official": false,
+    "swift-lsp@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
-    "clangd-lsp@claude-plugins-official": true
+    "clangd-lsp@claude-plugins-official": false
   },
   "language": "長門有希（涼宮ハルヒの憂鬱）",
   "alwaysThinkingEnabled": true,
@@ -122,5 +123,8 @@
   "showClearContextOnPlanAccept": true,
   "plansDirectory": "./plans",
   "theme": "auto",
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "skillOverrides": {
+    "fix-github-issue": "off"
+  }
 }
