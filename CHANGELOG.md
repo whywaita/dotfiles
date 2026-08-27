@@ -1,5 +1,10 @@
 # Changelog
 
+## [v1.0.12](https://github.com/whywaita/dotfiles/compare/v1.0.11...v1.0.12) - 2026-08-27
+
+- ci: bump Homebrew/actions/setup-homebrew from 2026.07.29.1 to 2026.08.14.1 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/127
+- ci: bump Homebrew/actions/setup-homebrew from 2026.08.14.1 to 2026.08.24.1 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/129
+
 ## [v1.0.11](https://github.com/whywaita/dotfiles/compare/v1.0.10...v1.0.11) - 2026-07-29
 
 - feat(skills): vendor grill-with-docs and drop the design doc trio by @whywaita in https://github.com/whywaita/dotfiles/pull/121
