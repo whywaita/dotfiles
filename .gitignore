@@ -3,3 +3,5 @@
 # opencode.json contains sensitive information
 opencode.json
 .claude/worktrees/
+
+dot_claude/skills/ciu-*/

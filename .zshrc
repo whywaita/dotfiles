@@ -154,3 +154,6 @@ export PATH="$HOME/.local/bin:$PATH"
 
 ## local固有設定
 [ -f ~/.config/zsh.local ] && source ~/.config/zsh.local
+
+# opencode
+export PATH=$HOME/.opencode/bin:$PATH

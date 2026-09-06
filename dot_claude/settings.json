@@ -24,7 +24,10 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "claude-opus-4-6",
+  "model": "claude-fable-5-1[1m]",
+  "skillOverrides": {
+    "fix-github-issue": "off"
+  },
   "hooks": {
     "Notification": [
       {
@@ -124,7 +127,7 @@
   "plansDirectory": "./plans",
   "theme": "auto",
   "skipAutoPermissionPrompt": true,
-  "skillOverrides": {
-    "fix-github-issue": "off"
+  "env": {
+    "CLAUDE_CODE_THRIFTY_SONIC": "false"
   }
 }
