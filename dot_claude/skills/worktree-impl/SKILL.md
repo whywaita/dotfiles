@@ -1,52 +1,47 @@
 ---
-allowed-tools: Bash(git worktree:*), Bash(git branch:*), Bash(git fetch:*), Bash(pwd:*), Bash(ls:*), Bash(mkdir:*)
+name: worktree-impl
+allowed-tools: Bash(git worktree:*), Bash(git branch:*), Bash(git fetch:*), Bash(git rev-parse:*), Bash(git symbolic-ref:*), Bash(pwd:*), Bash(ls:*), Bash(mkdir:*)
 argument-hint: [branch-name]
-description: Plan mode終了後、実装開始前に使用する。git worktreeを作成して隔離環境で実装を進める。変更を加える際に自動的に提案すること。
+description: Plan mode 終了後、実装開始前に使用する。git worktree を作成して隔離環境で実装を進める。変更を加える際に自動的に提案すること。
 ---
 
-Plan mode が終わった後、実装を開始する前に git worktree を作成し、その中で作業を進めるためのスキル。
+計画が固まった後、実装を始める前に git worktree を作り、その中で作業するためのスキル。
 
 ## 配置ルール
 
-- worktree は `<repo>/.worktrees/<branch-name>/` に配置する
-- `.worktrees/` は `.gitignore` に追加して管理対象外にする
+- worktree は `<repo>/.worktrees/<sanitized-name>/` に置く
+- `<sanitized-name>` はブランチ名の `/` を `-` に置換したもの
+- `.worktrees/` が `.gitignore` に無ければ追加する
 
-## Step 1: 事前確認
+## 手順
 
-1. 現在のディレクトリが git リポジトリであることを確認
-2. `git fetch origin` で最新の状態を取得
-3. `git worktree list` で既存の worktree 一覧を確認
+### 1. 事前確認
 
-## Step 2: ブランチ名の決定
+```bash
+git rev-parse --is-inside-work-tree
+git fetch origin
+git worktree list
+```
 
-引数でブランチ名が指定されていればそれを使用。指定がない場合：
+### 2. ブランチ名の決定
 
-1. Plan mode で作成した計画内容を参考に適切なブランチ名を決める
-2. 既存ブランチのパターンを `git branch -r` で確認して命名規則を合わせる
-3. ブランチ名を提案し、ユーザーに確認
+- 引数があればそれを使う
+- 無ければ計画内容から候補を決め、`git branch -r` で既存の命名規則に合わせてから、ユーザーに確認する
 
-## Step 3: Worktree の作成
+### 3. worktree の作成
 
-1. base ブランチを取得:
-   ```bash
-   git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
-   ```
-2. worktree を作成:
-   ```bash
-   git worktree add -b <branch-name> .worktrees/<sanitized-name> origin/<base>
-   ```
-   - `<sanitized-name>`: ブランチ名の `/` を `-` に置換
+```bash
+base="$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')"
+git worktree add -b <branch-name> .worktrees/<sanitized-name> "origin/$base"
+```
 
-## Step 4: 次のアクションを提案
+### 4. 次のアクションを提案
 
-1. **新しいセッションを worktree で開始**
-   ```bash
-   cd <worktree-path> && claude
-   ```
-2. **現在のセッションで移動して続行**
-3. **手動で移動**
+1. worktree で新しいセッションを開く（`cd <worktree-path>` してから使用中のエージェント CLI を起動）
+2. 現在のセッションで `cd <worktree-path>` して続行
+3. 手動で移動
 
 ## 注意点
 
-- 同じブランチを複数の worktree でチェックアウトできない
-- 作業完了後は `git worktree remove .worktrees/<name>` で削除してクリーンアップすること
+- 同じブランチを複数の worktree でチェックアウトすることはできない
+- 作業完了後は `git worktree remove .worktrees/<sanitized-name>` で削除する
