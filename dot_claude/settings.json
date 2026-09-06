@@ -126,5 +126,8 @@
   "skipAutoPermissionPrompt": true,
   "skillOverrides": {
     "fix-github-issue": "off"
+  },
+  "env": {
+    "CLAUDE_CODE_THRIFTY_SONIC": "false"
   }
 }
