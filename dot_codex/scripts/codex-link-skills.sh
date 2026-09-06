@@ -12,3 +12,5 @@ mkdir -p "$HOME/.codex/skills"
 
 safe_link "$dot_codex_dir/AGENTS.md" "$HOME/.codex/AGENTS.md"
 safe_link "$dot_codex_dir/skills" "$HOME/.codex/skills/local"
+safe_link "$dot_codex_dir/worktree-shell.sh" "$HOME/.codex/worktree-shell.sh"
+safe_link "$dot_codex_dir/scripts/codex-worktree.sh" "$HOME/.codex/codex-worktree.sh"

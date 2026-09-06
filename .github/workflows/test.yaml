@@ -22,6 +22,11 @@ jobs:
         run: ./tests/setup_claude_test.sh
       - name: Run skill sync test
         run: ./tests/sync_skills_test.sh
+      - name: Run Python tests
+        run: |
+          git ls-files 'tests/*_test.py' | while IFS= read -r test_file; do
+            python3 "$test_file" || exit 1
+          done
       - name: Check synced skills are up to date
         run: ./scripts/sync-skills.sh --check
       - name: Check zshrc syntax
@@ -117,7 +122,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Setup Homebrew
-        uses: Homebrew/actions/setup-homebrew@3cdb78d0f62ad29dd32de765782654f4eedea607 # main
+        uses: Homebrew/actions/setup-homebrew@3cdb78d0f62ad29dd32de765782654f4eedea607 # 2026.08.31.1
       - name: Check Homebrew packages exist
         run: ./brewfile.sh
 
