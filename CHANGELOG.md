@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.0.13](https://github.com/whywaita/dotfiles/compare/v1.0.12...v1.0.13) - 2026-09-07
+
+- ci: bump Songmu/tagpr from 1.20.1 to 1.20.2 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/131
+- ci: bump Homebrew/actions/setup-homebrew from 2026.08.24.1 to 2026.08.31.1 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/130
+- chore: update Claude Code settings, zsh PATH, and gitignore by @whywaita in https://github.com/whywaita/dotfiles/pull/132
+- chore(codex): align codex config with claude code settings by @whywaita in https://github.com/whywaita/dotfiles/pull/134
+- feat(codex): add worktree session wrapper by @whywaita in https://github.com/whywaita/dotfiles/pull/135
+
 ## [v1.0.12](https://github.com/whywaita/dotfiles/compare/v1.0.11...v1.0.12) - 2026-08-27
 
 - ci: bump Homebrew/actions/setup-homebrew from 2026.07.29.1 to 2026.08.14.1 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/127
