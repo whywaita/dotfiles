@@ -37,6 +37,7 @@ FORMULAE=(
 )
 
 CASKS=(
+  codex
   iterm2
   vlc
   coteditor
@@ -58,7 +59,7 @@ if [ "$CI_MODE" == "true" ]; then
 
   # Check formulae exist
   for formula in "${FORMULAE[@]}"; do
-    if brew info "$formula" > /dev/null 2>&1; then
+    if brew info "$formula" >/dev/null 2>&1; then
       echo "✓ Formula exists: $formula"
     else
       echo "✗ Formula NOT found: $formula"
@@ -68,7 +69,7 @@ if [ "$CI_MODE" == "true" ]; then
 
   # Check casks exist
   for cask in "${CASKS[@]}"; do
-    if brew info --cask "$cask" > /dev/null 2>&1; then
+    if brew info --cask "$cask" >/dev/null 2>&1; then
       echo "✓ Cask exists: $cask"
     else
       echo "✗ Cask NOT found: $cask"
