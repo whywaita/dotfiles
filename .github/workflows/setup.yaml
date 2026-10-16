@@ -23,6 +23,11 @@ on:
         type: boolean
         default: true
         required: false
+      pi:
+        description: "Setup pi worktree wrapper"
+        type: boolean
+        default: false
+        required: false
       opencode:
         description: "Setup OpenCode configuration"
         type: boolean
@@ -75,6 +80,10 @@ jobs:
       - name: Setup Codex
         if: ${{ inputs.codex }}
         run: ./dotfiles/scripts/setup-codex.sh
+
+      - name: Setup pi
+        if: ${{ inputs.pi }}
+        run: ./dotfiles/scripts/setup-pi.sh
 
       - name: Setup OpenCode
         if: ${{ inputs.opencode }}

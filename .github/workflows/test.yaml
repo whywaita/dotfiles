@@ -141,6 +141,7 @@ jobs:
       symlinks: true
       claude: true
       codex: true
+      pi: true
       opencode: true
       nvim: false
       homebrew: false

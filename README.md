@@ -21,6 +21,7 @@ sh dotfiles/setup.sh
 | `scripts/setup-symlinks.sh` | Create dotfile symlinks in `$HOME` |
 | `scripts/setup-claude.sh` | Setup Claude Code configuration |
 | `scripts/setup-codex.sh` | Setup Codex configuration, skills, and the worktree shell wrapper |
+| `scripts/setup-pi.sh` | Setup the pi worktree shell wrapper |
 | `scripts/setup-opencode.sh` | Setup OpenCode configuration |
 | `scripts/setup-nvim.sh` | Clone dein.vim (Neovim plugin manager) |
 | `scripts/setup-homebrew.sh` | Install Homebrew |
@@ -63,6 +64,30 @@ to continue existing work. Codex's exit code is preserved unless cleanup alone f
 
 Run the lifecycle tests with `python3 tests/codex_worktree_test.py`.
 
+### pi worktree sessions
+
+Run `./scripts/setup-pi.sh` and open a new Zsh session (or run
+`source "$HOME/.pi/worktree-shell.sh"` in the current Bash/Zsh session).
+Git and pi are required. pi is not on Homebrew; install it with the official
+installer (`curl -fsSL https://pi.dev/install.sh | sh`).
+
+```bash
+pi --worktree feature-name
+pi -w                            # Generate a unique name
+pi -w feature-name -- "Fix the failing tests"
+```
+
+This behaves like the Codex wrapper above, with these differences:
+
+- The branch is `pi/<name>` (the directory is still `.worktrees/<name>`).
+- pi has no working-directory option, so the wrapper starts pi inside the
+  worktree. Keep prints `(cd <worktree> && pi --resume)`.
+- Worktree mode rejects session selection options (`--continue` / `-c`,
+  `--resume` / `-r`, `--session`, `--session-id`, `--session-dir`, `--fork`),
+  because they would leave the new worktree's session.
+
+Run the lifecycle tests with `python3 tests/pi_worktree_test.py`.
+
 ## Reusable Workflow
 
 You can call the dotfiles setup from other repositories via GitHub Actions.
@@ -101,6 +126,7 @@ jobs:
 | `symlinks` | boolean | `true` | Create dotfile symlinks |
 | `claude` | boolean | `true` | Setup Claude Code |
 | `codex` | boolean | `true` | Setup Codex |
+| `pi` | boolean | `false` | Setup the pi worktree wrapper |
 | `opencode` | boolean | `false` | Setup OpenCode |
 | `nvim` | boolean | `false` | Setup Neovim (dein.vim) |
 | `homebrew` | boolean | `false` | Install Homebrew |

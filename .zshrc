@@ -154,6 +154,8 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Codex worktree lifecycle wrapper (installed by scripts/setup-codex.sh).
 [ -f "$HOME/.codex/worktree-shell.sh" ] && source "$HOME/.codex/worktree-shell.sh"
+# pi worktree lifecycle wrapper (installed by scripts/setup-pi.sh).
+[ -f "$HOME/.pi/worktree-shell.sh" ] && source "$HOME/.pi/worktree-shell.sh"
 
 ## local固有設定
 [ -f ~/.config/zsh.local ] && source ~/.config/zsh.local
