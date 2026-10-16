@@ -1,5 +1,10 @@
 # Changelog
 
+## [v1.0.14](https://github.com/whywaita/dotfiles/compare/v1.0.13...v1.0.14) - 2026-10-16
+
+- feat(pi): add worktree lifecycle wrapper by @whywaita in https://github.com/whywaita/dotfiles/pull/146
+- chore: flush public WIP changes from main by @whywaita in https://github.com/whywaita/dotfiles/pull/147
+
 ## [v1.0.13](https://github.com/whywaita/dotfiles/compare/v1.0.12...v1.0.13) - 2026-10-01
 
 - ci: bump Songmu/tagpr from 1.20.1 to 1.20.2 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/131
