@@ -1,4 +1,7 @@
 {
+  "env": {
+    "CLAUDE_CODE_THRIFTY_SONIC": "false"
+  },
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
@@ -24,7 +27,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "claude-fable-5-1[1m]",
+  "model": "opus",
   "hooks": {
     "Notification": [
       {
@@ -41,7 +44,7 @@
         ]
       }
     ],
-    "UserPromptSubmit": [
+    "PostToolUse": [
       {
         "matcher": "",
         "hooks": [
@@ -53,17 +56,6 @@
       }
     ],
     "PreToolUse": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "[ -n \"$TMUX_PANE\" ] && tmux set -p -u -t \"$TMUX_PANE\" window-style && tmux set -p -u -t \"$TMUX_PANE\" window-active-style || true"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
       {
         "matcher": "",
         "hooks": [
@@ -103,6 +95,17 @@
           }
         ]
       }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ -n \"$TMUX_PANE\" ] && tmux set -p -u -t \"$TMUX_PANE\" window-style && tmux set -p -u -t \"$TMUX_PANE\" window-active-style || true"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
@@ -110,12 +113,12 @@
     "command": "bash $HOME/dotfiles/dot_claude/scripts/statusline.sh"
   },
   "enabledPlugins": {
+    "clangd-lsp@claude-plugins-official": false,
+    "frontend-design@claude-plugins-official": false,
     "gopls-lsp@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": false,
-    "frontend-design@claude-plugins-official": false,
-    "swift-lsp@claude-plugins-official": false,
     "skill-creator@claude-plugins-official": true,
-    "clangd-lsp@claude-plugins-official": false
+    "swift-lsp@claude-plugins-official": false
   },
   "language": "長門有希（涼宮ハルヒの憂鬱）",
   "alwaysThinkingEnabled": true,
@@ -123,8 +126,5 @@
   "showClearContextOnPlanAccept": true,
   "plansDirectory": "./plans",
   "theme": "auto",
-  "skipAutoPermissionPrompt": true,
-  "env": {
-    "CLAUDE_CODE_THRIFTY_SONIC": "false"
-  }
+  "skipAutoPermissionPrompt": true
 }

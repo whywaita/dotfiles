@@ -5,3 +5,7 @@ opencode.json
 .claude/worktrees/
 
 dot_claude/skills/ciu-*/
+
+# Artifacts left by local skill tooling (trashed/synced skills)
+dot_claude/skills/.trash/
+dot_claude/skills/synced/
