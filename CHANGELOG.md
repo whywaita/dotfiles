@@ -1,5 +1,12 @@
 # Changelog
 
+## [v1.0.14](https://github.com/whywaita/dotfiles/compare/v1.0.13...v1.0.14) - 2026-10-19
+
+- feat(pi): add worktree lifecycle wrapper by @whywaita in https://github.com/whywaita/dotfiles/pull/146
+- chore: flush public WIP changes from main by @whywaita in https://github.com/whywaita/dotfiles/pull/147
+- ci: bump Songmu/tagpr from 1.21.0 to 1.21.2 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/144
+- ci: bump Homebrew/actions/setup-homebrew from 2026.09.28.1 to 2026.10.12.1 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/145
+
 ## [v1.0.13](https://github.com/whywaita/dotfiles/compare/v1.0.12...v1.0.13) - 2026-10-01
 
 - ci: bump Songmu/tagpr from 1.20.1 to 1.20.2 by @dependabot[bot] in https://github.com/whywaita/dotfiles/pull/131
