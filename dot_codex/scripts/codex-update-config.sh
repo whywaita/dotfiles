@@ -29,8 +29,12 @@ TEMPLATE = os.environ["TEMPLATE"]
 CONFIG = os.environ["CONFIG"]
 
 if tomllib is None:
-    # Fallback: copy template over if TOML parser is unavailable.
-    Path(CONFIG).write_text(Path(TEMPLATE).read_text(), encoding="utf-8")
+    # Without a TOML parser we cannot merge. Never clobber an existing config:
+    # Codex itself writes trusted projects, plugins and hook hashes into it.
+    if Path(CONFIG).exists():
+        print(f"warning: tomllib unavailable; leaving {CONFIG} untouched", file=sys.stderr)
+    else:
+        Path(CONFIG).write_text(Path(TEMPLATE).read_text(), encoding="utf-8")
     sys.exit(0)
 
 
