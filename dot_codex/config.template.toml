@@ -1,7 +1,8 @@
 # Merged into ~/.codex/config.toml by scripts/codex-update-config.sh.
-# Keys here override the existing config, except `notify` (default only).
+# Keys here override the existing config.
 # App-managed state (projects, plugins, marketplaces, hooks.state, desktop,
-# tui, bundled MCP servers) is written by Codex itself and is not tracked.
+# tui, bundled MCP servers, notify) is written by Codex itself and is not
+# tracked. Codex Computer Use owns `notify`; do not add it here.
 approval_policy = "on-request"
 approvals_reviewer = "auto_review"
 hide_agent_reasoning = true
@@ -10,10 +11,6 @@ model_reasoning_effort = "medium"
 personality = "pragmatic"
 service_tier = "default"
 web_search = "live"
-
-# Notification command after responses (single hook only).
-# Codex Computer Use wraps this with its own client, so it is default only.
-notify = ["bash", "-lc", "afplay /System/Library/Sounds/Ping.aiff"]
 
 [features]
 js_repl = false
