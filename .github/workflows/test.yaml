@@ -81,11 +81,18 @@ jobs:
           restore-keys: |
             dein-${{ runner.os }}-
       - name: Install Neovim
+        # 公式 release の tarball を固定バージョン + sha256 検証で入れる。
+        # ppa:neovim-ppa/unstable は依存パッケージの公開が追いつかず
+        # apt が解決に失敗することがあるため使わない。
+        env:
+          NVIM_VERSION: v0.12.6
+          NVIM_SHA256: 474430d53e6264f6d6dd18db42d6dc9df3a1b56ca9e88a325bbf860e1a811d87
         run: |
-          sudo apt-get install -y software-properties-common
-          sudo add-apt-repository ppa:neovim-ppa/unstable -y
-          sudo apt-get update
-          sudo apt-get install -y neovim
+          curl -fsSL -o nvim.tar.gz "https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux-x86_64.tar.gz"
+          echo "${NVIM_SHA256}  nvim.tar.gz" | sha256sum -c -
+          sudo tar -xzf nvim.tar.gz -C /opt
+          rm nvim.tar.gz
+          echo "/opt/nvim-linux-x86_64/bin" >> "$GITHUB_PATH"
       - name: Setup Neovim config
         run: |
           mkdir -p ~/.config/nvim
