@@ -109,7 +109,7 @@ jobs:
 
       - name: Setup Homebrew (for brewfile)
         if: ${{ inputs.brewfile }}
-        uses: Homebrew/actions/setup-homebrew@eb02c69dbabdb66ff183c614f4ce7ab3c077592c # main
+        uses: Homebrew/actions/setup-homebrew@ceec4e8419bb3c97ce96e9dda7738499ed5f869d # main
 
       - name: Run brewfile
         if: ${{ inputs.brewfile }}
